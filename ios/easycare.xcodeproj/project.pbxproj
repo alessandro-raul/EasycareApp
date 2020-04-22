@@ -33,6 +33,7 @@
 		572A938B8E624F79BD021F48 /* LobsterTwo.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0D16D83AE47842CC93F56D5A /* LobsterTwo.otf */; };
 		80346D7D9F364D26BF6CE920 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DACB0108B84E47CB8F211DC6 /* AntDesign.ttf */; };
 		27D99135566C4AFDB1E0F2D8 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0490F4D4F2164C249633B920 /* Fontisto.ttf */; };
+		3CEFD6C6D72A4E7087868289 /* CaviarDreams.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA166D55DE8A4BBBA8582D26 /* CaviarDreams.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		0D16D83AE47842CC93F56D5A /* LobsterTwo.otf */ = {isa = PBXFileReference; name = "LobsterTwo.otf"; path = "../assets/fonts/LobsterTwo.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		DACB0108B84E47CB8F211DC6 /* AntDesign.ttf */ = {isa = PBXFileReference; name = "AntDesign.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		0490F4D4F2164C249633B920 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BA166D55DE8A4BBBA8582D26 /* CaviarDreams.ttf */ = {isa = PBXFileReference; name = "CaviarDreams.ttf"; path = "../assets/fonts/CaviarDreams.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 				0D16D83AE47842CC93F56D5A /* LobsterTwo.otf */,
 				DACB0108B84E47CB8F211DC6 /* AntDesign.ttf */,
 				0490F4D4F2164C249633B920 /* Fontisto.ttf */,
+				BA166D55DE8A4BBBA8582D26 /* CaviarDreams.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				572A938B8E624F79BD021F48 /* LobsterTwo.otf in Resources */,
 				80346D7D9F364D26BF6CE920 /* AntDesign.ttf in Resources */,
 				27D99135566C4AFDB1E0F2D8 /* Fontisto.ttf in Resources */,
+				3CEFD6C6D72A4E7087868289 /* CaviarDreams.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

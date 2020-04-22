@@ -6,7 +6,7 @@ import {
   StyleSheet
 } from 'react-native'
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class InputComIcon extends Component {
   constructor(props){
@@ -31,10 +31,9 @@ export default class InputComIcon extends Component {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    height: 50,
-    borderColor: 'rgba(70,70,70, 0.55)',
+    borderColor: 'rgba(70,70,70, 0.31)',
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 50,
     paddingLeft: 20,
     marginTop: 25,
     flexDirection: 'row'
@@ -42,12 +41,15 @@ const styles = StyleSheet.create({
 
   icon: {
     alignSelf: 'center',
-    paddingRight: 20
+    paddingRight: 20,
+    marginLeft: 10,
+    color: 'rgba(0,0,0,0.7)'
   },
 
   input: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#666',
     flex: 1
   }
+  
 })

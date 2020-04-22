@@ -3,19 +3,16 @@ import {
     StyleSheet,
     Text,
     View,
-    Platform,
-    StatusBar,
-    Image,
 } from 'react-native'
+import CaviarDreams from '../../assets/fonts/CaviarDreams.ttf'
 
 class HeaderLogin extends Component{
     render(){
         return(
-          <View>
-            <View style={styles.header}>
-                   <StatusBar backgroundColor="#277AB1" barStyle="light-content" />
-                <Text style={styles.text}>Easycare</Text>
-            </View>
+            <View>
+                <View style={styles.header}>
+                    <Text style={styles.text}>Easycare</Text>
+                </View>
             </View>
         )
     };
@@ -23,20 +20,24 @@ class HeaderLogin extends Component{
 
 const styles = StyleSheet.create({
     header: {
-        marginTop: -15,
-        //borderBottomRightRadius: 30,
-        //borderBottomStartRadius: 30,
-        backgroundColor: '#277AB1',
+        backgroundColor: 'white',
         width: '100%',
-        height: 100,
+        height: 90,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        /*elevation: 3,
+        shadowOffset: { width: 1, height: 1 },
+        shadowColor: '#3977A0',
+        shadowOpacity: 0.3,*/
     },
 
     text:{
-        fontSize: 50,
-        color: 'white',
-        fontFamily: 'LobsterTwo'
+        marginTop: 10,
+        textAlign: 'center',
+        fontSize: 37,
+        color: '#23AFDB',
+        fontFamily: 'CaviarDreams',
+        
     },
 })
 

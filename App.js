@@ -1,21 +1,14 @@
+import React from 'react';
+import Routes from './src/routes';
+import { NavigationContainer } from '@react-navigation/native';
+import {StatusBar} from 'react-native'
 
-import React, {Component} from 'react';
-
-import Header from './src/componentes/Header';
-
- 
-
-
-
-
-export default class App extends Component {
-render(){
-  return(
-    <Header/>
-  
-
-  )
+export default function App() {
+  return (
+    <NavigationContainer>
+      <StatusBar barStyle="dark-content"/>
+      <Routes />
+    </NavigationContainer>
+   
+  );
 }
-}
-
-

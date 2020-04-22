@@ -1,101 +1,158 @@
-import React, { Component} from "react"
-import {StyleSheet, ScrollView,View, Alert, Text, Image, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, StatusBar, SafeAreaView, ScrollViewBase, TextInput, ImageBackground} from 'react-native';
+import React, { useState} from "react"
+import {StyleSheet, View, FlatList, ScrollView, Alert, Text, Image, Dimensions, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, StatusBar, SafeAreaView, ScrollViewBase, TextInput, ImageBackground, KeyboardAvoidingView, Button, AsyncStorage} from 'react-native';
 import HeaderLogin from '../componentes/HeaderLogin';
-import Form from '../componentes/Form';
-import { Input } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Logo from '../../assets/imgs/icon2.png';
-import FootPular from "../componentes/FootPular";
-import InputComIcom from '../componentes/inputComIcon'
+import InputComIcom from '../componentes/inputComIcon';
+import api from '../services/api';
 
-export default class TelaLogin extends Component{
-    alert=() =>{
-        Alert.alert(this.state.name)
-    }
+export default function TelaLogin({navigation}){
 
-    state = {
-        name: '',
-        cpf: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        stageNew: false
-    }
+    const [stageNew, setStageNew] = useState([false]);
+    const [nomeCliente, setNomeCliente] = useState('');
+    const [cpfCliente, setCpfCliente] = useState(['']);
+    const [idCliente, setIdCliente] = useState(['']);
 
-    render(){
+    var resposta= "";
+
+        const data = {
+            nomeCliente: nomeCliente,
+            cpfCliente: cpfCliente
+        }
+
+        function navigateToHome(){
+            navigation.navigate('Home');
+        }
+    
+        function navigateToCad2(){
+            navigation.navigate('Cadastro');
+        }
+
+        function stageFunction(){
+            setStageNew(!stageNew);
+        }
+
+        async function Cadastrar(){
+            try{
+                const response = await api.post('/User/', data);
+                resposta = response.data.response;
+                console.log(resposta);
+                salvarDados();
+              
+            }catch(error) {
+                console.log(error);
+                alert(error) 
+            }
+        }
+
+        async function salvarDados(){
+            try {
+                await AsyncStorage.setItem("nomeCliente", nomeCliente);
+                await AsyncStorage.setItem("CPF", cpfCliente);
+                navigateToCad2();
+
+            }catch(error) {
+                console.log(error);
+            }
+        }
+
+        async function Logar(){
+            alert(`${idCliente}`);
+        }
+
         return(
-            <ScrollView style={{height: '100%'}}>
-             <StatusBar backgroundColor="#277AB1" barStyle="light-content" />
-                <HeaderLogin/>   
-                <View style={styles.fundo}>
-                <Image source={Logo} style={styles.logo}/>
-                    <Text style={styles.txtLoginTop}>
-                        {this.state.stageNew ? 'Criar nova conta' : 'Login'}</Text>
-                  
+            <View style={{height: '100%', backgroundColor: '#fff', justifyContent:'center'}}>
+                <StatusBar barStyle="dark-content"/>
+              <HeaderLogin />
+                    <KeyboardAvoidingView style={styles.fundo}>
+                        <Image source={Logo} style={styles.logo}/>
+                        <Text style={styles.txtLoginTop}>
+                            {stageNew ? 'Login' : 'Criar conta'}
+                        </Text>
+                        <Text style={styles.txtInsira}>
+                        {stageNew ? 'Insira seus dados' : 'Informe seus dados pessoais'}
+                           
+                        </Text>
+                    
+                        <View style = {styles.formContainer}>
+                            {stageNew &&
+                            <>
+                                <InputComIcom placeholder = "Email" icon='email'  onChangeText={emailCliente => setEmailCliente(emailCliente)} /> 
+                                <InputComIcom placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} secureTextEntry={true} />
+                            </>
+                            }
 
-                    <View style = {styles.formContainer}>
-                        {this.state.stageNew &&
-                        <InputComIcom placeholder = "Nome" icon="user" onChangeText={name=> this.setState({name})}
-                        />
-                        }
-                        {this.state.stageNew &&
-                        <InputComIcom placeholder = "CPF" icon='address-card' onChangeText={cpf=>this.setState({cpf})} />
-                        }
-                        <InputComIcom placeholder = "Email" icon='envelope' onChangeText={email=>this.setState({email})} />
-                        <InputComIcom placeholder = "Senha" icon='lock' secureTextEntry={true} onChangeText={password=>this.setState({password})}/>
-                        {this.state.stageNew &&
-                        <InputComIcom placeholder = "Confirmar senha" icon='lock' style={styles.textInput} secureTextEntry={true} onChangeText={confirmPassword=>this.setState({confirmPassword})}/>
-                        }
-                        <View style={styles.bt}>
-                            <TouchableNativeFeedback onPress = {()=> {this.alert()}}>
-                                <View style={styles.btLogar}>
-                                    <Text style={styles.txtLogin}>{this.state.stageNew ? 'Criar' : 'Logar'}</Text>
-                                </View>
-                            </TouchableNativeFeedback>
-                        </View>
-                            <TouchableOpacity style={styles.bt2} onPress={()=> this.setState({stageNew: !this.state.stageNew})}>
-                                <Text style={styles.txtCadastro}>
-                                    {this.state.stageNew ? 'Já possui cadastro?' : 'Não é cadastrado?'} 
-                                </Text>
+                            {!stageNew &&
+                            <>
+                            <InputComIcom placeholder = "Nome" icon='person-pin' onChangeText={nomeCliente=>setNomeCliente(nomeCliente)} />
+                            <InputComIcom placeholder = "CPF" keyboardType='numeric' icon='assignment-ind' onChangeText={cpfCliente=>setCpfCliente(cpfCliente)}/>
+                            </>
+                            }
+                            
+
+                            <View style={styles.bt}>
+                                <TouchableNativeFeedback onPress={stageNew ? Logar : Cadastrar}>                           
+                                    <View style={styles.btLogar}>
+                                        <Text style={styles.txtLogin}> {stageNew ? 'Logar' : 'Prosseguir'} </Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                            </View>
+                            <TouchableOpacity style={styles.bt2} onPress={stageFunction}>
+                                       <Text style={styles.txtCadastro}> {stageNew ? 'Não possui cadastro?' : 'Já possui cadastro?'} </Text>
                             </TouchableOpacity>
-                    </View>
-                </View>
-                <FootPular/>
-            </ScrollView>
+                        </View>
+
+                    </KeyboardAvoidingView>
+                
+            </View>
         )
     }
-}
 
 const styles = StyleSheet.create({
+
+
     fundo:{
-        flex: 1,
-        alignItems: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white'
+
     },
 
     text:{
         fontSize: 60,
         color: '#3980ac',
-        fontFamily: 'LobsterTwo'
+        fontFamily: 'CaviarDreams'
     },
 
     txtLoginTop:{
         marginTop: '3%',
-        fontSize: 42.5,
-        color: '#277AB1',
-        fontFamily: 'LobsterTwo',
+        fontSize: 30,
+        color: '#23AFDB',
+        fontFamily: 'CaviarDreams',
         //fontWeight: 'bold'
     },
 
+    txtInsira:{
+        marginTop: 10,
+        fontFamily: 'CaviarDreams',
+        fontSize: 20,
+        textAlign: 'center',
+        marginBottom: 10
+    },
+
     logo:{
-        marginTop: '7%',
-        width: 140,
-        height: 140,
+        width: 130,
+        height: 130,
     },
 
     formContainer:{
-        flex:1,
-        //backgroundColor: 'blue',
+        backgroundColor: 'white',
         width: '85%',
+        marginBottom: 10
+    },
+    
+    bt2:{
+        marginTop: 30,
+        alignItems: 'center',
     },
 
     bt:{
@@ -103,17 +160,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    bt2:{
-        marginTop: 30,
-        alignItems: 'center',
-    },
 
     btLogar:{
         justifyContent: 'center',
-        backgroundColor: '#277AB1',
-        height: 50,
-        width: 250,
-        borderRadius: 8
+        backgroundColor: '#23AFDB',
+        height: 48,
+        width: 240,
+        borderRadius: 50
     },
 
     txtLogin:{
@@ -124,15 +177,9 @@ const styles = StyleSheet.create({
     },
 
     txtCadastro:{
-        color: '#277AB1',
-        //fontWeight: 'bold',
-        fontSize: 20,
-    
-    },
-
-    txtPular: {
+        color: '#707070',
         fontSize: 17,
-        color: 'gray',
-        textDecorationLine: 'underline'
-    },
-    });
+        //marginBottom: 50
+       
+    },    
+});

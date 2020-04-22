@@ -3,56 +3,42 @@ import {
     StyleSheet,
     Text,
     View,
-    Platform,
-    StatusBar,
-    Image,
     TouchableNativeFeedback,
+    TouchableOpacity,
 } from 'react-native'
 
-class FootPular extends Component{
-    render(){
+function FootPular ({navigation}){
+    function navigateToHome(){
+        navigation.navigate('Home');
+      }
+
         return(
-            
-            <View style={styles.container}>
-            <TouchableNativeFeedback>
-                <View style={styles.btPular}>
+            <View style={styles.bt}>
+                <View style={styles.btLogar}>
+                <TouchableOpacity onPress={navigateToHome}>
                     <Text style={styles.txtPular}>Pular</Text>
+                </TouchableOpacity>
                 </View>
-                </TouchableNativeFeedback>
             </View>
-           
         )
-    }
 }
 
 const styles = StyleSheet.create({
-    btPular: {
-        flex: 1,
-        alignItems: 'center', 
-        width: '100%',
-        height: 50,
-        //borderTopStartRadius: 20,
-        //borderTopEndRadius: 20,
-        backgroundColor: '#277AB1',
-        
-        
+    bt:{
     },
-    
-    container: {
-       marginTop: '15.7%',
-       alignItems: 'center',
-       height: 145,
-       marginBottom: -100
 
+    btLogar:{
+        backgroundColor: '#fff',
+        height: 50,
+        width: '100%',
     },
 
     txtPular:{
-        marginTop: 10,
-        color: 'white',
-        fontSize: 17
+
+        textAlign: 'center',
+        color: '#707070',
+        fontSize: 16
     }
-
-
 })
 
 export default FootPular;
