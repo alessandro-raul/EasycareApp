@@ -32,7 +32,7 @@ export default function TelaPerfil({navigation}){
     }
 
     return(
-        <>
+        <View style={{backgroundColor:"white", height: '100%'}}>
         <Header text="Perfil"/>
         <ScrollView style={styles.fundo}>
             <View style={styles.banner}>
@@ -115,7 +115,7 @@ export default function TelaPerfil({navigation}){
              
             </View>
             </ScrollView>
-        </>
+        </View>
     )
 }
 

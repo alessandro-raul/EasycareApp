@@ -21,6 +21,7 @@ export default function EditarPerfil({navigation}){
     const [senhaCliente, setSenhaCliente] = useState('');
     const [telefoneCliente, setTelefoneCliente] = useState('');
     var idLoginCliente;
+    var idFoneCliente;
 
     async function pegarDados(){
         try {
@@ -103,9 +104,9 @@ export default function EditarPerfil({navigation}){
             const data = response.data.response;
 
             data.map( item => {
-                idLoginCliente = (item.idLoginCliente);
+                idFoneCliente = (item.idFoneCliente);
             });     
-            salvarIdLogin();
+            atualizarTelefone();
 
         } catch (error) {
             console.log(error);
@@ -116,12 +117,11 @@ export default function EditarPerfil({navigation}){
 
     async function atualizarTelefone(){
         const data = {
-            idCliente: idCliente,
             numFoneCliente: telefoneCliente
         }
         try{
             await api.put('/UserPhone/', data, {params: {idFoneCliente} });
-
+            atualizarDados();
         }catch (error){
             console.log(error);
         }
@@ -134,6 +134,7 @@ export default function EditarPerfil({navigation}){
             await AsyncStorage.setItem("CPF", cpfCliente);
             await AsyncStorage.setItem("emailCliente", emailCliente);
             await AsyncStorage.setItem("senhaCliente", senhaCliente);
+            await AsyncStorage.setItem("telefoneCliente", telefoneCliente);
             Alert.alert(
                 "Easycare",
                 "Perfil atualizado com sucesso!",

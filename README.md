@@ -1,2 +1,0 @@
-# EasycareApp
-App Easycare
