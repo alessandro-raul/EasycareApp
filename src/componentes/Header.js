@@ -22,22 +22,22 @@ function fun(){
 
 const styles = StyleSheet.create({
     header: {
-        marginTop: 2,
+      
         backgroundColor: 'white',
         width: '100%',
-        height: 70,
+        height: 60,
         alignItems: 'center',
-        justifyContent: 'center'
-        /*elevation: 3,
+        justifyContent: 'center',
+        elevation: 2,
         shadowOffset: { width: 1, height: 1 },
         shadowColor: '#3977A0',
-        shadowOpacity: 0.3,*/
+        shadowOpacity: 0.3,
     },
 
     text:{
       
         textAlign: 'center',
-        fontSize: 35,
+        fontSize: 30,
         color: '#23AFDB',
         fontFamily: 'CaviarDreams',
         

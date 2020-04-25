@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StatusBar, Text, View, StyleSheet, Image, AsyncStorage, Alert, ScrollView, Modal } from 'react-native';
 import { TouchableOpacity, TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
 import Brendon from '../../assets/imgs/brendon.jpg';
-import Input from '../componentes/inputComIcon';
+import Input from '../componentes/InputComIconQuad';
 import api from '../services/api';
 
 export default function EditarPerfil({navigation}){
@@ -97,7 +97,6 @@ export default function EditarPerfil({navigation}){
         }
     }
 
-
     async function pegarIdTelefone(){
         try {
             const response = await api.get('/UserPhone/', {params: {idCliente} });
@@ -111,9 +110,7 @@ export default function EditarPerfil({navigation}){
         } catch (error) {
             console.log(error);
         }
-
     }
-
 
     async function atualizarTelefone(){
         const data = {
@@ -126,7 +123,6 @@ export default function EditarPerfil({navigation}){
             console.log(error);
         }
     }
-
 
     async function atualizarDados(){
         try{
@@ -199,6 +195,10 @@ export default function EditarPerfil({navigation}){
 }
 
 const styles = StyleSheet.create({
+    fundo:{
+        backgroundColor: 'white'
+    },
+
     banner:{
         alignItems: 'center',
         height: 170,

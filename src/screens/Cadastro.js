@@ -17,7 +17,6 @@ export default function Cadastro({navigation}){
     var cpfCliente;
     var idCliente;
     
-    
     function navigateToLogin(){
         navigation.navigate(TelaLogin);
     }
@@ -98,24 +97,20 @@ export default function Cadastro({navigation}){
     <View style={{height: '100%', backgroundColor: '#fff', justifyContent: 'center'}}>
         <HeaderLogin/>        
         <KeyboardAvoidingView style={styles.fundo}>
-           
             <Image source={Logo} style={styles.logo}/>
             <Text style={styles.txtLoginTop}>
                Finalizar cadastro
             </Text>
             <Text style={styles.txtInsira}>
-                        Falta pouco para você concluir!
+                Falta pouco para você concluir!
             </Text>
         
             <View style = {styles.formContainer}>
-            <>
-                <InputComIcom placeholder = "Email" icon='email'  onChangeText={emailCliente => setEmailCliente(emailCliente)} /> 
-                
-                <InputComIcom placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} secureTextEntry={true} />
-           
-                <InputComIcom placeholder = "Telefone" keyboardType='numeric' icon='phone' onChangeText={telefoneCliente=> setTelefoneCliente(telefoneCliente)}/>
-           
-           </>
+                <>
+                    <InputComIcom placeholder = "Email" icon='email'  onChangeText={emailCliente => setEmailCliente(emailCliente)} /> 
+                    <InputComIcom placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} secureTextEntry={true} />
+                    <InputComIcom placeholder = "Telefone" keyboardType='numeric' icon='phone' onChangeText={telefoneCliente=> setTelefoneCliente(telefoneCliente)}/>
+                </>
                 <View style={styles.bt}>
                     <TouchableNativeFeedback onPress={pegarCpf}>                           
                         <View style={styles.btLogar}>
@@ -127,79 +122,76 @@ export default function Cadastro({navigation}){
                     <Text style={styles.txtCadastro}>Voltar</Text>
                 </TouchableOpacity>
             </View>
-           
         </KeyboardAvoidingView>
     </View>
     )
 }
 
 const styles = StyleSheet.create({
+    fundo:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    },
 
-fundo:{
-justifyContent: 'center',
-alignItems: 'center',
+    text:{
+    fontSize: 60,
+    color: '#3980ac',
+    fontFamily: 'CaviarDreams'
+    },
 
-},
+    txtLoginTop:{
+    marginTop: '3%',
+    fontSize: 26,
+    color: '#23AFDB',
+    fontFamily: 'CaviarDreams',
+    },
 
-text:{
-fontSize: 60,
-color: '#3980ac',
-fontFamily: 'CaviarDreams'
-},
+    txtInsira:{
+    marginTop: 10,
+    fontFamily: 'CaviarDreams',
+    fontSize: 19,
+    textAlign: 'center',
+    marginBottom: 10
+    },
 
-txtLoginTop:{
-marginTop: '3%',
-fontSize: 26,
-color: '#23AFDB',
-fontFamily: 'CaviarDreams',
-},
+    logo:{
+    width: 140,
+    height: 140,
+    },
 
-txtInsira:{
-marginTop: 10,
-fontFamily: 'CaviarDreams',
-fontSize: 19,
-textAlign: 'center',
-marginBottom: 10
-},
+    formContainer:{
 
-logo:{
-width: 140,
-height: 140,
-},
+    width: '85%'
+    },
 
-formContainer:{
+    bt:{
+    marginTop: 40,
+    alignItems: 'center',
+    },
 
-width: '85%'
-},
+    bt2:{
+    marginTop: 30,
+    alignItems: 'center',
+    },
 
-bt:{
-marginTop: 40,
-alignItems: 'center',
-},
+    btLogar:{
+    justifyContent: 'center',
+    backgroundColor: '#23AFDB',
+    height: 48,
+    width: 240,
+    borderRadius: 50
+    },
 
-bt2:{
-marginTop: 30,
-alignItems: 'center',
-},
+    txtLogin:{
+    fontFamily: 'arial',
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center'
+    },
 
-btLogar:{
-justifyContent: 'center',
-backgroundColor: '#23AFDB',
-height: 48,
-width: 240,
-borderRadius: 50
-},
-
-txtLogin:{
-fontFamily: 'arial',
-color: 'white',
-fontSize: 20,
-textAlign: 'center'
-},
-
-txtCadastro:{
-color: '#707070',
-fontSize: 17,
-},    
+    txtCadastro:{
+    color: '#707070',
+    fontSize: 17,
+    },    
 });
         

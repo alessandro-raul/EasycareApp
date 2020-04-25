@@ -19,16 +19,12 @@ import easy from '../../assets/imgs/iconeCortado.png';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
-
-
 export default function IntrodutionAppScroll({navigation}){
 
     function navigateToLogin(){
         navigation.navigate('PreLog');
       }
 
-
-   
         return(
             <View style={{height: '100%', backgroundColor: 'white'}}>
                 <ScrollView
@@ -70,7 +66,6 @@ export default function IntrodutionAppScroll({navigation}){
                             <Text style={styles.Text}>Recebe em casa</Text>
                             <Text style={styles.descTxt}>Ao comprar a farmácia envia um entregador até você</Text>
                         </View>
-                      
                     </View>
                     <View style={styles.Screen4}>
                         <View style={styles.screenCont}>
@@ -88,7 +83,6 @@ export default function IntrodutionAppScroll({navigation}){
             </View>
         );
     }
-
 
 const styles = StyleSheet.create({
     topBar:{
@@ -129,7 +123,6 @@ const styles = StyleSheet.create({
         textAlign: 'center', 
         marginTop: 10,
         color:'rgba(0,0,0,0.6)'
-        
     },
 
     imagem:{
@@ -156,8 +149,5 @@ const styles = StyleSheet.create({
         padding: 10,
         color: '#707070',
         textDecorationLine:'underline',
-        
-       
     }
 });
-

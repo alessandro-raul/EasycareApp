@@ -28,12 +28,25 @@ function DashboardRoutes() {
             <Icon name="home" color={color} size={26} />
           ),
         }} />
-         <Tab.Screen name="Usuario" component={TelaLogin} />
+         <Tab.Screen name="Pesquisa" component={TelaLogin}
+          options={{
+       
+            tabBarIcon: ({color}) => (
+              <Icon name="search" color={color} size={26} />
+            ),
+          }} />
+         <Tab.Screen name="Pedido" component={TelaLogin}
+          options={{
+       
+            tabBarIcon: ({color}) => (
+              <Icon name="local-mall" color={color} size={26} />
+            ),
+          }} />
          <Tab.Screen name="Perfil" component={Perfil}
           options={{
        
             tabBarIcon: ({color}) => (
-              <Icon name="person" color={color} size={26} />
+              <Icon name="account-circle" color={color} size={26} />
             ),
           }}/>
      </Tab.Navigator>
