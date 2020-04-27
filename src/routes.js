@@ -6,13 +6,15 @@ import PreLog from './screens/PreLog';
 import Cadastro from './screens/Cadastro';
 import EditarPerfil from './screens/EditarPerfil';
 import DashboardRoutes from '../routes/dashboard.routes';
-import Header from './componentes/Header';
+import Pedido from './screens/Pedido/Pedido';
+import Pesquisa from './screens/Pesquisa/Pesquisa';
+import Resultado from './screens/Resultado/Resultado';
 
 const  AppStack = createStackNavigator();
 
 function Routes(){  
     return(
-            <AppStack.Navigator initialRouteName="Introducao" 
+            <AppStack.Navigator initialRouteName="Home" 
             
             screenOptions={{headerShown:false, 
            /* headerTitleAlign: "center", 
@@ -29,6 +31,7 @@ function Routes(){
                 <AppStack.Screen name="Cadastro" component={Cadastro}/>
                 <AppStack.Screen name="EditarPerfil" component={EditarPerfil}/>
                 <AppStack.Screen name="Home" component={DashboardRoutes}/>
+                <AppStack.Screen name="Resultado" component={Resultado}/>
                 
                 
             </AppStack.Navigator>

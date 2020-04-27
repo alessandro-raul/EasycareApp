@@ -4,6 +4,8 @@ import {cardStyleInterpolator, CardStyleInterpolators} from '@react-navigation/s
 import Home from '../src/screens/Home';
 import TelaLogin from '../src/screens/TelaLogin';
 import Perfil from '../src/screens/Perfil';
+import Pedido from '../src/screens/Pedido/Pedido';
+import Pesquisa from '../src/screens/Pesquisa/Pesquisa';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
@@ -28,7 +30,23 @@ function DashboardRoutes() {
             <Icon name="home" color={color} size={26} />
           ),
         }} />
-         <Tab.Screen name="Usuario" component={TelaLogin} />
+
+         <Tab.Screen name="Pesquisa" component={Pesquisa}
+          options={{
+       
+            tabBarIcon: ({color}) => (
+              <Icon name="search" color={color} size={26} />
+            ),
+          }}/>
+
+         <Tab.Screen name="Pedido" component={Pedido}
+          options={{
+       
+            tabBarIcon: ({color}) => (
+              <Icon name="local-mall" color={color} size={26} />
+            ),
+          }}/>
+
          <Tab.Screen name="Perfil" component={Perfil}
           options={{
        
