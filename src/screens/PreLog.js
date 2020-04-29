@@ -45,7 +45,7 @@ export default function PreLog({navigation}){
             </TouchableOpacity>
         </View>
         <View style={styles.bt}>
-                <View style={styles.btLogar}>
+                <View style={styles.btPular}>
                 <TouchableOpacity onPress={navigateToHome}>
                     <Text style={styles.txtPular}>Pular</Text>
                 </TouchableOpacity>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     borderColor: '#707070',
   },
 
-  btLogar:{
+  btPular:{
     backgroundColor: '#fff',
     height: 50,
     width: '100%',

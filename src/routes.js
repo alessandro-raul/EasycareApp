@@ -14,7 +14,7 @@ const  AppStack = createStackNavigator();
 
 function Routes(){  
     return(
-            <AppStack.Navigator initialRouteName="Home" 
+            <AppStack.Navigator initialRouteName="PreLog" 
             
             screenOptions={{headerShown:false, 
            /* headerTitleAlign: "center", 
