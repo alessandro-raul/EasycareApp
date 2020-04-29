@@ -20,7 +20,5 @@ export default function Home({ navigation }) {
         </Text>
       </TouchableHighlight>
     </>
-   
-    
     )
 }

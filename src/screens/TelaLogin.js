@@ -62,7 +62,7 @@ export default function TelaLogin({navigation}){
         return(
             <View style={{height: '100%', backgroundColor: '#fff', justifyContent:'center'}}>
                 <StatusBar barStyle="dark-content"/>
-              <HeaderLogin />
+                <HeaderLogin />
                     <KeyboardAvoidingView style={styles.fundo}>
                         <Image source={Logo} style={styles.logo}/>
                         <Text style={styles.txtLoginTop}>

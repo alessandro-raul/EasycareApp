@@ -22,13 +22,22 @@ function fun(){
 
 const styles = StyleSheet.create({
     header: {
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 1c6527b9eb5264e83558203a073b0975b0c31a2c
         backgroundColor: 'white',
         width: '100%',
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
+<<<<<<< HEAD
         elevation: 1,
         shadowOffset: { width: 3, height: 1 },
+=======
+        elevation: 2,
+        shadowOffset: { width: 1, height: 1 },
+>>>>>>> 1c6527b9eb5264e83558203a073b0975b0c31a2c
         shadowColor: '#3977A0',
         shadowOpacity: 0.3,
     },

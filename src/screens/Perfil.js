@@ -11,16 +11,19 @@ export default function TelaPerfil({navigation}){
         pegarNome();
     }, [nomeCliente]);
 
-
     const [nomeCliente, setNomeCliente] = useState(''); 
+    
     async function pegarNome(){
         try {
             const nome = await AsyncStorage.getItem("nomeCliente");
             setNomeCliente(nome);
-
         } catch (error) {
-            
+            console.log(error);
         }
+    }
+
+    function navigateToPagamentoPerfil(){
+        navigation.navigate('PagamentoPerfil');
     }
     
     function navigateToIntroducao(){
@@ -45,87 +48,78 @@ export default function TelaPerfil({navigation}){
 
             <View style={styles.infos}>
                 <View style={styles.nomeCliente}>
-    <Text style={styles.nomeClienteTxt}>{nomeCliente}</Text>
+                    <Text style={styles.nomeClienteTxt}>{nomeCliente}</Text>
                 </View>
-            
                 <View style={{marginTop: '3%'}}>
-                <TouchableOpacity style={styles.btEditar} onPress={navigateToEditarPerfil}>
-                    <Text style={styles.txtEditar}>Editar perfil</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.btEditar} onPress={navigateToEditarPerfil}>
+                        <Text style={styles.txtEditar}>Editar perfil</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-        
 
             <View style={styles.opcoes}>
                 <View style={styles.bt}> 
-                       
-                        <TouchableOpacity onPress={navigateToIntroducao} style={styles.touch}>
-                       
+                    <TouchableOpacity style={styles.touch}>
                         <Icon name='place' color='rgba(0,0,0,0.7)' size={25}/>
                         <View style={styles.btView}>
-                        <Text style={styles.btTxt}>Endereços</Text>
+                            <Text style={styles.btTxt}>Endereços</Text>
                         </View>
                         <Icon name='arrow-forward' size={27} color='#23AFDB' />
-
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
               
                 <View style={styles.bt}> 
-                <TouchableOpacity style={styles.touch}>
-                    <Icon name='payment' color='rgba(0,0,0,0.7)' size={25}/>
-                    <View style={styles.btView}>
-                    <Text style={styles.btTxt}>Pagamento</Text>
-                    </View>
-                    <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                    <TouchableOpacity onPress={navigateToPagamentoPerfil} style={styles.touch}>
+                        <Icon name='payment' color='rgba(0,0,0,0.7)' size={25}/>
+                        <View style={styles.btView}>
+                            <Text style={styles.btTxt}>Pagamento</Text>
+                        </View>
+                        <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
                     </TouchableOpacity>
                 </View>
             
                 <View style={styles.bt}> 
-                <TouchableOpacity style={styles.touch}>
-                    <Icon name='confirmation-number' color='rgba(0,0,0,0.7)' size={25}/>
-                    <View style={styles.btView}>
-                    <Text style={styles.btTxt}>Cupons</Text>
-                    </View>
-                    <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                    <TouchableOpacity style={styles.touch}>
+                        <Icon name='confirmation-number' color='rgba(0,0,0,0.7)' size={25}/>
+                        <View style={styles.btView}>
+                            <Text style={styles.btTxt}>Cupons</Text>
+                        </View>
+                        <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.bt}> 
-                <TouchableOpacity style={styles.touch}>
-                    <Icon name='notifications-none' color='rgba(0,0,0,0.7)' size={25}/>
-                    <View style={styles.btView}>
-                    <Text style={styles.btTxt}>Notificações</Text>
-                    </View>
-                    <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                    <TouchableOpacity style={styles.touch}>
+                        <Icon name='notifications-none' color='rgba(0,0,0,0.7)' size={25}/>
+                        <View style={styles.btView}>
+                            <Text style={styles.btTxt}>Notificações</Text>
+                        </View>
+                        <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.bt}> 
-                <TouchableOpacity style={styles.touch}>
-                    <Icon name='help' color='rgba(0,0,0,0.7)' size={27}/>
-                    <View style={styles.btView}>
-                    <Text style={styles.btTxt}>Ajuda</Text>
-                    </View>
-                   
-                
-                    <Icon name='arrow-forward' size={27} color='#23AFDB'  />
-                   
-                   </TouchableOpacity>
+                    <TouchableOpacity style={styles.touch}>
+                        <Icon name='help' color='rgba(0,0,0,0.7)' size={27}/>
+                        <View style={styles.btView}>
+                            <Text style={styles.btTxt}>Ajuda</Text>
+                        </View>
+                        <Icon name='arrow-forward' size={27} color='#23AFDB'  />
+                    </TouchableOpacity>
                 </View>
-             
             </View>
-            </ScrollView>
-        </View>
+        </ScrollView>
+    </View>
     )
 }
 
 const styles = StyleSheet.create({
-  
     banner:{
         alignItems: 'center',
         height: 170,
         //backgroundColor: 'red'
-    }, 
+    },
+
     imgPerfil:{
         borderRadius: 70,
         marginTop: 40,
@@ -140,7 +134,6 @@ const styles = StyleSheet.create({
 
     nomeCliente:{
         width: '80%',
-        
      },
 
     nomeClienteTxt:{
@@ -171,7 +164,7 @@ const styles = StyleSheet.create({
     }, 
     
     bt:{
-        //backgroundColor:'white', 
+        marginBottom: "5%",
         borderWidth: 1, 
         borderColor: "rgba(70,70,70,0.4)", 
         width: '85%', 
@@ -180,12 +173,11 @@ const styles = StyleSheet.create({
         alignItems:'center', 
         justifyContent:'center', 
         flexDirection: 'row',
-        marginBottom: '5%'
     },
 
     touch:{
         width: '100%', 
-        height:75, 
+        height:65, 
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent:'center'
