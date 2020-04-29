@@ -1,14 +1,17 @@
 import React , {useState, useEffect} from 'react';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StatusBar, Text, View, StyleSheet, Image, AsyncStorage, Alert, ScrollView, Modal } from 'react-native';
+import { StatusBar, Text, View, StyleSheet, Image, AsyncStorage, Alert, ScrollView, Modal, ActivityIndicator } from 'react-native';
 import { TouchableOpacity, TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
 import Brendon from '../../assets/imgs/brendon.jpg';
 import Input from '../componentes/InputComIconQuad';
 import api from '../services/api';
+import Perfil from './Perfil';
 
 export default function EditarPerfil({navigation}){
     
+    var mudaAe;
+
     useEffect(() => {
         pegarDados();
     }, []);
@@ -23,7 +26,12 @@ export default function EditarPerfil({navigation}){
     var idLoginCliente;
     var idFoneCliente;
 
+
+    const [showLoader, setShowLoader] = useState(false);
+    
+
     async function pegarDados(){
+
         try {
           const id = await AsyncStorage.getItem("idCliente");
           const nome = await AsyncStorage.getItem("nomeCliente");
@@ -40,12 +48,15 @@ export default function EditarPerfil({navigation}){
           setTelefoneCliente(telefone);
           
         } catch (error) {
-            console.log(error);
+            setShowLoader(false);
+            alert(error);
+           
         }
     }
 
     async function atualizarUsuario(){
         try{ 
+            setShowLoader(true);
             const data = {
                 nomeCliente: nomeCliente,
                 cpfCliente: cpfCliente
@@ -54,7 +65,8 @@ export default function EditarPerfil({navigation}){
             pegarIdLogin();
 
         } catch (error){
-            console.log(error);
+            setShowLoader(false);
+            alert(error);
         }
     }
 
@@ -69,7 +81,8 @@ export default function EditarPerfil({navigation}){
             salvarIdLogin();
 
         } catch (error) {
-            console.log(error);
+            setShowLoader(false);
+            alert(error);
         }
     }
 
@@ -79,7 +92,8 @@ export default function EditarPerfil({navigation}){
            atualizarLoginUsuario();
 
         } catch (error) {
-            console.log(error);
+            setShowLoader(false);
+            alert(error);
         }
     }
 
@@ -93,7 +107,8 @@ export default function EditarPerfil({navigation}){
             pegarIdTelefone();
 
         } catch (error) {
-            console.log(error);
+            setShowLoader(false);
+            alert(error);
         }
     }
 
@@ -108,7 +123,8 @@ export default function EditarPerfil({navigation}){
             atualizarTelefone();
 
         } catch (error) {
-            console.log(error);
+            setShowLoader(false);
+            alert(error);
         }
     }
 
@@ -120,17 +136,20 @@ export default function EditarPerfil({navigation}){
             await api.put('/UserPhone/', data, {params: {idFoneCliente} });
             atualizarDados();
         }catch (error){
-            console.log(error);
+            setShowLoader(false);
+            alert(error);
         }
     }
 
     async function atualizarDados(){
+        
         try{
             await AsyncStorage.setItem("nomeCliente", nomeCliente);
             await AsyncStorage.setItem("CPF", cpfCliente);
             await AsyncStorage.setItem("emailCliente", emailCliente);
             await AsyncStorage.setItem("senhaCliente", senhaCliente);
             await AsyncStorage.setItem("telefoneCliente", telefoneCliente);
+            setShowLoader(false);
             Alert.alert(
                 "Easycare",
                 "Perfil atualizado com sucesso!",
@@ -146,11 +165,14 @@ export default function EditarPerfil({navigation}){
     }
     
     function voltar(){
-        navigation.goBack(null); 
+       // mudaAe++;
+        navigation.goBack();
+       
     }
 
     return(
         <>
+       
         <StatusBar backgroundColor="white" />
         <Header text="Editar Perfil" navigation= {navigation} />
         <ScrollView style={styles.fundo}>
@@ -184,7 +206,14 @@ export default function EditarPerfil({navigation}){
                 <View style={styles.bt}>
                     <TouchableOpacity onPress={atualizarUsuario}>                           
                         <View style={styles.btLogar}>
+                        {!showLoader &&
                             <Text style={styles.txtLogin}>Salvar</Text>
+                        }
+
+                        {showLoader &&
+                            <ActivityIndicator animating={showLoader} size="small" 
+                            color="white" />
+                        }
                         </View>
                     </TouchableOpacity>
                 </View>

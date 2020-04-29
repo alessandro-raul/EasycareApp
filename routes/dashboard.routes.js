@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
 var azul = '#23AFDB';
+var mudaAe = 0;
+
 function DashboardRoutes() {
    
     return (
@@ -42,7 +44,7 @@ function DashboardRoutes() {
               <Icon name="local-mall" color={color} size={26} />
             ),
           }} />
-         <Tab.Screen name="Perfil" component={Perfil}
+         <Tab.Screen name="Perfil" component={Perfil} 
           options={{
        
             tabBarIcon: ({color}) => (

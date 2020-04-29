@@ -5,31 +5,39 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Input from '../componentes/inputBasico';
 
 
-export default function CadatrarCartao(){
+export default function AdicionarEndereco({navigation}){
     return(
         <>
-        <Header text="Adicionar Cartão"/>
+        <Header text="Adicionar Endereço"/>
             <View style={{backgroundColor:"white", height: '100%', alignItems: 'center'}}>
             <View style={styles.mcView}>
-                <Icon name='credit-card' size={22} color="rgba(0,0,0,0.75)"/>
+                <Icon name='edit-location' size={22} color="rgba(0,0,0,0.75)"/>
                 <Text style={styles.txt}>Preencha os dados abaixo</Text>
             </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Número do cartão"></Input>
+                    <Input placeholder="Endereço"></Input>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                    <View style={{width: "37%", marginRight: "6%"}}>
-                        <Input placeholder="Validade"></Input>
+                    <View style={{width: "35%", marginRight: "5%"}}>
+                        <Input placeholder="Número"></Input>
                     </View>
-                    <View style={{width: "37%"}}>
-                        <Input placeholder="CVV"></Input>
+                    <View style={{width: "40%"}}>
+                        <Input placeholder="CEP"></Input>
                     </View>
                 </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Nome do titular"></Input>
+                    <Input placeholder="Complemento"></Input>
                 </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="CPF/CNPJ"></Input>
+                    <Input placeholder="Bairro"></Input>
+                </View>
+                <View style={{flexDirection:'row'}}>
+                    <View style={{width: "50%", marginRight: "5%"}}>
+                        <Input placeholder="Cidade"></Input>
+                    </View>
+                    <View style={{width: "25%"}}>
+                        <Input placeholder="UF"></Input>
+                    </View>
                 </View>
                 <View style={{marginTop: '7%'}}>
                     <TouchableOpacity style={styles.btAdd} >
@@ -49,7 +57,6 @@ const styles = StyleSheet.create({
         width:'60%',
         marginTop: 25
     },
-    
     
     txt:{
         fontSize: 18,

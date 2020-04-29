@@ -28,14 +28,13 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 2,
+        elevation: 1.4,
         shadowOffset: { width: 1, height: 1 },
         shadowColor: '#3977A0',
         shadowOpacity: 0.3,
     },
 
     text:{
-      
         textAlign: 'center',
         fontSize: 30,
         color: '#23AFDB',

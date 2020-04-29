@@ -8,7 +8,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default class InputComIcon extends Component {
+export default class InputBasico extends Component {
   constructor(props){
     super(props)
   }

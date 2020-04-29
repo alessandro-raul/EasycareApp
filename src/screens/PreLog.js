@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
-import FootPular from '../componentes/FootPular';
-
 import logo from '../../assets/imgs/icon2.png';
 
 export default function PreLog({navigation}){
+  
   function navigateToHome(){
     navigation.navigate('Home');
   }
@@ -14,11 +13,12 @@ export default function PreLog({navigation}){
   function navigateToLogin(){
     navigation.navigate('TelaLogin')
   }
+
     return(
         <>
         <StatusBar barStyle="dark-content" backgroundColor="white"/>
-        <View style={styles.container} >
-            <Text style={styles.title} >Easycare</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Easycare</Text>
             <Image source={logo} style={styles.logo} />
             <Text style={styles.subTitle} >Olá, bem vindo!</Text>
             <Text style={styles.textEscolha} >Escolha uma forma de acesso</Text>
@@ -27,7 +27,7 @@ export default function PreLog({navigation}){
                 <View style={styles.icons}>
                   <MatIcon style={styles.iconEmail} name={'email'} size={20} color= 'rgba(0,0,0,0.7)' />
                 </View>
-                <Text style={styles.btText} >Acessar com Email</Text>
+                <Text style={styles.btText}>Acessar com Email</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btCont} >
@@ -44,12 +44,10 @@ export default function PreLog({navigation}){
                 <Text style={styles.btText} >Acessar com Google</Text>
             </TouchableOpacity>
         </View>
-        <View style={styles.bt}>
-            <View style={styles.btLogar}>
+        <View style={styles.btPular}>
             <TouchableOpacity onPress={navigateToHome}>
-                <Text style={styles.txtPular}>Pular</Text>
-              </TouchableOpacity>
-            </View>
+              <Text style={styles.txtPular}>Pular</Text>
+            </TouchableOpacity>
         </View>
       </>
     )
@@ -58,10 +56,11 @@ export default function PreLog({navigation}){
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 50,
+    height: "94%",
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    //backgroundColor: 'blue',
   },
 
   title: { 
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
 
   btCont: {
     height: 50,
-    width: "85%",
+    width: "83%",
     marginBottom: 22,
     flexDirection: 'row', 
     alignItems: 'center',
@@ -131,10 +130,11 @@ const styles = StyleSheet.create({
     borderColor: '#707070',
   },
 
-  btLogar:{
-    backgroundColor: '#fff',
-    height: 50,
+  btPular:{
+    alignSelf: 'flex-end',
+    backgroundColor: 'white',
     width: '100%',
+    height: 70
   },
 
   txtPular:{

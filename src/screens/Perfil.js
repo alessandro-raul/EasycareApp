@@ -1,18 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, View, Image, AsyncStorage} from 'react-native';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { Text, StyleSheet, View, Image, AsyncStorage } from 'react-native';
 import Header from '../componentes/Header';
 import Brendon from '../../assets/imgs/brendon.jpg'
-import { TouchableHighlight, ScrollView, TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function TelaPerfil({navigation}){
-
-    useEffect(() => {
-        pegarNome();
-    }, [nomeCliente]);
+export default function TelaPerfil({navigation, parametro}){
 
     const [nomeCliente, setNomeCliente] = useState(''); 
-    
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+                pegarNome();
+        });
+        return unsubscribe;
+    }, [navigation]);
+  
+
+
     async function pegarNome(){
         try {
             const nome = await AsyncStorage.getItem("nomeCliente");
@@ -34,81 +40,93 @@ export default function TelaPerfil({navigation}){
         navigation.navigate('EditarPerfil');
     }
 
+    function navigateToCupom(){
+        navigation.navigate('Cupom');
+    }
+
+    function navigateToNotificacoes(){
+        navigation.navigate('Notificacoes');
+    }
+
+    function navigateToEnderecos(){
+        navigation.navigate('Enderecos');
+    }
+
     return(
         <View style={{backgroundColor:"white", height: '100%'}}>
-        <Header text="Perfil"/>
-        <ScrollView style={styles.fundo}>
-            <View style={styles.banner}>
-                <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
-                    <Image source={Brendon} style={styles.imgPerfil}/>
-                </View>
-                <View style={{width:'100%', height:'20%'}}>
-                </View>
-            </View>
-
-            <View style={styles.infos}>
-                <View style={styles.nomeCliente}>
-                    <Text style={styles.nomeClienteTxt}>{nomeCliente}</Text>
-                </View>
-                <View style={{marginTop: '3%'}}>
-                    <TouchableOpacity style={styles.btEditar} onPress={navigateToEditarPerfil}>
-                        <Text style={styles.txtEditar}>Editar perfil</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <View style={styles.opcoes}>
-                <View style={styles.bt}> 
-                    <TouchableOpacity style={styles.touch}>
-                        <Icon name='place' color='rgba(0,0,0,0.7)' size={25}/>
-                        <View style={styles.btView}>
-                            <Text style={styles.btTxt}>Endereços</Text>
-                        </View>
-                        <Icon name='arrow-forward' size={27} color='#23AFDB' />
-                    </TouchableOpacity>
-                </View>
-              
-                <View style={styles.bt}> 
-                    <TouchableOpacity onPress={navigateToPagamentoPerfil} style={styles.touch}>
-                        <Icon name='payment' color='rgba(0,0,0,0.7)' size={25}/>
-                        <View style={styles.btView}>
-                            <Text style={styles.btTxt}>Pagamento</Text>
-                        </View>
-                        <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
-                    </TouchableOpacity>
-                </View>
-            
-                <View style={styles.bt}> 
-                    <TouchableOpacity style={styles.touch}>
-                        <Icon name='confirmation-number' color='rgba(0,0,0,0.7)' size={25}/>
-                        <View style={styles.btView}>
-                            <Text style={styles.btTxt}>Cupons</Text>
-                        </View>
-                        <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
-                    </TouchableOpacity>
+            <Header text="Perfil"/>
+            <ScrollView style={styles.fundo}>
+                <View style={styles.banner}>
+                    <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
+                        <Image source={Brendon} style={styles.imgPerfil}/>
+                    </View>
+                    <View style={{width:'100%', height:'20%'}}>
+                    </View>
                 </View>
 
-                <View style={styles.bt}> 
-                    <TouchableOpacity style={styles.touch}>
-                        <Icon name='notifications-none' color='rgba(0,0,0,0.7)' size={25}/>
-                        <View style={styles.btView}>
-                            <Text style={styles.btTxt}>Notificações</Text>
-                        </View>
-                        <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
-                    </TouchableOpacity>
+                <View style={styles.infos}>
+                    <View style={styles.nomeCliente}>
+                        <Text style={styles.nomeClienteTxt}>{nomeCliente}</Text>
+                    </View>
+                    <View style={{marginTop: '3%'}}>
+                        <TouchableOpacity style={styles.btEditar} onPress={navigateToEditarPerfil}>
+                            <Text style={styles.txtEditar}>Editar perfil</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-                <View style={styles.bt}> 
-                    <TouchableOpacity style={styles.touch}>
-                        <Icon name='help' color='rgba(0,0,0,0.7)' size={27}/>
-                        <View style={styles.btView}>
-                            <Text style={styles.btTxt}>Ajuda</Text>
-                        </View>
-                        <Icon name='arrow-forward' size={27} color='#23AFDB'  />
-                    </TouchableOpacity>
+                <View style={styles.opcoes}>
+                    <View style={styles.bt}> 
+                        <TouchableOpacity onPress={navigateToEnderecos} style={styles.touch}>
+                            <Icon name='place' color='rgba(0,0,0,0.7)' size={25}/>
+                            <View style={styles.btView}>
+                                <Text style={styles.btTxt}>Endereços</Text>
+                            </View>
+                            <Icon name='arrow-forward' size={27} color='#23AFDB' />
+                        </TouchableOpacity>
+                    </View>
+                
+                    <View style={styles.bt}> 
+                        <TouchableOpacity onPress={navigateToPagamentoPerfil} style={styles.touch}>
+                            <Icon name='payment' color='rgba(0,0,0,0.7)' size={25}/>
+                            <View style={styles.btView}>
+                                <Text style={styles.btTxt}>Pagamento</Text>
+                            </View>
+                            <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                        </TouchableOpacity>
+                    </View>
+                
+                    <View style={styles.bt}> 
+                        <TouchableOpacity onPress={navigateToCupom} style={styles.touch}>
+                            <IconAwesome name='ticket' color='rgba(0,0,0,0.7)' size={25}/>
+                            <View style={styles.btView}>
+                                <Text style={styles.btTxt}>Cupons</Text>
+                            </View>
+                            <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.bt}> 
+                        <TouchableOpacity style={styles.touch} onPress={navigateToNotificacoes}>
+                            <Icon name='notifications-none' color='rgba(0,0,0,0.7)' size={25}/>
+                            <View style={styles.btView}>
+                                <Text style={styles.btTxt}>Notificações</Text>
+                            </View>
+                            <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.bt}> 
+                        <TouchableOpacity style={styles.touch}>
+                            <Icon name='help' color='rgba(0,0,0,0.7)' size={27}/>
+                            <View style={styles.btView}>
+                                <Text style={styles.btTxt}>Ajuda</Text>
+                            </View>
+                            <Icon name='arrow-forward' size={27} color='#23AFDB'  />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
     </View>
     )
 }
@@ -117,7 +135,6 @@ const styles = StyleSheet.create({
     banner:{
         alignItems: 'center',
         height: 170,
-        //backgroundColor: 'red'
     },
 
     imgPerfil:{

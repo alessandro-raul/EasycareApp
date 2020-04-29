@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Header from '../componentes/Header';
- import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Introducao from '../screens/IntrodutionAppScroll';
-import { View, Button, Text, StatusBar } from 'react-native';
+import { Text, StatusBar } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+
 export default function Home({ navigation }) {
   
+navigateToInicio();
+
   function navigateToInicio(){
     navigation.navigate('Introducao');
   }
@@ -15,10 +16,8 @@ export default function Home({ navigation }) {
       <Header text="Easycare"/>
       <StatusBar backgroundColor='white'/>
       <TouchableHighlight onPress={navigateToInicio}>
-        <Text>
-          Introdução
-        </Text>
+        <Text>Introdução</Text>
       </TouchableHighlight>
     </>
-    )
+  )
 }

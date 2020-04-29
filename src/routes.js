@@ -6,35 +6,48 @@ import PreLog from './screens/PreLog';
 import Cadastro from './screens/Cadastro';
 import EditarPerfil from './screens/EditarPerfil';
 import DashboardRoutes from '../routes/dashboard.routes';
+import Enderecos from './screens/Enderecos';
+import AdicionarEndereco from './screens/AdicionarEndereco';
 import PagamentoPerfil from './screens/PagamentoPerfil';
 import Cartao from './screens/Cartao';
 import CadastrarCartao from './screens/CadastrarCartao';
+import Cupom from './screens/Cupom';
+import CadastrarCupom from './screens/CadastrarCupom';
+import Notificacoes from './screens/Notificacoes';
 import Header from './componentes/Header';
 
 const  AppStack = createStackNavigator();
 
 function Routes(){  
     return(
-        
-            <AppStack.Navigator initialRouteName="Introducao" 
+        <AppStack.Navigator initialRouteName="Home" 
             screenOptions={{headerShown:false, 
-           /* headerTitleAlign: "center", 
+            /* headerTitleAlign: "center", 
             title: "Easycare", 
             fontSize: "2000px",*/
             gestureEnabled: true,
             gestureDirection: "horizontal",
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
             }}>
-                <AppStack.Screen name="Introducao" component={Introducao}/>
-                <AppStack.Screen name="PreLog" component={PreLog}/>
-                <AppStack.Screen name="TelaLogin" component={TelaLogin}/>
-                <AppStack.Screen name="Cadastro" component={Cadastro}/>
-                <AppStack.Screen name="EditarPerfil" component={EditarPerfil}/>
-                <AppStack.Screen name="Home" component={DashboardRoutes}/>
-                <AppStack.Screen name="PagamentoPerfil" component={PagamentoPerfil}/>
-                <AppStack.Screen name="Cartao" component={Cartao}/>
-                <AppStack.Screen name="CadastrarCartao" component={CadastrarCartao}/>
-            </AppStack.Navigator>
+
+            <AppStack.Screen name="Introducao" component={Introducao}/>
+            <AppStack.Screen name="PreLog" component={PreLog}/>
+            <AppStack.Screen name="TelaLogin" component={TelaLogin}/>
+            <AppStack.Screen name="Cadastro" component={Cadastro}/>
+            <AppStack.Screen name="EditarPerfil" component={EditarPerfil}/>
+            <AppStack.Screen name="Home" component={DashboardRoutes}/>
+            <AppStack.Screen name="Perfil" component={DashboardRoutes}/>
+            <AppStack.Screen name="Enderecos" component={Enderecos}/>
+            <AppStack.Screen name="AdicionarEndereco" component={AdicionarEndereco}/>
+            <AppStack.Screen name="PagamentoPerfil" component={PagamentoPerfil}/>
+            <AppStack.Screen name="Cartao" component={Cartao}/>
+            <AppStack.Screen name="CadastrarCartao" component={CadastrarCartao}/>
+            <AppStack.Screen name="Cupom" component={Cupom}/>
+            <AppStack.Screen name="CadastrarCupom" component={CadastrarCupom}/>
+            
+            <AppStack.Screen name="Notificacoes" component={Notificacoes}/>
+
+        </AppStack.Navigator>
     )
 }
 
