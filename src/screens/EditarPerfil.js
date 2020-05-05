@@ -1,23 +1,19 @@
 import React , {useState, useEffect} from 'react';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StatusBar, Text, View, StyleSheet, Image, AsyncStorage, Alert, ScrollView, Modal, ActivityIndicator } from 'react-native';
-import { TouchableOpacity, TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
+import { StatusBar, Text, View, StyleSheet, Image, Alert, ScrollView, ActivityIndicator } from 'react-native';
+import { TouchableOpacity} from 'react-native-gesture-handler';
 import Brendon from '../../assets/imgs/brendon.jpg';
 import Input from '../componentes/InputComIconQuad';
 import api from '../services/api';
-import Perfil from './Perfil';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function EditarPerfil({navigation}){
-    
-    var mudaAe;
-
     useEffect(() => {
         pegarDados();
     }, []);
 
     const [idCliente, setIdCliente] = useState('');
-    //const [idLoginCliente, setIdLoginCliente] = useState('');
     const [nomeCliente, setNomeCliente] = useState('');
     const [cpfCliente, setCpfCliente] = useState('');
     const [emailCliente, setEmailCliente] = useState('');
@@ -26,12 +22,9 @@ export default function EditarPerfil({navigation}){
     var idLoginCliente;
     var idFoneCliente;
 
-
     const [showLoader, setShowLoader] = useState(false);
     
-
     async function pegarDados(){
-
         try {
           const id = await AsyncStorage.getItem("idCliente");
           const nome = await AsyncStorage.getItem("nomeCliente");
@@ -39,18 +32,15 @@ export default function EditarPerfil({navigation}){
           const email = await AsyncStorage.getItem("emailCliente");
           const senha = await AsyncStorage.getItem("senhaCliente");
           const telefone = await AsyncStorage.getItem("telefoneCliente");
-
           setIdCliente(id);
           setNomeCliente(nome);
           setCpfCliente(cpf);
           setEmailCliente(email);
           setSenhaCliente(senha);
           setTelefoneCliente(telefone);
-          
         } catch (error) {
             setShowLoader(false);
             alert(error);
-           
         }
     }
 
@@ -63,7 +53,6 @@ export default function EditarPerfil({navigation}){
             }
             await api.put('/User/?idCliente=', data, { params: {idCliente} });
             pegarIdLogin();
-
         } catch (error){
             setShowLoader(false);
             alert(error);
@@ -74,12 +63,10 @@ export default function EditarPerfil({navigation}){
         try {
             const response = await api.get('/UserLogin/', {params: {idCliente} });
             const data = response.data.response;
-
             data.map( item => {
                 idLoginCliente = (item.idLoginCliente);
             });     
             salvarIdLogin();
-
         } catch (error) {
             setShowLoader(false);
             alert(error);
@@ -90,7 +77,6 @@ export default function EditarPerfil({navigation}){
         try {
            await AsyncStorage.setItem("idLoginCliente", idLoginCliente); 
            atualizarLoginUsuario();
-
         } catch (error) {
             setShowLoader(false);
             alert(error);
@@ -105,7 +91,6 @@ export default function EditarPerfil({navigation}){
             }
             await api.put('/UserLogin/', data, {params: {idLoginCliente} });
             pegarIdTelefone();
-
         } catch (error) {
             setShowLoader(false);
             alert(error);
@@ -121,7 +106,6 @@ export default function EditarPerfil({navigation}){
                 idFoneCliente = (item.idFoneCliente);
             });     
             atualizarTelefone();
-
         } catch (error) {
             setShowLoader(false);
             alert(error);
@@ -142,7 +126,6 @@ export default function EditarPerfil({navigation}){
     }
 
     async function atualizarDados(){
-        
         try{
             await AsyncStorage.setItem("nomeCliente", nomeCliente);
             await AsyncStorage.setItem("CPF", cpfCliente);
@@ -156,70 +139,64 @@ export default function EditarPerfil({navigation}){
                 [
                   { text: "OK", onPress: () => voltar() }
                 ],
-                { cancelable: false }
-              );
-
+                { cancelable: false });
         }catch(error){
             console.log(error)
         }
     }
     
     function voltar(){
-       // mudaAe++;
         navigation.goBack();
-       
     }
 
     return(
         <>
-       
-        <StatusBar backgroundColor="white" />
-        <Header text="Editar Perfil" navigation= {navigation} />
-        <ScrollView style={styles.fundo}>
-            <View style={styles.banner}>
-                <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
-                       <Image source={Brendon} style={styles.imgPerfil}/>
+            <StatusBar backgroundColor="white" />
+            <Header text="Editar Perfil" navigation= {navigation} />
+            <ScrollView style={styles.fundo}>
+                <View style={styles.banner}>
+                    <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
+                        <Image source={Brendon} style={styles.imgPerfil}/>
+                    </View>
+                    <View style={{width:'100%', height:'20%'}}>
+                        <TouchableOpacity style={styles.imgPerfilTouch}>
+                            <Icon name='photo-camera' size={23} color="white" style={{padding: 5}}></Icon>
+                        </TouchableOpacity> 
+                    </View>
                 </View>
-                <View style={{width:'100%', height:'20%'}}>
-                    <TouchableOpacity style={styles.imgPerfilTouch}>
-                        <Icon name='photo-camera' size={23} color="white" style={{padding: 5}}></Icon>
-                    </TouchableOpacity> 
-                </View>
-            </View>
 
-            <View style={styles.form}>
-                <View style={styles.input}>
-                    <Input placeholder = "Nome" icon='person-pin' onChangeText={nomeCliente => setNomeCliente(nomeCliente)} value={nomeCliente}></Input>
-                </View>
-                <View style={styles.input}>
-                    <Input placeholder = "CPF" icon='assignment-ind' onChangeText={cpfCliente => setCpfCliente(cpfCliente)} value={cpfCliente}></Input>
-                </View>
-                <View style={styles.input}>
-                    <Input placeholder = "Telefone" icon='phone' onChangeText={telefoneCliente=> setTelefoneCliente(telefoneCliente)} value={telefoneCliente}></Input>
-                </View>
-                <View style={styles.input}>
-                    <Input placeholder = "Email" icon='mail' onChangeText={emailCliente => setEmailCliente(emailCliente)} value={emailCliente}></Input>
-                </View>
-                <View style={styles.input}>
-                    <Input placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} value={senhaCliente}></Input>
-                </View>
-                <View style={styles.bt}>
-                    <TouchableOpacity onPress={atualizarUsuario}>                           
-                        <View style={styles.btLogar}>
-                        {!showLoader &&
-                            <Text style={styles.txtLogin}>Salvar</Text>
-                        }
+                <View style={styles.form}>
+                    <View style={styles.input}>
+                        <Input placeholder = "Nome" icon='person-pin' onChangeText={nomeCliente => setNomeCliente(nomeCliente)} value={nomeCliente}></Input>
+                    </View>
+                    <View style={styles.input}>
+                        <Input placeholder = "CPF" icon='assignment-ind' onChangeText={cpfCliente => setCpfCliente(cpfCliente)} value={cpfCliente}></Input>
+                    </View>
+                    <View style={styles.input}>
+                        <Input placeholder = "Telefone" icon='phone' onChangeText={telefoneCliente=> setTelefoneCliente(telefoneCliente)} value={telefoneCliente}></Input>
+                    </View>
+                    <View style={styles.input}>
+                        <Input placeholder = "Email" icon='mail' onChangeText={emailCliente => setEmailCliente(emailCliente)} value={emailCliente}></Input>
+                    </View>
+                    <View style={styles.input}>
+                        <Input placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} value={senhaCliente}></Input>
+                    </View>
+                    <View style={styles.bt}>
+                        <TouchableOpacity onPress={atualizarUsuario}>                           
+                            <View style={styles.btLogar}>
+                            {!showLoader &&
+                                <Text style={styles.txtLogin}>Salvar</Text>
+                            }
 
-                        {showLoader &&
-                            <ActivityIndicator animating={showLoader} size="small" 
-                            color="white" />
-                        }
-                        </View>
-                    </TouchableOpacity>
+                            {showLoader &&
+                                <ActivityIndicator animating={showLoader} size="small" color="white" />
+                            }
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
-    </>
+            </ScrollView>
+        </>
     )
 }
 

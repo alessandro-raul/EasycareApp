@@ -6,7 +6,7 @@ import InputComIcom from '../componentes/inputComIcon';
 import { ScrollView } from 'react-native-gesture-handler';
 import TelaLogin from './TelaLogin';
 import api from '../services/api'
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import DashboardRoutes from '../../routes/dashboard.routes';
 
 export default function Cadastro({navigation}){

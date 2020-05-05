@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Text, StyleSheet, View, Image, AsyncStorage } from 'react-native';
+import { Text, StyleSheet, View, Image } from 'react-native';
 import Header from '../componentes/Header';
 import Brendon from '../../assets/imgs/brendon.jpg'
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default function TelaPerfil({navigation, parametro}){
+export default function TelaPerfil({navigation}){
 
     const [nomeCliente, setNomeCliente] = useState(''); 
 
@@ -17,8 +18,6 @@ export default function TelaPerfil({navigation, parametro}){
         return unsubscribe;
     }, [navigation]);
   
-
-
     async function pegarNome(){
         try {
             const nome = await AsyncStorage.getItem("nomeCliente");
@@ -26,6 +25,12 @@ export default function TelaPerfil({navigation, parametro}){
         } catch (error) {
             console.log(error);
         }
+    }
+
+    async function pegarEndereco(){
+        const endereco = await AsyncStorage.getItem("logCliente");
+        const numLog = await AsyncStorage.getItem("numLogCliente");
+        console.log(endereco, numLog);
     }
 
     function navigateToPagamentoPerfil(){
@@ -117,7 +122,7 @@ export default function TelaPerfil({navigation, parametro}){
                     </View>
 
                     <View style={styles.bt}> 
-                        <TouchableOpacity style={styles.touch}>
+                        <TouchableOpacity onPress={pegarEndereco} style={styles.touch}>
                             <Icon name='help' color='rgba(0,0,0,0.7)' size={27}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Ajuda</Text>
@@ -182,19 +187,19 @@ const styles = StyleSheet.create({
     
     bt:{
         marginBottom: "5%",
-        borderWidth: 1, 
-        borderColor: "rgba(70,70,70,0.4)", 
         width: '85%', 
-        height: 60, 
-        borderRadius: 8,  
+        height: 57, 
         alignItems:'center', 
         justifyContent:'center', 
         flexDirection: 'row',
     },
 
     touch:{
+        borderColor: "rgba(70,70,70,0.4)", 
         width: '100%', 
-        height:65, 
+        height: 57, 
+        borderWidth: 1,
+        borderRadius: 8,  
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent:'center'

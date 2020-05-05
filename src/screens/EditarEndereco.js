@@ -1,14 +1,18 @@
 import React, {useState} from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Picker, ScrollView, ActivityIndicator, Alert} from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Picker, ActivityIndicator, Alert} from 'react-native';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Input from '../componentes/inputBasico';
 import RNPickerSelect from 'react-native-picker-select';
 import api from '../services/api';
+import {useRoute} from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 
-export default function AdicionarEndereco({navigation}){
+export default function EditarEndereco({navigation}){
+    
     const [idCliente, setIdCliente] = useState('');
+    const [idEnderecoCliente, setIdEnderecoCliente] = useState('');
     const [logCliente, setLogCliente] = useState('');
     const [numLogCliente, setNumLogCliente] = useState('');
     const [cepLogCliente, setCepLogCliente] = useState('');
@@ -19,23 +23,49 @@ export default function AdicionarEndereco({navigation}){
     const [tipoEndereco, setTipoEndereco] = useState('');
     const [showLoader, setShowLoader] = useState(false);
     var id;
-    var idEnd;
+   
 
-    async function pegarIdCliente(){
-        try {
-            setShowLoader(true);
-            id = await AsyncStorage.getItem("idCliente");
-            AdicionaEndereco();
-        } catch (error) {
-            setShowLoader(false);
-            console.log(error);
-        }
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+                pegarEndereco();
+        });
+        return unsubscribe;
+    }, [navigation]);
+
+    function navigateToAdicionar(){
+        navigation.navigate('AdicionarEndereco');
     }
 
-    async function AdicionaEndereco(){
+
+    async function pegarEndereco(){
+        const log = await AsyncStorage.getItem("logCliente");
+        const Nlog = await AsyncStorage.getItem("numLogCliente");
+        const CEP = await AsyncStorage.getItem("cepCliente");
+        const complemento = await AsyncStorage.getItem("complementoLogCliente");
+        const bairro = await AsyncStorage.getItem("bairroLogCliente");
+        const cidade = await AsyncStorage.getItem("cidadeLogCliente");
+        const uf = await AsyncStorage.getItem("ufLogCliente");
+        const tp = await AsyncStorage.getItem("tipoEndereco");
+        const idEnd = await AsyncStorage.getItem("idEnderecoCliente");
+        const id = await AsyncStorage.getItem("idCliente");
+
+        setLogCliente(log);
+        setNumLogCliente(Nlog);
+        setCepLogCliente(CEP);
+        setComplementoCliente(complemento);
+        setBairroLogCliente(bairro);
+        setCidadeLogCliente(cidade);
+        setUfLogCliente(uf);
+        setTipoEndereco(tp);
+        setIdEnderecoCliente(idEnd);
+        setIdCliente(id);
+    }
+
+async function AtualizarEndereco(){
         try {
             const data = {
-                idCliente: id,
+                idEnderecoCliente: idEnderecoCliente,
+                idCliente: idCliente,
                 logCliente: logCliente,
                 numLogCliente: numLogCliente,
                 cepLogCliente: cepLogCliente,
@@ -45,12 +75,13 @@ export default function AdicionarEndereco({navigation}){
                 ufLogCliente: ufLogCliente,
                 tipoEndereco: tipoEndereco
             }
+        
             setShowLoader(true);
-            await api.post('/UserAdress/', data);
+            await api.put('/UserAdress/', data, { params:{idEnderecoCliente: idEnderecoCliente}});
             setShowLoader(false);
             Alert.alert(
                 "Easycare",
-                "Endereço adicionado com sucesso!",
+                "Endereço atualizado com sucesso!",
                 [
                   { text: "OK", onPress: () => voltar() }
                 ],
@@ -63,45 +94,48 @@ export default function AdicionarEndereco({navigation}){
     }
 
     function voltar(){
-        navigation.navigate('Home');
+        navigation.goBack();
     }
     
     return(
         <>
-        <Header text="Adicionar Endereço"/>
-        <ScrollView style={{width: '100%', backgroundColor: 'white'}}>
+            <Header text="Editar Endereço"/>
+         
+            <ScrollView style={{width: '100%', backgroundColor: 'white'}}>
             <View style={{backgroundColor:"white", height: '100%', alignItems: 'center'}}>
             <View style={styles.mcView}>
                 <Icon name='edit-location' size={22} color="rgba(0,0,0,0.75)"/>
                 <Text style={styles.txt}>Preencha os dados abaixo</Text>
             </View>
+        
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Endereço" onChangeText={logCliente => setLogCliente(logCliente)}></Input>
+                    <Input placeholder="Endereço"  value={logCliente} onChangeText={logCliente => setLogCliente(logCliente)}></Input>
                 </View>
                 <View style={{flexDirection:'row'}}>
                     <View style={{width: "35%", marginRight: "5%"}}>
-                        <Input placeholder="Número" onChangeText={numLogCliente=> setNumLogCliente(numLogCliente)}></Input>
+                        <Input placeholder="Número" value={numLogCliente} onChangeText={numLogCliente=> setNumLogCliente(numLogCliente)}></Input>
                     </View>
                     <View style={{width: "40%"}}>
-                        <Input placeholder="CEP" onChangeText={cepLogCliente => setCepLogCliente(cepLogCliente)}></Input>
+                        <Input placeholder="CEP" value={cepLogCliente} onChangeText={cepLogCliente => setCepLogCliente(cepLogCliente)}></Input>
                     </View>
                 </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Complemento" onChangeText={complementoLogCliente => setComplementoCliente(complementoLogCliente)}></Input>
+                    <Input placeholder="Complemento" value={complementoLogCliente} onChangeText={complementoLogCliente => setComplementoCliente(complementoLogCliente)}></Input>
                 </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Bairro" onChangeText={bairroLogCliente => setBairroLogCliente(bairroLogCliente)}></Input>
+                    <Input placeholder="Bairro" value={bairroLogCliente} onChangeText={bairroLogCliente => setBairroLogCliente(bairroLogCliente)}></Input>
                 </View>
                 <View style={{flexDirection:'row'}}>
                     <View style={{width: "50%", marginRight: "5%"}}>
-                        <Input placeholder="Cidade" onChangeText={cidadeLogCliente => setCidadeLogCliente(cidadeLogCliente)}></Input>
+                        <Input placeholder="Cidade" value={cidadeLogCliente} onChangeText={cidadeLogCliente => setCidadeLogCliente(cidadeLogCliente)}></Input>
                     </View>
                     <View style={{width: "25%"}}>
-                        <Input placeholder="UF" onChangeText={ufLogCliente => setUfLogCliente(ufLogCliente)}></Input>
+                        <Input placeholder="UF" value={ufLogCliente} onChangeText={ufLogCliente => setUfLogCliente(ufLogCliente)}></Input>
                     </View>
                 </View>
                 <View style={{width: '80%', borderWidth:1, borderRadius: 10, marginTop: '5%',   borderColor: 'rgba(70,70,70, 0.31)',}}>
                     <RNPickerSelect
+                        value={tipoEndereco}
                         onValueChange={tipoEndereco => setTipoEndereco(tipoEndereco)}
                         items={[
                             { label: 'Residência', value: 'Residência' },
@@ -109,25 +143,26 @@ export default function AdicionarEndereco({navigation}){
                         ]}
                         placeholder = { 
                             {label: "Tipo de endereço", value: null}
-                        }/>
+                        }
+                        />
                 </View>
                 <View style={{marginTop: '7%', marginBottom: '7%'}}>
-                    <TouchableOpacity style={styles.btAdd} onPress={pegarIdCliente}>
-                        
-                        
+                    <TouchableOpacity onPress={AtualizarEndereco} style={styles.btAdd}>
                             {!showLoader &&
-                                    <Text style={styles.txtAdd}>Adicionar</Text>
+                                    <Text style={styles.txtAdd}>Salvar</Text>
                             }
 
                             {showLoader &&
                                 <ActivityIndicator animating={showLoader} size="small" 
                                 color="white" />
                             }
-                        
                     </TouchableOpacity>
                 </View>
+               
             </View>
             </ScrollView>
+          
+            
         </>
     )
 }

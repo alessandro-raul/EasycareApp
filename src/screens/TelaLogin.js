@@ -1,9 +1,10 @@
 import React, { useState} from "react"
-import {StyleSheet, View, FlatList, ScrollView, Alert, Text, Image, Dimensions, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, StatusBar, SafeAreaView, ScrollViewBase, TextInput, ImageBackground, KeyboardAvoidingView, Button, AsyncStorage} from 'react-native';
+import {StyleSheet, View, FlatList, ScrollView, Alert, Text, Image, Dimensions, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, StatusBar, SafeAreaView, ScrollViewBase, TextInput, ImageBackground, KeyboardAvoidingView, Button} from 'react-native';
 import HeaderLogin from '../componentes/HeaderLogin';
 import Logo from '../../assets/imgs/icon2.png';
 import InputComIcom from '../componentes/inputComIcon';
 import api from '../services/api';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function TelaLogin({navigation}){
 

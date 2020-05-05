@@ -8,7 +8,9 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+
 export default class InputComIconQuad extends Component {
+
   constructor(props){
     super(props)
   }
@@ -17,7 +19,7 @@ export default class InputComIconQuad extends Component {
     return (
       <View style={styles.inputContainer}>
         <TouchableWithoutFeedback>
-          <Icon style={styles.icon} name={this.props.icon} size={20} color="#666" />
+          <Icon style={styles.icon} name={this.props.icon} size={18} color={this.props.iconColor} />
         </TouchableWithoutFeedback>
         <TextInput
           style={[styles.input, this.props.style]}
@@ -51,5 +53,5 @@ const styles = StyleSheet.create({
     color: '#666',
     flex: 1
   }
-  
+
 })

@@ -8,26 +8,31 @@ import EditarPerfil from './screens/EditarPerfil';
 import DashboardRoutes from '../routes/dashboard.routes';
 import Enderecos from './screens/Enderecos';
 import AdicionarEndereco from './screens/AdicionarEndereco';
+import DetailMed from './screens/DetailMed/DetailMed';
+import PerfilEstabelecimento from './screens/PerfilEstabelecimento/PerfilEstabelecimento';
 import PagamentoPerfil from './screens/PagamentoPerfil';
 import Cartao from './screens/Cartao';
 import CadastrarCartao from './screens/CadastrarCartao';
 import Cupom from './screens/Cupom';
 import CadastrarCupom from './screens/CadastrarCupom';
 import Notificacoes from './screens/Notificacoes';
-import Header from './componentes/Header';
+import EditarEndereco from './screens/EditarEndereco';
+import Resultado from './screens/Resultado/Resultado'
+
+
 
 const  AppStack = createStackNavigator();
 
 function Routes(){  
     return(
-        <AppStack.Navigator initialRouteName="Home" 
-            screenOptions={{headerShown:false, 
-            /* headerTitleAlign: "center", 
-            title: "Easycare", 
-            fontSize: "2000px",*/
-            gestureEnabled: true,
-            gestureDirection: "horizontal",
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+            <AppStack.Navigator initialRouteName="Home" 
+                screenOptions={{headerShown:false, 
+                /* headerTitleAlign: "center", 
+                title: "Easycare", 
+                fontSize: "2000px",*/
+                gestureEnabled: true,
+                gestureDirection: "horizontal",
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
             }}>
 
             <AppStack.Screen name="Introducao" component={Introducao}/>
@@ -44,9 +49,11 @@ function Routes(){
             <AppStack.Screen name="CadastrarCartao" component={CadastrarCartao}/>
             <AppStack.Screen name="Cupom" component={Cupom}/>
             <AppStack.Screen name="CadastrarCupom" component={CadastrarCupom}/>
-            
             <AppStack.Screen name="Notificacoes" component={Notificacoes}/>
-
+            <AppStack.Screen name="DetailMed" component={DetailMed}/>
+            <AppStack.Screen name="EditarEndereco" component={EditarEndereco}/>
+            <AppStack.Screen name="Resultado" component={Resultado}/>
+            <AppStack.Screen name="PerfilEstabelecimento" component={PerfilEstabelecimento}/>
         </AppStack.Navigator>
     )
 }
