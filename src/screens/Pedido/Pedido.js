@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { View, Text, Image, AsyncStorage } from 'react-native';
+import { View, Text, Image} from 'react-native';
 import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import Remedio from '../../../assets/imgs/remedio.png';
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Cupom from 'react-native-vector-icons/FontAwesome5';
 import api from '../../services/api';
 import styles from './style';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../../componentes/Header';
 
 
@@ -66,11 +66,11 @@ function navigateToPagamentoPerfil(){
       idd = await AsyncStorage.getItem("idEnderecoCliente");
       console.log(idd);
       
-      if (idd != null){ 
+     /* if (idd != null){ 
         setTem(true);
       } else {
         setTem(false);
-      }
+      }*/
       
       pegarEndereco();
     }catch(error){

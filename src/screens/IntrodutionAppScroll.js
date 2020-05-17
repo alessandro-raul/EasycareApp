@@ -18,8 +18,22 @@ import check from '../../assets/imgs/check3.png';
 import easy from '../../assets/imgs/iconeCortado.png';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function IntrodutionAppScroll({navigation}){
+
+    async function statusIntro(){
+       try {
+        const status = "1";
+        await AsyncStorage.setItem("statusIntro", status);
+        navigateToLogin();
+        console.log('foi');
+       } catch (error) {
+           console.log(error);
+       }
+       
+    }
+
 
     function navigateToLogin(){
         navigation.navigate('PreLog');
@@ -76,7 +90,7 @@ export default function IntrodutionAppScroll({navigation}){
                     </View>
                 </ScrollView>
                 <TouchableOpacity
-                onPress={navigateToLogin} style={{height: +1}}
+                onPress={statusIntro} style={{height: +1}}
                 style={{backgroundColor: 'white'}}>
                       <Text style={styles.txtPular}>Pular</Text>
                 </TouchableOpacity>

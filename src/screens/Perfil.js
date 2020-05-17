@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View, Image, Alert } from 'react-native';
 import Header from '../componentes/Header';
 import Brendon from '../../assets/imgs/brendon.jpg'
 import { ScrollView, TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
@@ -55,6 +55,27 @@ export default function TelaPerfil({navigation}){
 
     function navigateToEnderecos(){
         navigation.navigate('Enderecos');
+    }
+
+    async function navigateToPreLog(){
+        try{
+            await AsyncStorage.clear();
+            const status = "1";
+            await AsyncStorage.setItem("statusIntro", status);
+            navigation.navigate('PreLog');
+        }catch(error){
+            console.log(error)
+        }
+    }
+       
+    function logOut(){
+        Alert.alert(
+            "Easycare",
+            "Tem certeza que deseja sair?",
+            [
+              { text: "Sim", onPress: () => navigateToPreLog() }
+            ],
+            { cancelable: false });
     }
 
     return(
@@ -130,6 +151,17 @@ export default function TelaPerfil({navigation}){
                             <Icon name='arrow-forward' size={27} color='#23AFDB'  />
                         </TouchableOpacity>
                     </View>
+
+                    <View style={styles.bt}> 
+                        <TouchableOpacity onPress={logOut} style={styles.touch}>
+                            <Icon name='power-settings-new' color='rgba(0,0,0,0.7)' size={27}/>
+                            <View style={styles.btView}>
+                                <Text style={styles.btTxt}>Sair</Text>
+                            </View>
+                            <Icon name='exit-to-app' size={27} color='#23AFDB'  />
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
             </ScrollView>
     </View>
@@ -188,6 +220,15 @@ const styles = StyleSheet.create({
     bt:{
         marginBottom: "5%",
         width: '85%', 
+        height: 57, 
+        alignItems:'center', 
+        justifyContent:'center', 
+        flexDirection: 'row',
+    },
+
+    btLogout:{
+        marginBottom: "5%",
+        width: '89%', 
         height: 57, 
         alignItems:'center', 
         justifyContent:'center', 

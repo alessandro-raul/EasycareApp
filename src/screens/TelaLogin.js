@@ -9,9 +9,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default function TelaLogin({navigation}){
 
     const [stageNew, setStageNew] = useState([false]);
+    const [emailCliente, setEmailCliente] = useState('');
+    const [senhaCliente, setSenhaCliente] = useState('');
+    const [telefoneCliente, setTelefoneCliente] = useState();
     const [nomeCliente, setNomeCliente] = useState('');
-    const [cpfCliente, setCpfCliente] = useState(['']);
-    const [idCliente, setIdCliente] = useState(['']);
+    const [cpfCliente, setCpfCliente] = useState();
+    const [idCliente, setIdCliente] = useState();
+    var valida = 0;
+    var idClientee;
+    var cpfClientee;
+    var foneClientee;
+    var nomeClientee;
 
     var resposta= "";
 
@@ -21,7 +29,7 @@ export default function TelaLogin({navigation}){
         }
 
         function navigateToHome(){
-            navigation.navigate('Home');
+            navigation.navigate('Home', {screen: 'Home'});
         }
     
         function navigateToCad2(){
@@ -38,7 +46,6 @@ export default function TelaLogin({navigation}){
                 resposta = response.data.response;
                 console.log(resposta);
                 salvarDados();
-              
             }catch(error) {
                 console.log(error);
                 alert(error) 
@@ -47,19 +54,78 @@ export default function TelaLogin({navigation}){
 
         async function salvarDados(){
             try {
+                await AsyncStorage.setItem("emailCliente", emailCliente);
+                await AsyncStorage.setItem("senhaCliente", senhaCliente);
                 await AsyncStorage.setItem("nomeCliente", nomeCliente);
                 await AsyncStorage.setItem("CPF", cpfCliente);
                 navigateToCad2();
-
             }catch(error) {
                 console.log(error);
             }
         }
 
         async function Logar(){
-            alert(`${idCliente}`);
+            try{
+               const response = await api.get('/UserLogin/', {params:{emailCliente: emailCliente, senhaCliente: senhaCliente}});
+               const data = response.data.response;
+               
+               if(data != undefined){
+                data.map(item => {
+                    valida = item.idLoginCliente,
+                    idClientee = item.idCliente
+                });
+               }
+                if(valida != 0){
+                    pegarDadosCliente();
+                }else{
+                    Alert.alert(
+                        "Easycare",
+                        "Email ou senha inválidos!",
+                        [
+                          { text: "OK"}
+                        ],
+                        { cancelable: false });
+                }
+            }catch(error){
+                console.log(error);
+            }
         }
 
+        async function pegarDadosCliente(){
+            try{
+            const response = await api.get('/User/', {params:{idCliente: idClientee}});
+            const responseFone = await api.get('/UserPhone/', {params:{idCliente: idClientee}});
+            const data = response.data.response;
+            const dataFone = responseFone.data.response;
+        
+            data.map(item => {
+                nomeClientee = item.nomeCliente,
+                cpfClientee = item.cpfCliente
+            })
+
+            dataFone.map(item => {
+                foneClientee = item.numFoneCliente
+            })
+            salvarDados2();
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+        async function salvarDados2(){
+            try {
+                await AsyncStorage.setItem("emailCliente", emailCliente);
+                await AsyncStorage.setItem("senhaCliente", senhaCliente);
+                await AsyncStorage.setItem("nomeCliente", nomeClientee);
+                await AsyncStorage.setItem("CPF", cpfClientee);
+                await AsyncStorage.setItem("idCliente", idClientee);
+                await AsyncStorage.setItem("telefoneCliente", foneClientee);
+                navigateToHome();
+            }catch(error) {
+                console.log(error);
+            }
+        }
+    
         return(
             <View style={{height: '100%', backgroundColor: '#fff', justifyContent:'center'}}>
                 <StatusBar barStyle="dark-content"/>
@@ -88,7 +154,6 @@ export default function TelaLogin({navigation}){
                             <InputComIcom placeholder = "CPF" keyboardType='numeric' icon='assignment-ind' onChangeText={cpfCliente=>setCpfCliente(cpfCliente)}/>
                             </>
                             }
-                            
 
                             <View style={styles.bt}>
                                 <TouchableNativeFeedback onPress={stageNew ? Logar : Cadastrar}>                           
@@ -101,9 +166,7 @@ export default function TelaLogin({navigation}){
                                        <Text style={styles.txtCadastro}> {stageNew ? 'Não possui cadastro?' : 'Já possui cadastro?'} </Text>
                             </TouchableOpacity>
                         </View>
-
                     </KeyboardAvoidingView>
-                
             </View>
         )
     }

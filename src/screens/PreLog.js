@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar, Dimensions}
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import logo from '../../assets/imgs/icon2.png';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function PreLog({navigation}){
   

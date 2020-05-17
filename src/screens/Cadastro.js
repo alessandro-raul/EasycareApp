@@ -8,6 +8,7 @@ import TelaLogin from './TelaLogin';
 import api from '../services/api'
 import AsyncStorage from '@react-native-community/async-storage';
 import DashboardRoutes from '../../routes/dashboard.routes';
+import {Formik} from 'formik'
 
 export default function Cadastro({navigation}){
 
@@ -27,7 +28,7 @@ export default function Cadastro({navigation}){
 
     async function pegarCpf(){
         try {
-            cpfCliente = await AsyncStorage.getItem("CPF");
+            cpfCliente = await AsyncStorage.getItem("statusIntro");
             pegarId();
         } catch (error) {
             console.log(error);
@@ -118,9 +119,9 @@ export default function Cadastro({navigation}){
                         </View>
                     </TouchableNativeFeedback>
                 </View>
-                <TouchableOpacity style={styles.bt2} onPress={navigateToLogin}>
+                {/*<TouchableOpacity style={styles.bt2} onPress={navigateToLogin}>
                     <Text style={styles.txtCadastro}>Voltar</Text>
-                </TouchableOpacity>
+                    </TouchableOpacity>*/}
             </View>
         </KeyboardAvoidingView>
     </View>

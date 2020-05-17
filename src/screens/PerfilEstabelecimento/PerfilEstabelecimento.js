@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image,TouchableOpacity, ScrollView, FlatList} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import Header from '../../componentes/Header';
-
-import Banner from '../../../assets/imgs/drogariaspbanner.png';
+import logo from '../../../assets/imgs/drogariasp.png';
 import Remedio from '../../../assets/imgs/remedio.png';
-
+import SearchBarHome from '../../componentes/SearchBarHome';
 import api from '../../services/api';
 import styles from './style';
+import style from './style';
 
   
 export default function PerfilEstabelecimento({navigation}) {
@@ -67,22 +68,29 @@ export default function PerfilEstabelecimento({navigation}) {
 
   return(
     <>
-    <Header text="Drogaria SP" />
+    <Header text="Easycare" />
     <View style={styles.container}>
-      <View style={styles.contBanner}>
-        <Image style={styles.imgBanner} source={Banner}/>
+    <View style={styles.viewLogoFarma}>
+      <Image style={styles.logoFarma} source={logo}/>
+    </View>
+    <View style={styles.infosFarma}>
+      <View style={styles.nomeFarmaView}>
+        <Text style={styles.nomeFarmaTxt}>{nomeEstabelecimento} - {bairroLogEstabelecimento}</Text>
+        <TouchableOpacity style={styles.btMais}>
+            <Icon name='navigate-next' size={35} color="#23AFDB" />
+        </TouchableOpacity>
       </View>
-      <View style={styles.cont}>
-        <View style={styles.infoFarm}>
-          <Text style={styles.nameFarm}>{nomeEstabelecimento}</Text>
-          <Text>//Filial, 42</Text>
-          <Text>{logEstabelecimento}, N°{numLogEstabelecimento}</Text>
-          <Text>{bairroLogEstabelecimento}, {cidadeLogEstabelecimento}</Text>
-          <Text>Avaliação</Text>
-          <TouchableOpacity style={styles.btLigar}>
-            <Text style={styles.textBtLigar}>Ligar</Text>
-          </TouchableOpacity>
-        </View>
+      <SearchBarHome/>
+      <View style={styles.taxaEntregaView}>
+        <IconAwesome name='motorcycle' size={20} color="#23AFDB" />
+        <Text style={styles.taxaEntregaTxt}>Taxa de entrega = R$5,00</Text>
+      </View>
+      
+    </View>
+ 
+      
+     
+    
 
         <View style={styles.contOferta}>
           <Text style={styles.subTitle}>Ofertas</Text>
@@ -113,7 +121,7 @@ export default function PerfilEstabelecimento({navigation}) {
             /> 
           </View>
         </View>
-      </View>
+
     </View>
     </>
   )  

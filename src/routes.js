@@ -24,8 +24,11 @@ import Resultado from './screens/Resultado/Resultado'
 const  AppStack = createStackNavigator();
 
 function Routes(){  
+    var tela = "Home";
+
+
     return(
-            <AppStack.Navigator initialRouteName="Home" 
+            <AppStack.Navigator initialRouteName={tela} 
                 screenOptions={{headerShown:false, 
                 /* headerTitleAlign: "center", 
                 title: "Easycare", 

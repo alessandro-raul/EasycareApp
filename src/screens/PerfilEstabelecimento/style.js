@@ -9,7 +9,7 @@ export default styles = StyleSheet.create({
     backgroundColor: '#fff',  
   },
 
-  contBanner: {  
+  /*contBanner: {  
     width: '100%',
     height: 200,
     alignItems: 'center',
@@ -17,10 +17,18 @@ export default styles = StyleSheet.create({
     //borderBottomWidth:1,
     //borderColor: 'rgba(70,70,70,0.3)',
     backgroundColor: "#fff",  
+  },*/
+
+  viewLogoFarma:{
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 95,
   },
 
-  imgBanner: {
-    flex: 1,  
+  logoFarma: {
+    width: 60,
+    height: 60,
+    borderRadius: 50
   },
 
   cont: {
@@ -32,22 +40,52 @@ export default styles = StyleSheet.create({
     backgroundColor: '#fff',  
   },
 
-  infoFarm: {
+  infosFarma: {
     width: '100%',
-    height: 250,
-    marginTop: -30,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 30,
-    borderWidth: 1,
-    borderRadius: 30,
+    height: 155,
+    elevation: 1.4,
+    shadowColor: '#3977A0',
+    shadowOpacity: 3,
+    paddingHorizontal: 30,
     borderColor: 'rgba(70,70,70,0.3)',
-    backgroundColor: '#fff',   
+    backgroundColor: '#fff',
   },
 
-  nameFarm: {
-    color: '#3977A0',
-    fontSize: 16,  
+  nomeFarmaView:{
+    width: '100%',
+    minHeight: 30,
+    flexDirection: 'row',
+    marginBottom: '4%'
+  },
+
+  nomeFarmaTxt: {
+    fontSize: 20,
+    width: '85%',
+    paddingTop: 3,
+    fontWeight: 'bold', 
+    color: 'grey'
+  },
+
+  btMais:{
+    width:40,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: '8%'
+  },
+
+  taxaEntregaView: {
+    paddingTop: "3%",
+    //backgroundColor: 'red',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    flexDirection: 'row'
+  },
+
+  taxaEntregaTxt: {
+    fontSize: 16,
+    color: 'grey',
+    marginLeft: '3%'
   },
 
   btLigar: {
@@ -77,7 +115,7 @@ export default styles = StyleSheet.create({
   },
 
   contScroll: {
-    width: '100%',
+    width: '85%',
     height: 200,
     justifyContent: 'center',
     backgroundColor: '#fff',

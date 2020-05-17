@@ -18,23 +18,34 @@ export default function Home({ navigation }) {
   const [logCliente, setLogCliente] = useState();
   const [numLogCliente, setNumLogCliente] = useState();
   const [tem, setTem] = useState(false);
-  
   var idd;
-
-  useEffect(() => {
-    navigateToIntro();
-  }, []);
+  var statusIntro;
 
   useLayoutEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       pegarIdEndereco();
       loadMedicaments();
+      gerenciaIntroducao();
            
     });
     return unsubscribe;
   }, [navigation]);
 
   navigation = useNavigation(); 
+
+  async function gerenciaIntroducao(){
+    try {
+      statusIntro = await AsyncStorage.getItem("statusIntro");
+      console.log(statusIntro);
+        if(statusIntro == null){
+          navigateToIntro();
+        }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+ 
 
   function navigateToDetailMed(medicament) {
     navigation.navigate('DetailMed', { medicament });
@@ -51,8 +62,6 @@ export default function Home({ navigation }) {
   function navigateToEnderecos() {
     navigation.navigate('Enderecos');
   }
-
-  
 
   async function loadMedicaments() {
     const response = await api.get('/Medicament/');
@@ -93,7 +102,6 @@ async function pegarEndereco(){
   
       }
 
-    
   }catch(error){
     console.log(error);
   } 
