@@ -68,13 +68,13 @@ export default styles = StyleSheet.create({
     marginTop: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
+    borderRadius: 5,
     backgroundColor: '#23AFDB',  
   },
 
   textBtComprar: {
     color: '#fff',
-    fontSize: 18,  
+    fontSize: 19,  
   },
 
   btAdd:{
@@ -83,7 +83,7 @@ export default styles = StyleSheet.create({
     marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
+    borderRadius: 5,
     borderWidth: 2,
     borderColor: '#23AFDB', 
     backgroundColor: '#fff', 

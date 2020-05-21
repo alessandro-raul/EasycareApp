@@ -130,9 +130,9 @@ export default styles = StyleSheet.create({
 
   contScroll: {
     width: '100%',
-    marginTop: '2%',
-    paddingHorizontal: 20,
-    height: 250,
+    marginTop: '1%',
+    
+    height: 230,
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
@@ -143,12 +143,12 @@ export default styles = StyleSheet.create({
 
   medicContainer: {
     width: 120,
-    height: 150,
-    marginRight: 10,
+    height: '100%',
+    marginLeft: 22,
     padding: 7,
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: 'rgba(70,70,70,0.3)',
     //backgroundColor: 'red',  
