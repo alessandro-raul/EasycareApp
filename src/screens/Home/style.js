@@ -2,7 +2,6 @@ import { StyleSheet, Dimensions } from "react-native";
 
 export default StyleSheet.create({
   container: {
-   
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     paddingLeft: 32,
@@ -12,7 +11,6 @@ export default StyleSheet.create({
 
   contSearch: {
     marginTop: '5%',
-   
     alignItems: 'center',
     justifyContent: 'center',
     width: "95%"
@@ -29,13 +27,12 @@ export default StyleSheet.create({
   },
 
   medicContainer: {
-    width: 170,
-    height: 170,
+    width: 130,
     marginRight: 10,
     padding: 7,
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 10,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: 'rgba(70,70,70,0.3)',
     //backgroundColor: 'red',  
@@ -50,13 +47,12 @@ export default StyleSheet.create({
   },
 
   imgMedic: {
-    width: 75,
-    height: 75,
+    width: 65,
+    height: 65,
   },
 
   contDesc: {
     height: 50,
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -75,20 +71,21 @@ export default StyleSheet.create({
   },
   
   imgFarma: {
-    marginLeft: '8%',
-    width: 30,
-    height: 30,
-    borderRadius: 5,  
+    marginLeft: 15,
+    marginRight: 30,
+    width: 25,
+    height: 25,
+    borderRadius: 20,  
   },
 
   descMedic: {
-    width: 110,
-    marginLeft: '8%',
+    width: 100,
+    marginLeft: '15%',
     //backgroundColor: 'yellow',
   },
 
   nameMedic: {
-    fontSize: 16, 
+    fontSize: 15, 
     color: '#707070', 
   }, 
 

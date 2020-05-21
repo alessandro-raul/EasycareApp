@@ -10,6 +10,7 @@ import Enderecos from './screens/Enderecos';
 import AdicionarEndereco from './screens/AdicionarEndereco';
 import DetailMed from './screens/DetailMed/DetailMed';
 import PerfilEstabelecimento from './screens/PerfilEstabelecimento/PerfilEstabelecimento';
+import DetailEstabelecimento from './screens/DetailEstabelecimento';
 import PagamentoPerfil from './screens/PagamentoPerfil';
 import Cartao from './screens/Cartao';
 import CadastrarCartao from './screens/CadastrarCartao';
@@ -20,13 +21,10 @@ import EditarEndereco from './screens/EditarEndereco';
 import Resultado from './screens/Resultado/Resultado'
 
 
-
 const  AppStack = createStackNavigator();
 
 function Routes(){  
     var tela = "Home";
-
-
     return(
             <AppStack.Navigator initialRouteName={tela} 
                 screenOptions={{headerShown:false, 
@@ -57,6 +55,7 @@ function Routes(){
             <AppStack.Screen name="EditarEndereco" component={EditarEndereco}/>
             <AppStack.Screen name="Resultado" component={Resultado}/>
             <AppStack.Screen name="PerfilEstabelecimento" component={PerfilEstabelecimento}/>
+            <AppStack.Screen name="DetailEstabelecimento" component={DetailEstabelecimento}/>
         </AppStack.Navigator>
     )
 }

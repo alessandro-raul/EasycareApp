@@ -27,7 +27,6 @@ export default function IntrodutionAppScroll({navigation}){
         const status = "1";
         await AsyncStorage.setItem("statusIntro", status);
         navigateToLogin();
-        console.log('foi');
        } catch (error) {
            console.log(error);
        }

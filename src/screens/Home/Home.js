@@ -21,12 +21,14 @@ export default function Home({ navigation }) {
   var idd;
   var statusIntro;
 
+  useEffect(() => {
+    gerenciaIntroducao();
+  }, []);
+
   useLayoutEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       pegarIdEndereco();
-      loadMedicaments();
-      gerenciaIntroducao();
-           
+      loadMedicaments();   
     });
     return unsubscribe;
   }, [navigation]);
@@ -36,7 +38,6 @@ export default function Home({ navigation }) {
   async function gerenciaIntroducao(){
     try {
       statusIntro = await AsyncStorage.getItem("statusIntro");
-      console.log(statusIntro);
         if(statusIntro == null){
           navigateToIntro();
         }
@@ -44,8 +45,6 @@ export default function Home({ navigation }) {
       console.log(error);
     }
   }
-
- 
 
   function navigateToDetailMed(medicament) {
     navigation.navigate('DetailMed', { medicament });
@@ -72,47 +71,41 @@ export default function Home({ navigation }) {
   async function pegarIdEndereco(){
     try{
       idd = await AsyncStorage.getItem("idEnderecoCliente");
-     
       if (idd != null || idd != undefined){ 
         pegarEndereco();
       } else {
         setTem(false);
       }
-      
     }catch(error){
       console.log(error);
     }
   }
-   
 
-async function pegarEndereco(){
-  try{
-    const response = await api.get('/UserAdress/', {params: {idEnderecoCliente : idd}});
-    const data = response.data.response;
-    console.log(data);
+  async function pegarEndereco(){
+    try{
+      const response = await api.get('/UserAdress/', {params: {idEnderecoCliente : idd}});
+      const data = response.data.response;
+      console.log(data);
 
-    if (data == "Nenhum usuário encontrado" || data== undefined){ 
-      setTem(false);
-   } else {
-       setTem(true);
-       data.map(item => {
-        setLogCliente(item.logCliente);
-        setNumLogCliente(item.numLogCliente);
-      });   
-  
+      if (data == "Nenhum usuário encontrado" || data== undefined){ 
+        setTem(false);
+      } else {
+        setTem(true);
+        data.map(item => {
+          setLogCliente(item.logCliente);
+          setNumLogCliente(item.numLogCliente);
+        });   
       }
-
-  }catch(error){
-    console.log(error);
-  } 
-}
+    }catch(error){
+      console.log(error);
+    } 
+  }
   
   return(
     <>
       <StatusBar backgroundColor='white'/>
       <Header text="Easycare"/>
       <View style={styles.container}>    
-     
      
       <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
           <Icon name='place' size={25} color='#23AFDB'/>
@@ -126,6 +119,7 @@ async function pegarEndereco(){
           {!tem &&
             <Text style={styles.txtLocalizacao}>Selecione um endereço</Text>
           }
+
       </TouchableOpacity>
 
       <View style={styles.contSearch}>
@@ -135,29 +129,29 @@ async function pegarEndereco(){
         <View style={styles.contScroll}>
           <HeaderScroll title="Ofertas recentes" icon="arrow-forward" size={26} />                     
           <FlatList
-          data={medicaments}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={medicament => String(medicament.idMedicamento)}
-          style={styles.scrollMedic}
-          renderItem={({ item:medicament }) => (
-          <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
-            <View style={styles.contImg}>
-              <Image source={Remedio} style={styles.imgMedic} />
-            </View>
-            <View style={styles.contDesc}>
-            
-                <Image source={Drogaria} style={styles.imgFarma} />
-            
-              <View style={styles.descMedic}>
-                <Text style={styles.nameMedic}>{medicament.descMed}</Text>
-                <Text style={styles.precoMedic}>R$ {medicament.precoMed},00
-                </Text>       
+            data={medicaments}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={medicament => String(medicament.idMedicamento)}
+            style={styles.scrollMedic}
+            renderItem={({ item:medicament }) => (
+            <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
+              <View style={styles.contImg}>
+                <Image source={Remedio} style={styles.imgMedic} />
               </View>
-            </View>
-          </TouchableOpacity>
+              <View style={styles.contDesc}>
+              
+                  <Image source={Drogaria} style={styles.imgFarma} />
+              
+                <View style={styles.descMedic}>
+                  <Text style={styles.nameMedic}>{medicament.descMed}</Text>
+                  <Text style={styles.precoMedic}>R$ {medicament.precoMed},00
+                  </Text>       
+                </View>
+              </View>
+            </TouchableOpacity>
           )}
-        /> 
+          /> 
         </View>   
 
          <View style={styles.contScroll}>
