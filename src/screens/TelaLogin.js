@@ -120,6 +120,7 @@ export default function TelaLogin({navigation}){
                 await AsyncStorage.setItem("CPF", cpfClientee);
                 await AsyncStorage.setItem("idCliente", idClientee);
                 await AsyncStorage.setItem("telefoneCliente", foneClientee);
+                await AsyncStorage.setItem("statusLogin", "completo");
                 navigateToHome();
             }catch(error) {
                 console.log(error);

@@ -2,22 +2,39 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Text, StyleSheet, View, Image, Alert } from 'react-native';
 import Header from '../componentes/Header';
 import Brendon from '../../assets/imgs/brendon.jpg'
-import { ScrollView, TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, TouchableNativeFeedback, TouchableHighlight, ActivityIndicator } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import gifTriste from '../../assets/imgs/gifTriste.gif';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default function TelaPerfil({navigation}){
 
     const [nomeCliente, setNomeCliente] = useState(''); 
+    const [statusLogin, setStatusLogin] = useState(0);
+    const [showLoader, setShowLoader] = useState(true);
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-                pegarNome();
+            pegarStatus();
+            pegarNome();
         });
         return unsubscribe;
     }, [navigation]);
   
+    async function pegarStatus(){
+        try {
+            const status = await AsyncStorage.getItem('statusLogin');
+            if(status== "completo"){
+                setStatusLogin(1);
+            }else{
+                setStatusLogin(2);
+            }
+        } catch (error) {
+            
+        }
+    }
+
     async function pegarNome(){
         try {
             const nome = await AsyncStorage.getItem("nomeCliente");
@@ -81,7 +98,13 @@ export default function TelaPerfil({navigation}){
     return(
         <View style={{backgroundColor:"white", height: '100%'}}>
             <Header text="Perfil"/>
-            <ScrollView style={styles.fundo}>
+            {statusLogin==0 &&
+            <View style={styles.container2}>
+            </View>
+            }
+
+           {statusLogin==1 &&
+           <ScrollView style={styles.fundo}>
                 <View style={styles.banner}>
                     <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
                         <Image source={Brendon} style={styles.imgPerfil}/>
@@ -164,11 +187,50 @@ export default function TelaPerfil({navigation}){
 
                 </View>
             </ScrollView>
+            }
+
+            {statusLogin==2 &&
+                <View style={styles.container2}>
+                    <Text style={styles.nlTxt}>Você ainda não se logou...</Text>
+                    <Image source={gifTriste} style={styles.gif}/>
+                        <TouchableOpacity style={styles.btLogar} onPress={navigateToPreLog}>
+                            <Text style={styles.txtLogar}>Logar agora!</Text>
+                        </TouchableOpacity>
+                    </View>
+            }
     </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container2:{
+        height: '100%', 
+        width: '100%',
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+
+    nlTxt:{
+        fontSize: 22, color: '#666', 
+        textAlign: 'center', 
+        fontWeight: 'bold'
+    },
+
+    btLogar:{
+        backgroundColor: '#23AFDB', 
+        width: 155, 
+        height: 40, 
+        borderRadius: 10, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+
+    txtLogar:{
+        color: '#fff', 
+        fontSize: 17, 
+        fontWeight: 'bold'
+    },
+    
     banner:{
         alignItems: 'center',
         height: 170,
@@ -255,5 +317,10 @@ const styles = StyleSheet.create({
         paddingRight: '45%', 
         paddingLeft: '5%',
         color: 'gray'
+    },
+
+    gif:{
+        width: 150,
+        height: 150
     }
 })

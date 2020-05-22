@@ -3,21 +3,9 @@ import {StyleSheet, Dimensions} from 'react-native';
 export default styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width,
-    //height: Dimensions.get('window').height,
     height: '100%',
-    //paddingLeft: 32,
     backgroundColor: '#fff',  
   },
-
-  /*contBanner: {  
-    width: '100%',
-    height: 200,
-    alignItems: 'center',
-    paddingHorizontal: 32,
-    //borderBottomWidth:1,
-    //borderColor: 'rgba(70,70,70,0.3)',
-    backgroundColor: "#fff",  */
- 
 
   viewLogoFarma:{
       justifyContent: 'center',
@@ -112,6 +100,39 @@ export default styles = StyleSheet.create({
     backgroundColor: '#fff',  
   },
 
+  categoriasView:{
+    width: '100%',
+    paddingTop: 20,
+    marginBottom: 4
+  },
+
+  scrollCategorias: {
+     marginTop: '3%',
+  },
+
+  txtCategoria:{
+      color: '#666',
+      //textAlign: 'center',
+      paddingHorizontal: 29,
+      fontSize: 18
+  },
+
+  btCategoria:{
+    marginLeft: 22,
+    backgroundColor: '#23AFDB',
+    height: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 120,
+    borderRadius: 5,
+  },
+
+  txtBt:{
+    color: '#fff',
+    paddingHorizontal: 10,
+    fontSize: 15
+  },
+
   subTitle: {
     fontSize: 18,
     color: "#3977A0",
@@ -122,96 +143,99 @@ export default styles = StyleSheet.create({
       alignItems: 'center'
   },
 
-
-  descMedic: {
-    marginLeft: '5%',
-    //backgroundColor: 'yellow',
-  },
-
   contScroll: {
+    height: 330,
     width: '100%',
     marginTop: '1%',
-    
-    height: 230,
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    alignItems: 'center',  
   },
-
+  
   scrollMedic: {  
     width: '100%',
   },
 
   medicContainer: {
-    width: 120,
+    width: 130,
     height: '100%',
-    marginLeft: 22,
+    marginLeft:22,
     padding: 7,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'rgba(70,70,70,0.3)',
     //backgroundColor: 'red',  
   },
-
-  imgMedic: {
-    width: 75,
-    height: 75,
-  },
-
   
   contImg: {
-    width: '80%',
-    height: '65%',
+    width: '90%',
+    height: '40%',
     alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: '#fff',  
+    //backgroundColor: '#333',  
   },
 
-  medContainer: {
-    width: 130,
-    height: 155,
-    marginRight: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    alignSelf: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(70,70,70,0.3)',
-    backgroundColor: '#fff',
-  },
-
-  imgMed:{
-    width: 75,
-    height: 80,
+  imgMedic: {
+    width: 65,
+    height: 65,
   },
 
   contDesc: {
-    height: 50,
-    width: '100%',
-    flexDirection: 'row',
+    width: '90%',
+    height: '60%',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     borderTopWidth: 1,
     borderColor: 'rgba(70,70,70,0.3)',
     //backgroundColor: 'blue'
   },
-  nameMed: {
-    textAlign: 'center',
-    
+
+  dadosCompra: {
+    width:'100%',
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
+    //backgroundColor:'#fff'
+  },
+  
+  imgFarma: {
+    width: 25,
+    height: 25,
+    borderRadius: 20,  
+  },
+
+  descMedic: {
+    width: '100%',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    //backgroundColor: 'yellow',
   },
 
   nameMedic: {
-    fontSize: 14
+    fontSize: 14, 
+    color: '#707070', 
+  }, 
+
+  nameLab: {
+    fontWeight: '700',
+    fontSize: 14, 
+    color: '#707070', 
+  },
+
+  dosagemMedic: {
+    fontSize: 14, 
+    color: '#707070', 
   },
 
   precoMedic: {
-    color: 'green'
+    fontSize: 14,
+    color: '#1F9433'  
   },
 
-  precoMed: {
-    textAlign: 'center',
-  },
 });

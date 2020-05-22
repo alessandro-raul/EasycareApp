@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image,TouchableOpacity, ScrollView, StyleSheet, Linking} from 'react-native';
+import { View, Text, Image,TouchableOpacity, StyleSheet, Linking} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MeuHeader from '../componentes/Header';
 import logo from '../../assets/imgs/drogariasp.png';
@@ -63,11 +63,11 @@ export default function PerfilEstabelecimento({navigation}) {
   }
 
   function abrirTelefone(){
-    Linking.openURL(`tel:${numFoneEstabelecimento}`)
+    Linking.openURL(`tel:${numFoneEstabelecimento}`);
   }
 
   function abrirEmail(){
-    Linking.openURL(`mailto:${emailEstabelecimento}`)
+    Linking.openURL(`mailto:${emailEstabelecimento}`);
   }
 
   return(
@@ -81,16 +81,16 @@ export default function PerfilEstabelecimento({navigation}) {
         <Text style={styles.logFarmaTxt}>
             {logEstabelecimento}, {numLogEstabelecimento} - {bairroLogEstabelecimento}, {cidadeLogEstabelecimento} - {ufLogEstabelecimento}
         </Text>
-        <View style={styles.numFoneView}>
-            <Icon name='phone' size={20} color="#23AFDB" />
-            <Text style={styles.numFoneTxt}>
-                {numFoneEstabelecimento}
-            </Text>
-        </View>
         <View style={styles.emailView}>
             <Icon name='email' size={20} color="#23AFDB" />
             <Text style={styles.numFoneTxt}>
                 {emailEstabelecimento}
+            </Text>
+        </View>
+        <View style={styles.numFoneView}>
+            <Icon name='phone' size={20} color="#23AFDB" />
+            <Text style={styles.numFoneTxt}>
+                {numFoneEstabelecimento}
             </Text>
         </View>
         <View style={styles.btsContainer}>
@@ -112,8 +112,8 @@ export default function PerfilEstabelecimento({navigation}) {
               longitudeDelta: 0.0121,
             }}>
             <Marker
-              title={nomeEstabelecimento}
-              description={streetName}
+              title={nomeEstabelecimento+' - '+bairroLogEstabelecimento}
+              description={streetName+", "+numLogEstabelecimento}
               coordinate={{
                 latitude,
                 longitude
@@ -143,6 +143,8 @@ const styles = StyleSheet.create({
 
   logFarmaTxt: {
     fontSize: 16,
+    width: '85%',
+    textAlign: 'center',
     paddingTop: 3,
     fontWeight: 'bold', 
     color: 'grey'
@@ -167,13 +169,13 @@ const styles = StyleSheet.create({
   numFoneView:{
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '2%',
     justifyContent: 'center',
   },
 
   emailView:{
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: '3%',
     justifyContent: 'center',
   },
 
@@ -216,4 +218,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: "65%"
   }
+
 })

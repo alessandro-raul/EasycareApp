@@ -21,8 +21,8 @@ export default styles = StyleSheet.create({
   },
 
   imgMed: {
-    width: 180,
-    height: 220,
+    width: 160,
+    height: 200,
   },
 
   descMed: {

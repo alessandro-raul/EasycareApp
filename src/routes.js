@@ -11,6 +11,8 @@ import AdicionarEndereco from './screens/AdicionarEndereco';
 import DetailMed from './screens/DetailMed/DetailMed';
 import PerfilEstabelecimento from './screens/PerfilEstabelecimento/PerfilEstabelecimento';
 import DetailEstabelecimento from './screens/DetailEstabelecimento';
+import Todos from './screens/Todos';
+import Categoria from './screens/Categoria';
 import PagamentoPerfil from './screens/PagamentoPerfil';
 import Cartao from './screens/Cartao';
 import CadastrarCartao from './screens/CadastrarCartao';
@@ -56,6 +58,8 @@ function Routes(){
             <AppStack.Screen name="Resultado" component={Resultado}/>
             <AppStack.Screen name="PerfilEstabelecimento" component={PerfilEstabelecimento}/>
             <AppStack.Screen name="DetailEstabelecimento" component={DetailEstabelecimento}/>
+            <AppStack.Screen name="Categoria" component={Categoria}/>
+            <AppStack.Screen name="Todos" component={Todos}/>
         </AppStack.Navigator>
     )
 }

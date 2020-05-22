@@ -4,8 +4,15 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function HeaderScroll(props){
+
+
+  function navigateToTodos(idEstabelecimento){
+    console.log("aa");
+    navigation.navigate('Todos', {idEstabelecimento})
+  }
+
   return(
-    <TouchableOpacity style={styles.headerContainer}>
+    <TouchableOpacity style={styles.headerContainer} onPress={props.function}>
       <View style={styles.cont}>
         <Text style={styles.title}>{props.title}</Text>    
         <Icon name={props.icon} size={props.size} color={"#666"} />        

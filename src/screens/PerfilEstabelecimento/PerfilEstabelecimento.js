@@ -5,19 +5,18 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import MeuHeader from '../../componentes/Header';
 import logo from '../../../assets/imgs/drogariasp.png';
-import Drogaria from '../../../assets/imgs/drogariasp.png';
 import Remedio from '../../../assets/imgs/remedio.png';
 import SearchBarHome from '../../componentes/SearchBarHome';
 import api from '../../services/api';
 import styles from './style';
 import HeaderScroll from '../../componentes/HeaderScroll';
-import style from './style';
-import {Container, Header, Content, Tab, Tabs } from 'native-base';
+import {Tab, Tabs } from 'native-base';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
-  
 export default function PerfilEstabelecimento({navigation}) {
   navigation = useNavigation();
   const route = useRoute();
+  console.disableYellowBox = true;
 
   const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
   const [cnpjEstabelecimento, setCnpjEstabelecimento] = useState(0);
@@ -28,9 +27,9 @@ export default function PerfilEstabelecimento({navigation}) {
   const [cidadeLogEstabelecimento, setCidadeLogEstabelecimento] = useState('');
   const [ufLogEstabelecimento, setUfLogEstabelecimento] = useState('');
   const [statusEstabelecimento, setStatusEstabelecimento] = useState('');
-
+  const [categories, setCategories] = useState([]);
   const [medicaments, setMedicaments] = useState([]);
-
+  
   const idEstabelecimento = route.params.idEstabelecimento;
 
   async function loadDadosEstablishment(idEstabelecimento) {
@@ -48,17 +47,32 @@ export default function PerfilEstabelecimento({navigation}) {
       setStatusEstabelecimento(item.statusEstabelecimento);
     });
       loadMedicaments(idEstabelecimento);
+      loadCategories(idEstabelecimento);
   }
 
   function navigateToDetailEstabelecimento(idEstabelecimento, nomeEstabelecimento, cnpjEstabelecimento, logEstabelecimento, numLogEstabelecimento, bairroLogEstabelecimento, cidadeLogEstabelecimento, ufLogEstabelecimento, cepLogEstabelecimento) {
     navigation.navigate('DetailEstabelecimento', { idEstabelecimento, nomeEstabelecimento, cnpjEstabelecimento, logEstabelecimento, numLogEstabelecimento, bairroLogEstabelecimento, cidadeLogEstabelecimento, ufLogEstabelecimento, cepLogEstabelecimento });
   }
 
+  function navigateToCategoria(nomeCategoria, idEstabelecimento){
+    navigation.navigate('Categoria', {nomeCategoria, idEstabelecimento})
+  }
+
   async function loadMedicaments(idEstabelecimento) {
-    const response = await api.get('/Medicament', { params: {idEstabelecimento,
-                                 } });
+    const response = await api.get('/Medicament', { params: {idEstabelecimento,}});
     const data = response.data.response;
     setMedicaments(data);
+  }
+
+  async function loadCategories(idEstabelecimento) {
+    const response = await api.get('/MedicamentCategories/', { params: {idEstabelecimento,}});
+    const data = response.data.response;
+    setCategories(data);
+  }
+
+  function navigateToTodos(idEstabelecimento){
+    console.log("aa");
+    navigation.navigate('Todos', {idEstabelecimento})
   }
 
   function navigateToDetailMed(medicament, nomeEstabelecimento) {
@@ -95,11 +109,32 @@ export default function PerfilEstabelecimento({navigation}) {
     <Tabs tabStyle={{backgroundColor: 'white', borderWidth: 0}} tabBarPosition='top' locked={true} tabBarUnderlineStyle={{backgroundColor: '#23AFDB'}} initialPage={0}>
               <Tab heading="Medicamentos" textStyle={{color: 'gray'}} activeTextStyle={{color: '#23AFDB'}}  activeTabStyle={{backgroundColor: 'white'}} tabStyle={{backgroundColor: 'white'}}>
                 <View style={[ styles.containerTab, { backgroundColor: '#fff' } ]}>
+                  <View style={styles.categoriasView}>
+                  <Text style={styles.txtCategoria}>Categorias</Text>
+                    <ScrollView
+                    style={styles.scrollCategorias}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    >
+                       <FlatList
+                      data={categories}
+                      initialNumToRender
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      keyExtractor={categories => String(categories.idCategoriaMed)}
+                      style={styles.scrollMedic}
+                      renderItem={({ item:categories }) => (
+                      <TouchableNativeFeedback style={styles.btCategoria} onPress={()=>navigateToCategoria(categories.nomeCategoria, idEstabelecimento)}>
+                        <Text style={styles.txtBt}>{categories.nomeCategoria}</Text>
+                      </TouchableNativeFeedback>
+                      )} />
+                      
+                    </ScrollView>
+                  </View>
                   <View style={styles.contScroll}>
                     <HeaderScroll title="Ofertas" icon="arrow-forward" size={26} />                     
                     <FlatList
                       data={medicaments}
-                      initialNumToRender
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
                       keyExtractor={medicament => String(medicament.idMedicamento)}
@@ -107,25 +142,27 @@ export default function PerfilEstabelecimento({navigation}) {
                       renderItem={({ item:medicament }) => (
                       <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
                         <View style={styles.contImg}>
-                            <Image source={Remedio} style={styles.imgMedic} />
+                          <Image source={Remedio} style={styles.imgMedic} />
                         </View>
                         <View style={styles.contDesc}>
-                           
-                        <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>{medicament.descMed}</Text>
-                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00
-                            </Text>       
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
+                            <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
+                            <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
+                          </View>              
+                        
+                          <View style={styles.dadosCompra}>
+                         
+                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
                           </View>
                         </View>
                       </TouchableOpacity>
-                      )}
-                      /> 
+                    )}/> 
                   </View>   
                   <View style={styles.contScroll}>
                     <HeaderScroll title="Mais vendidos" icon="arrow-forward" size={26} />                     
                     <FlatList
                       data={medicaments}
-                      initialNumToRender
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
                       keyExtractor={medicament => String(medicament.idMedicamento)}
@@ -133,26 +170,28 @@ export default function PerfilEstabelecimento({navigation}) {
                       renderItem={({ item:medicament }) => (
                       <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
                         <View style={styles.contImg}>
-                            <Image source={Remedio} style={styles.imgMedic} />
+                          <Image source={Remedio} style={styles.imgMedic} />
                         </View>
                         <View style={styles.contDesc}>
-                           
-                        <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>{medicament.descMed}</Text>
-                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00
-                            </Text>       
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
+                            <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
+                            <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
+                          </View>              
+                        
+                          <View style={styles.dadosCompra}>
+                         
+                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
                           </View>
                         </View>
                       </TouchableOpacity>
-                      )}
-                      /> 
+                    )}/> 
                   </View> 
 
                   <View style={styles.contScroll}>
-                    <HeaderScroll title="Mais vendidos" icon="arrow-forward" size={26} />                     
+                    <HeaderScroll title="Todos" icon="arrow-forward" size={26} function={()=> navigateToTodos(idEstabelecimento)}/>                     
                     <FlatList
                       data={medicaments}
-                      initialNumToRender
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
                       keyExtractor={medicament => String(medicament.idMedicamento)}
@@ -160,23 +199,25 @@ export default function PerfilEstabelecimento({navigation}) {
                       renderItem={({ item:medicament }) => (
                       <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
                         <View style={styles.contImg}>
-                            <Image source={Remedio} style={styles.imgMedic} />
+                          <Image source={Remedio} style={styles.imgMedic} />
                         </View>
                         <View style={styles.contDesc}>
-                           
-                        <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>{medicament.descMed}</Text>
-                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00
-                            </Text>       
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
+                            <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
+                            <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
+                          </View>              
+                        
+                          <View style={styles.dadosCompra}>
+                         
+                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
                           </View>
                         </View>
                       </TouchableOpacity>
-                      )}
-                      /> 
+                    )}/> 
                   </View> 
-                
                 </View>
-                
+
               </Tab>
               <Tab heading="Outros" textStyle={{color: 'gray'}} activeTextStyle={{color: '#23AFDB'}}  activeTabStyle={{backgroundColor: 'white'}} tabStyle={{backgroundColor: 'white'}}>
                 <View style={[ styles.containerTab, { backgroundColor: '#fff' } ]}>
@@ -184,7 +225,7 @@ export default function PerfilEstabelecimento({navigation}) {
                 </View>
               </Tab>
             </Tabs>
-    </View>
+        </View>
     </ScrollView>
     </>
   )  

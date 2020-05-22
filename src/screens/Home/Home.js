@@ -18,8 +18,11 @@ export default function Home({ navigation }) {
   const [logCliente, setLogCliente] = useState();
   const [numLogCliente, setNumLogCliente] = useState();
   const [tem, setTem] = useState(false);
+  const [estabelecimentos, setEstabelecimentos] = useState();
+  const todos = "true";
   var idd;
   var statusIntro;
+  console.disableYellowBox = true;
 
   useEffect(() => {
     gerenciaIntroducao();
@@ -28,7 +31,8 @@ export default function Home({ navigation }) {
   useLayoutEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       pegarIdEndereco();
-      loadMedicaments();   
+      loadMedicaments();  
+      loadEstabelecimentos(); 
     });
     return unsubscribe;
   }, [navigation]);
@@ -50,6 +54,10 @@ export default function Home({ navigation }) {
     navigation.navigate('DetailMed', { medicament });
   }
 
+  function navigateToEstabelecimento(idEstabelecimento) {
+    navigation.navigate('PerfilEstabelecimento', { idEstabelecimento });
+  }
+
   function navigateToIntro() {
     navigation.navigate('Introducao');
   }
@@ -63,7 +71,7 @@ export default function Home({ navigation }) {
   }
 
   async function loadMedicaments() {
-    const response = await api.get('/Medicament/');
+    const response = await api.get('/Medicament/', {params: {todos: todos}});
     const data = response.data.response;
     setMedicaments(data);
   }
@@ -100,29 +108,36 @@ export default function Home({ navigation }) {
       console.log(error);
     } 
   }
+
+  async function loadEstabelecimentos() {
+    const response = await api.get('/Establishment');
+    const data = response.data.response;
+    setEstabelecimentos(data);
+  }
   
   return(
     <>
       <StatusBar backgroundColor='white'/>
       <Header text="Easycare"/>
-      <View style={styles.container}>    
+      <View style={styles.container}>   
+      <ScrollView style={{height: '100%', marginTop: 20}}>
      
-      <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
-          <Icon name='place' size={25} color='#23AFDB'/>
+        <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
+            <Icon name='place' size={25} color='#23AFDB'/>
 
-          {tem &&
-          <View style={styles.viewLocalizacao}>
-          <Text style={styles.txtLocalizacao}>{logCliente}, {numLogCliente}</Text>
-          </View>
-          }
+            {tem &&
+            <View style={styles.viewLocalizacao}>
+            <Text style={styles.txtLocalizacao}>{logCliente}, {numLogCliente}</Text>
+            </View>
+            }
 
-          {!tem &&
-            <Text style={styles.txtLocalizacao}>Selecione um endereço</Text>
-          }
+            {!tem &&
+              <Text style={styles.txtLocalizacao}>Selecione um endereço</Text>
+            }
 
-      </TouchableOpacity>
+        </TouchableOpacity>
 
-      <View style={styles.contSearch}>
+        <View style={styles.contSearch}>
           <SearchBarHome press={() => navigateToSearch() }/>
         </View> 
 
@@ -140,18 +155,21 @@ export default function Home({ navigation }) {
                 <Image source={Remedio} style={styles.imgMedic} />
               </View>
               <View style={styles.contDesc}>
-              
-                  <Image source={Drogaria} style={styles.imgFarma} />
-              
                 <View style={styles.descMedic}>
-                  <Text style={styles.nameMedic}>{medicament.descMed}</Text>
-                  <Text style={styles.precoMedic}>R$ {medicament.precoMed},00
-                  </Text>       
+                  <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
+                  <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
+                  <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
+                </View>              
+              
+                <View style={styles.dadosCompra}>
+                  <Image source={Drogaria} style={styles.imgFarma} />
+                  <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
                 </View>
               </View>
             </TouchableOpacity>
           )}
           /> 
+        
         </View>   
 
          <View style={styles.contScroll}>
@@ -177,7 +195,32 @@ export default function Home({ navigation }) {
           </View>
           )}
         /> 
-        </View>          
+        </View>
+
+        <HeaderScroll title="Estabelecimentos proximos" icon="arrow-forward" size={26} />
+        <FlatList
+          data={estabelecimentos}
+          showsVerticalScrollIndicator={true}
+          keyExtractor={estabelecimentos => String(estabelecimentos.idEstabelecimento)}
+          style={{marginBottom: 130}}
+          renderItem={({ item:estabelecimento }) => (
+            <View style={{paddingHorizontal: 32,}}>
+            <TouchableOpacity onPress={()=> navigateToEstabelecimento(estabelecimento.idEstabelecimento)}>
+            <View style={styles.farmaContainer}>
+              <View style={styles.viewImg}>
+                <Image source={Drogaria} style={styles.ImgFarma} />
+              </View>
+              <View style={styles.viewDados}>
+                <Text style={styles.title}>{estabelecimento.nomeEstabelecimento} - {estabelecimento.bairroLogEstabelecimento}</Text>
+                <Text style={styles.subTitle}>1,6 km - R$ 5,00</Text>
+              </View>
+              
+            </View>
+            </TouchableOpacity>
+            </View>
+          )}
+        />
+        </ScrollView>
       </View>
     </>
   )

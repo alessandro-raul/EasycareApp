@@ -56,11 +56,10 @@ export default function DetailMed() {
 
   if(nomeEstablishment==null){
     loadDadosEstablishment(medicament.idEstabelecimento);
-    auxNome = nomeEstabelecimento
-
+    auxNome = nomeEstabelecimento;
+    
   }else{
     auxNome = nomeEstablishment;
-    
   }
   
   return(
@@ -76,10 +75,8 @@ export default function DetailMed() {
           <TouchableOpacity onPress={() => navigateToEstabelecimento(medicament.idEstabelecimento)}>
           <Text style={styles.descFarma}>Vendido por  
           
-         
           <Text style={styles.nameFarm}> {auxNome}</Text>
-          
-          
+        
           </Text> 
           </TouchableOpacity>
         </View> 

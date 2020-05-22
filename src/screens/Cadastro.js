@@ -8,7 +8,6 @@ import TelaLogin from './TelaLogin';
 import api from '../services/api'
 import AsyncStorage from '@react-native-community/async-storage';
 import DashboardRoutes from '../../routes/dashboard.routes';
-import {Formik} from 'formik'
 
 export default function Cadastro({navigation}){
 
@@ -28,7 +27,7 @@ export default function Cadastro({navigation}){
 
     async function pegarCpf(){
         try {
-            cpfCliente = await AsyncStorage.getItem("statusIntro");
+            cpfCliente = await AsyncStorage.getItem("CPF");
             pegarId();
         } catch (error) {
             console.log(error);
@@ -88,9 +87,19 @@ export default function Cadastro({navigation}){
             await AsyncStorage.setItem("senhaCliente", senhaCliente);
             await AsyncStorage.setItem("idCliente", idCliente);
             await AsyncStorage.setItem("telefoneCliente", telefoneCliente);
-            navigateToHome();
+            salvaStatusLogin();
         } catch (error) {
             alert(error);
+        }
+    }
+
+    async function salvaStatusLogin(){
+        try {
+            await AsyncStorage.setItem("statusLogin", "completo");
+            console.log('Completo');
+            navigateToHome();
+        } catch (error) {
+            
         }
     }
 
