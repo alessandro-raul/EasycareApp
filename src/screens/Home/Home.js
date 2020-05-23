@@ -2,7 +2,8 @@ import React, { useState, useLayoutEffect } from 'react';
 import Header from '../../componentes/Header';
 import { Text, StatusBar, View, Image, ScrollView, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+//import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 import styles from './style';
 import HeaderScroll from '../../componentes/HeaderScroll';
 import Remedio from '../../../assets/imgs/remedio.png';
@@ -123,7 +124,7 @@ export default function Home({ navigation }) {
       <ScrollView style={{height: '100%', marginTop: 20}}>
      
         <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
-            <Icon name='place' size={25} color='#23AFDB'/>
+            <Icon name='map-pin' size={22} color='#23AFDB'/>
 
             {tem &&
             <View style={styles.viewLocalizacao}>
@@ -142,7 +143,7 @@ export default function Home({ navigation }) {
         </View> 
 
         <View style={styles.contScroll}>
-          <HeaderScroll title="Ofertas recentes" icon="arrow-forward" size={26} />                     
+          <HeaderScroll title="Ofertas recentes" icon="arrow-right" size={26} />                     
           <FlatList
             data={medicaments}
             horizontal={true}
@@ -173,7 +174,7 @@ export default function Home({ navigation }) {
         </View>   
 
          <View style={styles.contScroll}>
-          <HeaderScroll title="Comprados anteriormente" icon="arrow-forward" size={26} />                     
+          <HeaderScroll title="Comprados anteriormente" icon="arrow-right" size={26} />                     
           <FlatList
           data={medicaments}
           horizontal={true}
@@ -197,7 +198,7 @@ export default function Home({ navigation }) {
         /> 
         </View>
 
-        <HeaderScroll title="Estabelecimentos proximos" icon="arrow-forward" size={26} />
+        <HeaderScroll title="Estabelecimentos proximos" icon="arrow-right" size={26} />
         <FlatList
           data={estabelecimentos}
           showsVerticalScrollIndicator={true}

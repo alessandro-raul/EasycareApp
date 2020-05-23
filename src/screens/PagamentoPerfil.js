@@ -4,6 +4,7 @@ import Header from '../componentes/Header';
 import Brendon from '../../assets/imgs/brendon.jpg'
 import { TouchableHighlight, ScrollView, TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
 
 export default function PagamentoPerfil({navigation}){
     function navigateToCadastrarCartao(){
@@ -17,7 +18,7 @@ export default function PagamentoPerfil({navigation}){
             <View style={styles.opcoes}>
                 <View style={styles.bt}> 
                     <TouchableOpacity onPress={navigateToCadastrarCartao}  style={styles.touch}>
-                        <Icon name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
+                        <IconFeather name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
                         <View style={styles.btView}>
                             <Text style={styles.btTxt}>Cartão</Text>
                         </View>

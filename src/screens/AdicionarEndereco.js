@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Picker, ScrollView, ActivityIndicator, Alert} from 'react-native';
 import Header from '../componentes/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
 import Input from '../componentes/inputBasico';
 import RNPickerSelect from 'react-native-picker-select';
 import api from '../services/api';
@@ -72,7 +72,7 @@ export default function AdicionarEndereco({navigation}){
         <ScrollView style={{width: '100%', backgroundColor: 'white'}}>
             <View style={{backgroundColor:"white", height: '100%', alignItems: 'center'}}>
             <View style={styles.mcView}>
-                <Icon name='edit-location' size={22} color="rgba(0,0,0,0.75)"/>
+                <IconFeather name='map-pin' size={20} color="rgba(0,0,0,0.75)"/>
                 <Text style={styles.txt}>Preencha os dados abaixo</Text>
             </View>
                 <View style={{width: '80%'}}>

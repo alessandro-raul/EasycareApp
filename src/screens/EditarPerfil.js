@@ -1,6 +1,8 @@
 import React , {useState, useEffect} from 'react';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/Feather';
+import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import { StatusBar, Text, View, StyleSheet, Image, Alert, ScrollView, ActivityIndicator } from 'react-native';
 import { TouchableOpacity} from 'react-native-gesture-handler';
 import Brendon from '../../assets/imgs/brendon.jpg';
@@ -158,22 +160,22 @@ export default function EditarPerfil({navigation}){
                     <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
                         <Image source={Brendon} style={styles.imgPerfil}/>
                     </View>
-                    <View style={{width:'100%', height:'20%'}}>
+                    <View style={{width:'100%', height:'20%',}}>
                         <TouchableOpacity style={styles.imgPerfilTouch}>
-                            <Icon name='photo-camera' size={23} color="white" style={{padding: 5}}></Icon>
+                            <Icons name='camera' size={20} color="white" style={{padding: 6}}></Icons>
                         </TouchableOpacity> 
                     </View>
                 </View>
 
                 <View style={styles.form}>
                     <View style={styles.input}>
-                        <Input placeholder = "Nome" icon='person-pin' onChangeText={nomeCliente => setNomeCliente(nomeCliente)} value={nomeCliente}></Input>
+                        <Input placeholder = "Nome" icon='user' onChangeText={nomeCliente => setNomeCliente(nomeCliente)} value={nomeCliente}></Input>
                     </View>
                     <View style={styles.input}>
-                        <Input placeholder = "CPF" icon='assignment-ind' onChangeText={cpfCliente => setCpfCliente(cpfCliente)} value={cpfCliente}></Input>
+                        <Input placeholder = "CPF" icon='clipboard' onChangeText={cpfCliente => setCpfCliente(cpfCliente)} value={cpfCliente}></Input>
                     </View>
                     <View style={styles.input}>
-                        <Input placeholder = "Telefone" icon='phone' onChangeText={telefoneCliente=> setTelefoneCliente(telefoneCliente)} value={telefoneCliente}></Input>
+                        <Input placeholder = "Telefone" icon='smartphone' onChangeText={telefoneCliente=> setTelefoneCliente(telefoneCliente)} value={telefoneCliente}></Input>
                     </View>
                     <View style={styles.input}>
                         <Input placeholder = "Email" icon='mail' onChangeText={emailCliente => setEmailCliente(emailCliente)} value={emailCliente}></Input>

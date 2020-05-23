@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
 
 export default function Cartao({navigation}){
 
@@ -20,7 +21,7 @@ export default function Cartao({navigation}){
             <View style={styles.opcoes}>
                 <View style={{marginBottom: "5%"}}>
                     <View style={styles.bt}> 
-                            <Icon name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
+                            <IconFeather name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Visa - Débito</Text>
                                 <Text style={styles.btTxt}>Final: 7585</Text>
@@ -32,7 +33,7 @@ export default function Cartao({navigation}){
                 </View>
                 <View style={{marginBottom: "5%"}}>
                     <View style={styles.bt}> 
-                                <Icon name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
+                            <IconFeather name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Visa - Débito</Text>
                                 <Text style={styles.btTxt}>Final: 7585</Text>
@@ -44,7 +45,7 @@ export default function Cartao({navigation}){
                 </View>
                 <View style={{marginBottom: "5%"}}>
                     <View style={styles.bt}> 
-                            <Icon name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
+                            <IconFeather name='credit-card' color='rgba(0,0,0,0.7)' size={25}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Visa - Débito</Text>
                                 <Text style={styles.btTxt}>Final: 7585</Text>

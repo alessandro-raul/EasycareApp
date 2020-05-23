@@ -6,7 +6,7 @@ import {
   StyleSheet
 } from 'react-native'
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default class InputComIcon extends Component {
   constructor(props){

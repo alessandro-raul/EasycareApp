@@ -5,6 +5,8 @@ import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-
 
 import Remedio from '../../../assets/imgs/remedio.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
+import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import Cupom from 'react-native-vector-icons/FontAwesome5';
 import api from '../../services/api';
 import styles from './style';
@@ -107,7 +109,7 @@ function navigateToPagamentoPerfil(){
 
       <TouchableNativeFeedback onPress={navigateToEnderecos} style={styles.contEntrega}>
         <View style={styles.icons}>
-          <Icon name="room" size={32} color='#23AFDB'/>  
+          <IconFeather name="map-pin" size={28} color='#23AFDB'/>  
         </View>
         <View style={styles.local}>
           <Text style={styles.subTitleBold}>Entregar em:</Text>
@@ -161,7 +163,7 @@ function navigateToPagamentoPerfil(){
       </View>  
 
       <TouchableNativeFeedback onPress={navigateToCupom} style={styles.contCupom}>
-        <Cupom name="ticket-alt" size={25} color="#23AFDB"/>  
+        <IconComunity name="cards-outline" size={28} color="#23AFDB"/>  
         <View style={styles.dadosCupom}>
           <Text style={styles.subTitleBold}>Cupom:</Text>
           <Text style={styles.cont}>Inserir cupom</Text>
@@ -170,7 +172,7 @@ function navigateToPagamentoPerfil(){
       </TouchableNativeFeedback>
 
       <TouchableNativeFeedback onPress={navigateToPagamentoPerfil} style={styles.contPagto}>
-        <Icon name="payment" size={29} color="#23AFDB"/>  
+        <IconFeather name="credit-card" size={26} color="#23AFDB"/>  
         <View style={styles.dadosPagto}>
           <Text style={styles.subTitleBold}>Pagamento:</Text>
           <Text style={styles.cont}>Formas de pagamento</Text>

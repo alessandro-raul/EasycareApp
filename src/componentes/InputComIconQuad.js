@@ -6,7 +6,7 @@ import {
   StyleSheet
 } from 'react-native'
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
 
 
 export default class InputComIconQuad extends Component {
@@ -19,7 +19,7 @@ export default class InputComIconQuad extends Component {
     return (
       <View style={styles.inputContainer}>
         <TouchableWithoutFeedback>
-          <Icon style={styles.icon} name={this.props.icon} size={18} color={this.props.iconColor} />
+          <IconFeather style={styles.icon} name={this.props.icon} size={18} color={this.props.iconColor} />
         </TouchableWithoutFeedback>
         <TextInput
           style={[styles.input, this.props.style]}

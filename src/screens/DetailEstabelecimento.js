@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import MeuHeader from '../componentes/Header';
 import logo from '../../assets/imgs/drogariasp.png';
 import api from '../services/api';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
 import MapView, { Marker } from 'react-native-maps';
 import Geocoder from 'react-native-geocoder';
   
@@ -82,23 +82,23 @@ export default function PerfilEstabelecimento({navigation}) {
             {logEstabelecimento}, {numLogEstabelecimento} - {bairroLogEstabelecimento}, {cidadeLogEstabelecimento} - {ufLogEstabelecimento}
         </Text>
         <View style={styles.emailView}>
-            <Icon name='email' size={20} color="#23AFDB" />
+            <IconFeather name='mail' size={20} color="#23AFDB" />
             <Text style={styles.numFoneTxt}>
                 {emailEstabelecimento}
             </Text>
         </View>
         <View style={styles.numFoneView}>
-            <Icon name='phone' size={20} color="#23AFDB" />
+            <IconFeather name='phone' size={20} color="#23AFDB" />
             <Text style={styles.numFoneTxt}>
                 {numFoneEstabelecimento}
             </Text>
         </View>
         <View style={styles.btsContainer}>
           <TouchableOpacity style={styles.btFone} onPress={abrirTelefone}>
-            <Icon name='phone' size={22} color="#FFF" />
+            <IconFeather name='phone' size={18} color="#FFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.btMail} onPress={abrirEmail}>
-            <Icon name='mail' size={20} color="#FFF" />
+            <IconFeather name='mail' size={18} color="#FFF" />
           </TouchableOpacity>
         </View>
         <View style={styles.mapa}>

@@ -144,15 +144,15 @@ export default function TelaLogin({navigation}){
                         <View style = {styles.formContainer}>
                             {stageNew &&
                             <>
-                                <InputComIcom placeholder = "Email" icon='email'  onChangeText={emailCliente => setEmailCliente(emailCliente)} /> 
+                                <InputComIcom placeholder = "Email" icon='mail'  onChangeText={emailCliente => setEmailCliente(emailCliente)} /> 
                                 <InputComIcom placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} secureTextEntry={true} />
                             </>
                             }
 
                             {!stageNew &&
                             <>
-                            <InputComIcom placeholder = "Nome" icon='person-pin' onChangeText={nomeCliente=>setNomeCliente(nomeCliente)} />
-                            <InputComIcom placeholder = "CPF" keyboardType='numeric' icon='assignment-ind' onChangeText={cpfCliente=>setCpfCliente(cpfCliente)}/>
+                            <InputComIcom placeholder = "Nome" icon='user' onChangeText={nomeCliente=>setNomeCliente(nomeCliente)} />
+                            <InputComIcom placeholder = "CPF" keyboardType='numeric' icon='clipboard' onChangeText={cpfCliente=>setCpfCliente(cpfCliente)}/>
                             </>
                             }
 
