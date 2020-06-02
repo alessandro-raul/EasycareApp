@@ -16,6 +16,28 @@ export default StyleSheet.create({
     width: "95%"
   },
 
+  contScroll2: {
+    height: 230,
+    width: '100%',
+    marginTop: '1%',
+    justifyContent: 'center',
+    alignItems: 'center',  
+  },
+
+  medicContainer2: {
+    width: 130,
+    marginLeft:22,
+    padding: 7,
+    paddingTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'rgba(70,70,70,0.3)',
+    //backgroundColor: 'red',  
+  },
+  
+
   /*Card Scroll Ofertas*/
   contScroll: {
     height: 330,
@@ -42,8 +64,8 @@ export default StyleSheet.create({
   },
   
   contImg: {
-    width: '90%',
-    height: '40%',
+    width: 100,
+    height: 100,
     alignItems: 'center',
     justifyContent: 'center',
     //backgroundColor: '#333',  
@@ -117,8 +139,7 @@ export default StyleSheet.create({
     flexDirection:'row',
     width: '70%',
     paddingLeft: 30, 
-    paddingTop: 5,
-    paddingTop: 5,
+    paddingTop: 20,
     alignItems: 'center',
     paddingHorizontal: 15,
   },
@@ -145,7 +166,7 @@ export default StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: 'rgba(70,70,70, 0.1)',
+    borderColor: 'rgba(70,70,70, 0.2)',
     //backgroundColor: '#333',
   },
 

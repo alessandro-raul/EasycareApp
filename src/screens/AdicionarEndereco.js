@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Picker, ScrollView, ActivityIndicator, Alert} from 'react-native';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -6,6 +6,7 @@ import Input from '../componentes/inputBasico';
 import RNPickerSelect from 'react-native-picker-select';
 import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useRoute } from '@react-navigation/native';
 
 export default function AdicionarEndereco({navigation}){
     const [idCliente, setIdCliente] = useState('');
@@ -18,8 +19,34 @@ export default function AdicionarEndereco({navigation}){
     const [ufLogCliente, setUfLogCliente] = useState('');
     const [tipoEndereco, setTipoEndereco] = useState('');
     const [showLoader, setShowLoader] = useState(false);
+    const route = useRoute();
     var id;
     var idEnd;
+    
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+                pegarGps();
+        });
+        return unsubscribe;
+    }, [navigation]);
+
+    function pegarGps(){
+        try {
+            const logCliente = route.params.logCliente;
+            const numLogCliente = route.params.numLogCliente;
+            const cepLogCliente = route.params.cepLogCliente;
+            const bairroLogCliente = route.params.bairroLogCliente; 
+            const cidadeLogCliente = route.params.cidadeLogCliente;
+    
+            setLogCliente(logCliente);
+            setNumLogCliente(numLogCliente);
+            setCepLogCliente(cepLogCliente);
+            setBairroLogCliente(bairroLogCliente);
+            setCidadeLogCliente(cidadeLogCliente);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function pegarIdCliente(){
         try {
@@ -76,25 +103,25 @@ export default function AdicionarEndereco({navigation}){
                 <Text style={styles.txt}>Preencha os dados abaixo</Text>
             </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Endereço" onChangeText={logCliente => setLogCliente(logCliente)}></Input>
+                    <Input placeholder="Endereço" value={logCliente} onChangeText={logCliente => setLogCliente(logCliente)}></Input>
                 </View>
                 <View style={{flexDirection:'row'}}>
                     <View style={{width: "35%", marginRight: "5%"}}>
-                        <Input placeholder="Número" onChangeText={numLogCliente=> setNumLogCliente(numLogCliente)}></Input>
+                        <Input placeholder="Número" value={numLogCliente} onChangeText={numLogCliente=> setNumLogCliente(numLogCliente)}></Input>
                     </View>
                     <View style={{width: "40%"}}>
-                        <Input placeholder="CEP" onChangeText={cepLogCliente => setCepLogCliente(cepLogCliente)}></Input>
+                        <Input placeholder="CEP" value={cepLogCliente} onChangeText={cepLogCliente => setCepLogCliente(cepLogCliente)}></Input>
                     </View>
                 </View>
                 <View style={{width: '80%'}}>
                     <Input placeholder="Complemento" onChangeText={complementoLogCliente => setComplementoCliente(complementoLogCliente)}></Input>
                 </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Bairro" onChangeText={bairroLogCliente => setBairroLogCliente(bairroLogCliente)}></Input>
+                    <Input placeholder="Bairro" value={bairroLogCliente} onChangeText={bairroLogCliente => setBairroLogCliente(bairroLogCliente)}></Input>
                 </View>
                 <View style={{flexDirection:'row'}}>
                     <View style={{width: "50%", marginRight: "5%"}}>
-                        <Input placeholder="Cidade" onChangeText={cidadeLogCliente => setCidadeLogCliente(cidadeLogCliente)}></Input>
+                        <Input placeholder="Cidade" value={cidadeLogCliente} onChangeText={cidadeLogCliente => setCidadeLogCliente(cidadeLogCliente)}></Input>
                     </View>
                     <View style={{width: "25%"}}>
                         <Input placeholder="UF" onChangeText={ufLogCliente => setUfLogCliente(ufLogCliente)}></Input>

@@ -36,6 +36,7 @@ export default function PerfilEstabelecimento({navigation}) {
   async function pegarCoordenadas(){
     try{
     const res = await Geocoder.geocodeAddress(logEstabelecimento+numLogEstabelecimento);
+    console.log(res)
     res.map(item =>{
       setLatitude(item.position.lat);
       setLongitude(item.position.lng);

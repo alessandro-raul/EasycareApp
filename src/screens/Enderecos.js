@@ -9,16 +9,19 @@ import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
 import {Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
+import MapView, { Marker } from 'react-native-maps';
+import Geocoder from 'react-native-geocoder';
+import Geolocation from '@react-native-community/geolocation';
 
 export default function Enderecos({navigation}){
-    const [enderecos, setEnderecos] = useState([]);
+    const [enderecos, setEnderecos] = useState('');
     const [modal, setModal] = useState(false);
     const [tem, setTem] = useState(true);
     const [logModal, setLogModal] = useState();
     const [numLogModal, setNumLogModal] = useState();
     const [bairroLogModal, setBairroLogModal] = useState();
     const [cidadeLogModal, setCidadeLogModal] = useState();
-  
+   
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
                 pegarId();
@@ -26,8 +29,8 @@ export default function Enderecos({navigation}){
         return unsubscribe;
     }, [navigation]);
 
-    function navigateToAdicionar(){
-        navigation.navigate('AdicionarEndereco');
+    function navigateToAdicionar(logCliente, numLogCliente, cepLogCliente, bairroLogCliente, cidadeLogCliente){
+        navigation.navigate('AdicionarEndereco', {logCliente, numLogCliente, cepLogCliente, bairroLogCliente, cidadeLogCliente});
     }
 
     async function pegarId(){
@@ -88,7 +91,7 @@ export default function Enderecos({navigation}){
             setModal(false);
             pegarId();
         }catch(error){
-        console.log(error);
+            console.log(error);
         }
     }
 
@@ -101,7 +104,6 @@ export default function Enderecos({navigation}){
         try {
             const response = await api.get('/UserAdress/', {params: {idCliente: id}});
             const data = response.data.response;
-            console.log(data);
             
             if (data == "Nenhum usuário encontrado" || data == undefined){ 
                setTem(false);
@@ -124,6 +126,35 @@ export default function Enderecos({navigation}){
         }        
     }
 
+    function pegarLocalizacaoAtual(){
+      Geolocation.getCurrentPosition(
+          ({ coords: {latitude, longitude}}) =>{
+            var PO = {
+                lat: latitude,
+                lng: longitude
+            }
+            pegar2(PO);
+          },
+          ()=> {},
+          {
+              timeout: 2000,
+              enableHighAccuracy: true,
+              maximumAge: 1000
+          }
+      )
+    }
+
+    async function pegar2(PO){
+        var PO = PO; 
+        const resp = await Geocoder.geocodePosition(PO,1);
+        const logCliente = resp[1].streetName;
+        const numLogCliente = resp[1].streetNumber;
+        const cepLogCliente = resp[1].postalCode;
+        const bairroLogCliente = resp[1].subLocality;
+        const cidadeLogCliente = resp[1].adminArea;
+        navigateToAdicionar(logCliente, numLogCliente, cepLogCliente, bairroLogCliente, cidadeLogCliente);
+    }
+
     return(
         <>
             <Header text="Endereços"/>
@@ -140,11 +171,11 @@ export default function Enderecos({navigation}){
                         </View>
                 </TouchableNativeFeedback>
            
-                <TouchableOpacity style={styles.touchLocalizacao}>
+                <TouchableOpacity style={styles.touchLocalizacao} onPress={pegarLocalizacaoAtual}>
                     <Icon name="gps-fixed" size={25} color="rgba(0,0,0,0.75)"/>
                         <View style={styles.viewLocalizacao}>
                             <Text style={{fontSize: 15}}>Usar a localização atual</Text>
-                            <Text style={{fontSize: 14, color:'gray'}}>R. dos Bobos, 0 - Itaim Paulista</Text>
+                            <Text style={{fontSize: 14, color:'gray'}}>Pressione para usar sua localização atual</Text>
                         </View>
                 </TouchableOpacity>
             </View>

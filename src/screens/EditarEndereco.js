@@ -10,7 +10,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default function EditarEndereco({navigation}){
-    
     const [idCliente, setIdCliente] = useState('');
     const [idEnderecoCliente, setIdEnderecoCliente] = useState('');
     const [logCliente, setLogCliente] = useState('');
@@ -22,8 +21,7 @@ export default function EditarEndereco({navigation}){
     const [ufLogCliente, setUfLogCliente] = useState('');
     const [tipoEndereco, setTipoEndereco] = useState('');
     const [showLoader, setShowLoader] = useState(false);
-    var id;
-   
+    var id;   
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -35,7 +33,6 @@ export default function EditarEndereco({navigation}){
     function navigateToAdicionar(){
         navigation.navigate('AdicionarEndereco');
     }
-
 
     async function pegarEndereco(){
         const log = await AsyncStorage.getItem("logCliente");
@@ -61,7 +58,7 @@ export default function EditarEndereco({navigation}){
         setIdCliente(id);
     }
 
-async function AtualizarEndereco(){
+    async function AtualizarEndereco(){
         try {
             const data = {
                 idEnderecoCliente: idEnderecoCliente,
@@ -98,10 +95,9 @@ async function AtualizarEndereco(){
     }
     
     return(
-        <>
-            <Header text="Editar Endereço"/>
-         
-            <ScrollView style={{width: '100%', backgroundColor: 'white'}}>
+    <>
+        <Header text="Editar Endereço"/> 
+        <ScrollView style={{width: '100%', backgroundColor: 'white'}}>
             <View style={{backgroundColor:"white", height: '100%', alignItems: 'center'}}>
             <View style={styles.mcView}>
                 <Icon name='edit-location' size={22} color="rgba(0,0,0,0.75)"/>
@@ -158,12 +154,9 @@ async function AtualizarEndereco(){
                             }
                     </TouchableOpacity>
                 </View>
-               
             </View>
-            </ScrollView>
-          
-            
-        </>
+        </ScrollView>
+    </>
     )
 }
 
