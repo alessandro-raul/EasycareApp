@@ -3,6 +3,7 @@ import { View, Text, Image,TouchableOpacity, ScrollView, FlatList} from 'react-n
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
+import IconFeather from 'react-native-vector-icons/Feather';
 import MeuHeader from '../../componentes/Header';
 import logo from '../../../assets/imgs/drogariasp.png';
 import Remedio from '../../../assets/imgs/remedio.png';
@@ -132,7 +133,7 @@ export default function PerfilEstabelecimento({navigation}) {
                     </ScrollView>
                   </View>
                   <View style={styles.contScroll}>
-                    <HeaderScroll title="Ofertas" icon="arrow-forward" size={26} />                     
+                    <HeaderScroll title="Ofertas" icon="arrow-right" size={26} />                     
                     <FlatList
                       data={medicaments}
                       horizontal={true}
@@ -160,7 +161,7 @@ export default function PerfilEstabelecimento({navigation}) {
                     )}/> 
                   </View>   
                   <View style={styles.contScroll}>
-                    <HeaderScroll title="Mais vendidos" icon="arrow-forward" size={26} />                     
+                    <HeaderScroll title="Mais vendidos" icon="arrow-right" size={26} />                     
                     <FlatList
                       data={medicaments}
                       horizontal={true}
@@ -189,7 +190,7 @@ export default function PerfilEstabelecimento({navigation}) {
                   </View> 
 
                   <View style={styles.contScroll}>
-                    <HeaderScroll title="Todos" icon="arrow-forward" size={26} function={()=> navigateToTodos(idEstabelecimento)}/>                     
+                    <HeaderScroll title="Todos" icon="arrow-right" size={26} function={()=> navigateToTodos(idEstabelecimento)}/>                     
                     <FlatList
                       data={medicaments}
                       horizontal={true}

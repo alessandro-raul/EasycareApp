@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 
 
@@ -22,7 +23,7 @@ export default function Cupom({navigation}){
                 <View style={styles.opcoes}>
                     <View style={styles.btView}>
                         <View style={styles.bt}> 
-                                <IconAwesome name='ticket' color='rgba(0,0,0,0.7)' size={25}/>
+                                <IconComunity name='cards-outline' color='rgba(0,0,0,0.7)' size={25}/>
                                 <View style={styles.btTxtView}>
                                     <Text style={styles.btTxt}>Cupom: 100-OFF</Text>
                                     <Text style={styles.btTxt}>Valor: R$100</Text>
@@ -34,7 +35,7 @@ export default function Cupom({navigation}){
                     </View>
                     <View style={styles.btView}>
                         <View style={styles.bt}> 
-                                <IconAwesome name='ticket' color='rgba(0,0,0,0.7)' size={25}/>
+                                <IconComunity name='cards-outline' color='rgba(0,0,0,0.7)' size={25}/>
                                 <View style={styles.btTxtView}>
                                     <Text style={styles.btTxt}>Cupom: 100-OFF</Text>
                                     <Text style={styles.btTxt}>Valor: R$100</Text>
@@ -46,7 +47,7 @@ export default function Cupom({navigation}){
                     </View>
                     <View style={styles.btView}>
                         <View style={styles.bt}> 
-                                <IconAwesome name='ticket' color='rgba(0,0,0,0.7)' size={25}/>
+                                <IconComunity name='cards-outline' color='rgba(0,0,0,0.7)' size={25}/>
                                 <View style={styles.btTxtView}>
                                     <Text style={styles.btTxt}>Cupom: 100-OFF</Text>
                                     <Text style={styles.btTxt}>Valor: R$100</Text>

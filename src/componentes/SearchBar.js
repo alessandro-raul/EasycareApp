@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text,   StyleSheet, View, TextInput, TouchableOpacity,} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default function SearchBar(props){
 
@@ -8,7 +8,7 @@ export default function SearchBar(props){
     <View style={styles.container}>
       <View style={styles.containerInput}>
         <TouchableOpacity>
-          <Icon name="search" size={24} color={props.cor}/>
+          <Icon name="search" size={22} color={props.cor}/>
         </TouchableOpacity>
         <TextInput style={styles.input} placeholderTextColor="#666" placeholder="Pesquisar"></TextInput>
       </View>

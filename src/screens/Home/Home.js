@@ -2,7 +2,8 @@ import React, { useState, useLayoutEffect } from 'react';
 import Header from '../../componentes/Header';
 import { Text, StatusBar, View, Image, ScrollView, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+//import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 import styles from './style';
 import HeaderScroll from '../../componentes/HeaderScroll';
 import Remedio from '../../../assets/imgs/remedio.png';
@@ -119,12 +120,48 @@ export default function Home({ navigation }) {
       <StatusBar backgroundColor='white'/>
       <Header text="Easycare"/>
       <View style={styles.container}>   
+<<<<<<< HEAD
         <ScrollView style={{height: '100%'}}>
           <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
               <Icon name='place' size={25} color='#23AFDB'/>
               {tem &&
               <View style={styles.viewLocalizacao}>
               <Text style={styles.txtLocalizacao}>{logCliente}, {numLogCliente}</Text>
+=======
+      <ScrollView style={{height: '100%', marginTop: 20}}>
+     
+        <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
+            <Icon name='map-pin' size={22} color='#23AFDB'/>
+
+            {tem &&
+            <View style={styles.viewLocalizacao}>
+            <Text style={styles.txtLocalizacao}>{logCliente}, {numLogCliente}</Text>
+            </View>
+            }
+
+            {!tem &&
+              <Text style={styles.txtLocalizacao}>Selecione um endereço</Text>
+            }
+
+        </TouchableOpacity>
+
+        <View style={styles.contSearch}>
+          <SearchBarHome press={() => navigateToSearch() }/>
+        </View> 
+
+        <View style={styles.contScroll}>
+          <HeaderScroll title="Ofertas recentes" icon="arrow-right" size={26} />                     
+          <FlatList
+            data={medicaments}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={medicament => String(medicament.idMedicamento)}
+            style={styles.scrollMedic}
+            renderItem={({ item:medicament }) => (
+            <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
+              <View style={styles.contImg}>
+                <Image source={Remedio} style={styles.imgMedic} />
+>>>>>>> b7b21b7c4e394791b9a07a4f967d68794a30c113
               </View>
               }
 
@@ -162,6 +199,29 @@ export default function Home({ navigation }) {
                     <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
                   </View>
                 </View>
+<<<<<<< HEAD
+=======
+              </View>
+            </TouchableOpacity>
+          )}
+          /> 
+        
+        </View>   
+
+         <View style={styles.contScroll}>
+          <HeaderScroll title="Comprados anteriormente" icon="arrow-right" size={26} />                     
+          <FlatList
+          data={medicaments}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={medicament => String(medicament.idMedicamento)}
+          style={styles.scrollMedic}
+          renderItem={({ item:medicament }) => (
+          <View style={styles.medicContainer}>
+            <View style={styles.contImg}>
+              <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.hitBox}>
+                <Image source={Remedio} style={styles.imgMedic} />
+>>>>>>> b7b21b7c4e394791b9a07a4f967d68794a30c113
               </TouchableOpacity>
             )}
             /> 
@@ -217,6 +277,36 @@ export default function Home({ navigation }) {
                   </TouchableOpacity>
                 </View>)}/>
           </View>
+<<<<<<< HEAD
+=======
+          )}
+        /> 
+        </View>
+
+        <HeaderScroll title="Estabelecimentos proximos" icon="arrow-right" size={26} />
+        <FlatList
+          data={estabelecimentos}
+          showsVerticalScrollIndicator={true}
+          keyExtractor={estabelecimentos => String(estabelecimentos.idEstabelecimento)}
+          style={{marginBottom: 130}}
+          renderItem={({ item:estabelecimento }) => (
+            <View style={{paddingHorizontal: 32,}}>
+            <TouchableOpacity onPress={()=> navigateToEstabelecimento(estabelecimento.idEstabelecimento)}>
+            <View style={styles.farmaContainer}>
+              <View style={styles.viewImg}>
+                <Image source={Drogaria} style={styles.ImgFarma} />
+              </View>
+              <View style={styles.viewDados}>
+                <Text style={styles.title}>{estabelecimento.nomeEstabelecimento} - {estabelecimento.bairroLogEstabelecimento}</Text>
+                <Text style={styles.subTitle}>1,6 km - R$ 5,00</Text>
+              </View>
+              
+            </View>
+            </TouchableOpacity>
+            </View>
+          )}
+        />
+>>>>>>> b7b21b7c4e394791b9a07a4f967d68794a30c113
         </ScrollView>
       </View>
     </>

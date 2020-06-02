@@ -1,6 +1,7 @@
 import React , {useState, useEffect} from 'react';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
 import { Text, View, StyleSheet, Image, Alert, FlatList } from 'react-native';
 import { TouchableOpacity, TouchableNativeFeedback} from 'react-native-gesture-handler';
 import api from '../services/api';
@@ -164,7 +165,7 @@ export default function Enderecos({navigation}){
                 </View>*/}
 
                 <TouchableNativeFeedback style={styles.touchAdd} onPress={navigateToAdicionar}>
-                    <Icon name="edit-location" size={25} color="rgba(0,0,0,0.75)"/>
+                    <IconFeather name="map-pin" size={25} color="rgba(0,0,0,0.75)"/>
                         <View style={styles.viewLocalizacao}>
                             <Text style={{fontSize: 15}}>Adicionar endereço</Text>
                             <Text style={{fontSize: 14, color:'gray'}}>Adicione um novo endereço aqui</Text>

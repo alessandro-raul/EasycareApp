@@ -7,7 +7,7 @@ import Perfil from '../src/screens/Perfil';
 import Pedido from '../src/screens/Pedido/Pedido';
 import Pesquisa from '../src/screens/Pesquisa/Pesquisa';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
 var azul = '#23AFDB';
@@ -26,7 +26,7 @@ function DashboardRoutes() {
          options={{
        
           tabBarIcon: ({color}) => (
-            <Icon name="home" color={color} size={26} />
+            <Icon name="home" color={color} size={22} />
           ),
         }} />
 
@@ -35,7 +35,7 @@ function DashboardRoutes() {
               options={{
             
                 tabBarIcon: ({color}) => (
-                  <Icon name="search" color={color} size={26} />
+                  <Icon name="search" color={color} size={22} />
                 ),
               }}/>
 
@@ -43,7 +43,7 @@ function DashboardRoutes() {
               options={{
             
                 tabBarIcon: ({color}) => (
-                  <Icon name="local-mall" color={color} size={26} />
+                  <Icon name="shopping-bag" color={color} size={22} />
                 ),
               }}/>
 
@@ -52,7 +52,7 @@ function DashboardRoutes() {
           options={{
        
             tabBarIcon: ({color}) => (
-              <Icon name="account-circle" color={color} size={26} />
+              <Icon name="user" color={color} size={22} />
             ),
           }}/>
      </Tab.Navigator>

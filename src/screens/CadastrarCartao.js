@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import Header from '../componentes/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
 import Input from '../componentes/inputBasico';
 
 
@@ -11,7 +11,7 @@ export default function CadatrarCartao(){
         <Header text="Adicionar Cartão"/>
             <View style={{backgroundColor:"white", height: '100%', alignItems: 'center'}}>
             <View style={styles.mcView}>
-                <Icon name='credit-card' size={22} color="rgba(0,0,0,0.75)"/>
+                <IconFeather name='credit-card' size={20} color="rgba(0,0,0,0.75)"/>
                 <Text style={styles.txt}>Preencha os dados abaixo</Text>
             </View>
                 <View style={{width: '80%'}}>

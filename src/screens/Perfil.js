@@ -4,8 +4,10 @@ import Header from '../componentes/Header';
 import Brendon from '../../assets/imgs/brendon.jpg'
 import { ScrollView, TouchableOpacity, TouchableNativeFeedback, TouchableHighlight, ActivityIndicator } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import gifTriste from '../../assets/imgs/gifTriste.gif';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import IconFeather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default function TelaPerfil({navigation}){
@@ -127,61 +129,61 @@ export default function TelaPerfil({navigation}){
                 <View style={styles.opcoes}>
                     <View style={styles.bt}> 
                         <TouchableOpacity onPress={navigateToEnderecos} style={styles.touch}>
-                            <Icon name='place' color='rgba(0,0,0,0.7)' size={25}/>
+                            <IconFeather name='map-pin' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Endereços</Text>
                             </View>
-                            <Icon name='arrow-forward' size={27} color='#23AFDB' />
+                            <IconFeather name='arrow-right' size={24} color='#23AFDB' />
                         </TouchableOpacity>
                     </View>
                 
                     <View style={styles.bt}> 
                         <TouchableOpacity onPress={navigateToPagamentoPerfil} style={styles.touch}>
-                            <Icon name='payment' color='rgba(0,0,0,0.7)' size={25}/>
+                            <IconFeather name='credit-card' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Pagamento</Text>
                             </View>
-                            <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                            <IconFeather name='arrow-right' size={24} color='#23AFDB' style={{}}/>
                         </TouchableOpacity>
                     </View>
                 
                     <View style={styles.bt}> 
                         <TouchableOpacity onPress={navigateToCupom} style={styles.touch}>
-                            <IconAwesome name='ticket' color='rgba(0,0,0,0.7)' size={25}/>
+                            <IconComunity name='cards-outline' color='rgba(0,0,0,0.7)' size={25}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Cupons</Text>
                             </View>
-                            <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                            <IconFeather name='arrow-right' size={24} color='#23AFDB' style={{}}/>
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.bt}> 
                         <TouchableOpacity style={styles.touch} onPress={navigateToNotificacoes}>
-                            <Icon name='notifications-none' color='rgba(0,0,0,0.7)' size={25}/>
+                            <IconFeather name='bell' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Notificações</Text>
                             </View>
-                            <Icon name='arrow-forward' size={27} color='#23AFDB' style={{}}/>
+                            <IconFeather name='arrow-right' size={24} color='#23AFDB' style={{}}/>
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.bt}> 
                         <TouchableOpacity onPress={pegarEndereco} style={styles.touch}>
-                            <Icon name='help' color='rgba(0,0,0,0.7)' size={27}/>
+                            <IconFeather name='help-circle' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Ajuda</Text>
                             </View>
-                            <Icon name='arrow-forward' size={27} color='#23AFDB'  />
+                            <IconFeather name='arrow-right' size={24} color='#23AFDB' style={{}}/>
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.bt}> 
                         <TouchableOpacity onPress={logOut} style={styles.touch}>
-                            <Icon name='power-settings-new' color='rgba(0,0,0,0.7)' size={27}/>
+                            <IconFeather name='power' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Sair</Text>
                             </View>
-                            <Icon name='exit-to-app' size={27} color='#23AFDB'  />
+                            <IconFeather name='log-out' size={24} color='#23AFDB'  />
                         </TouchableOpacity>
                     </View>
 
