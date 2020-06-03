@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Header from '../componentes/Header';
 import IconFeather from 'react-native-vector-icons/Feather';
 import Input from '../componentes/inputBasico';
@@ -15,21 +15,63 @@ export default function CadatrarCartao(){
                 <Text style={styles.txt}>Preencha os dados abaixo</Text>
             </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Número do cartão"></Input>
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.input}
+                            returnKeyType="next"
+                            keyboardType="numeric"
+                            placeholder="Número do cartão"
+                            onSubmitEditing={() => this.input2.focus()}
+                            blurOnSubmit={false}
+                        />
+                    </View>
                 </View>
                 <View style={{flexDirection:'row'}}>
                     <View style={{width: "37%", marginRight: "6%"}}>
-                        <Input placeholder="Validade"></Input>
+                        <View style={styles.inputContainer}>
+                            <TextInput style={styles.input}
+                                returnKeyType="next"
+                                placeholder="Validade"
+                                ref={(input) => {this.input2 = input;}} 
+                                onSubmitEditing={() => this.input3.focus()}
+                                blurOnSubmit={false}                           
+                            />
+                        </View>
                     </View>
                     <View style={{width: "37%"}}>
-                        <Input placeholder="CVV"></Input>
+                        <View style={styles.inputContainer}>
+                            <TextInput style={styles.input}
+                                returnKeyType="next"
+                                keyboardType="numeric"
+                                placeholder="CVV"
+                                ref={(input) => {this.input3 = input;}}
+                                onSubmitEditing={() => this.input4.focus()}
+                                blurOnSubmit={false}
+                            />
+                        </View>
                     </View>
                 </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="Nome do titular"></Input>
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.input}
+                            returnKeyType="next"
+                            autoCapitalize="characters"
+                            autoCompleteType="name"
+                            placeholder="Nome do titular"
+                            ref={(input) => {this.input4 = input;}}
+                            onSubmitEditing={() => this.input5.focus()}
+                            blurOnSubmit={false}
+                        />
+                    </View>
                 </View>
                 <View style={{width: '80%'}}>
-                    <Input placeholder="CPF/CNPJ"></Input>
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.input}
+                            returnKeyType="done"
+                            keyboardType="numeric"
+                            placeholder="CPF/CNPJ"
+                            ref={(input) => {this.input5 = input;}}
+                        />
+                    </View>
                 </View>
                 <View style={{marginTop: '7%'}}>
                     <TouchableOpacity style={styles.btAdd} >
@@ -71,5 +113,21 @@ const styles = StyleSheet.create({
         textAlign:"center", 
         fontSize: 17, 
         color: 'white'
-    }
+    },
+
+    inputContainer: {
+        borderColor: 'rgba(70,70,70, 0.31)',
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingLeft: 20,
+        marginTop: 25,
+        flexDirection: 'row',
+       
+      },
+    
+      input: {
+        fontSize: 16,
+        color: '#666',
+        flex: 1
+      }
 })

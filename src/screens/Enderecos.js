@@ -8,6 +8,7 @@ import api from '../services/api';
 import triste from '../../assets/imgs/triste.png';
 import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
+import gifTriste from '../../assets/imgs/gifTriste3.gif';
 import {Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 import MapView, { Marker } from 'react-native-maps';
@@ -15,6 +16,7 @@ import Geocoder from 'react-native-geocoder';
 import Geolocation from '@react-native-community/geolocation';
 
 export default function Enderecos({navigation}){
+    const [statusLogin, setStatusLogin] = useState(0);
     const [enderecos, setEnderecos] = useState('');
     const [modal, setModal] = useState(false);
     const [tem, setTem] = useState(true);
@@ -25,13 +27,38 @@ export default function Enderecos({navigation}){
    
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
+                pegarStatus();
                 pegarId();
         });
         return unsubscribe;
     }, [navigation]);
 
+    async function pegarStatus(){
+        try {
+            const status = await AsyncStorage.getItem('statusLogin');
+            if(status== "completo"){
+                setStatusLogin(1);
+            }else{
+                setStatusLogin(2);
+            }
+        } catch (error) {
+            
+        }
+    }
+
     function navigateToAdicionar(logCliente, numLogCliente, cepLogCliente, bairroLogCliente, cidadeLogCliente){
         navigation.navigate('AdicionarEndereco', {logCliente, numLogCliente, cepLogCliente, bairroLogCliente, cidadeLogCliente});
+    }
+
+    async function navigateToPreLog(){
+        try{
+            await AsyncStorage.clear();
+            const status = "1";
+            await AsyncStorage.setItem("statusIntro", status);
+            navigation.navigate('PreLog');
+        }catch(error){
+            console.log(error)
+        }
     }
 
     async function pegarId(){
@@ -159,11 +186,19 @@ export default function Enderecos({navigation}){
     return(
         <>
             <Header text="Endereços"/>
-            <View style={styles.fundo}>
-                {/*View style={styles.inputPesquisa}>  
-                    <InputComIconQuad icon="search" placeholder="Digite o endereço e o número"/>
-                </View>*/}
 
+            {statusLogin==2 &&
+             <View style={styles.container2}>
+                    <Text style={styles.nlTxt}>Você precisa se logar para isso...</Text>
+                    <Image source={gifTriste} style={styles.gif}/>
+                        <TouchableOpacity style={styles.btLogar} onPress={navigateToPreLog}>
+                            <Text style={styles.txtLogar}>Logar agora!</Text>
+                        </TouchableOpacity>
+                    </View>
+            }
+
+            {statusLogin==1 &&
+            <View style={styles.fundo}>
                 <TouchableNativeFeedback style={styles.touchAdd} onPress={navigateToAdicionar}>
                     <IconFeather name="map-pin" size={25} color="rgba(0,0,0,0.75)"/>
                         <View style={styles.viewLocalizacao}>
@@ -180,8 +215,8 @@ export default function Enderecos({navigation}){
                         </View>
                 </TouchableOpacity>
             </View>
-
-              {tem &&
+            }
+              {tem && statusLogin==1 &&
                 <FlatList style={{marginTop:'5%'}}
                       data = {enderecos}
                       keyExtractor={endereco => String(endereco.idEnderecoCliente)}
@@ -203,13 +238,14 @@ export default function Enderecos({navigation}){
                     )} /> 
                 }
 
-                {!tem &&
+                {!tem && statusLogin ==1 &&
                     <View style={{justifyContent:'center', alignItems:'center', height: '70%'}}>
                         <Image source={triste} style={{width: 60, height: 60, marginBottom: 10}}/>
                         <Text style={{fontSize: 15}}>Nenhum endereço cadastrado ainda...</Text>
                     </View>
                 }
-                  
+                
+            
                 <View style={styles.gb}>
                 <Modal 
                 isVisible={modal} 
@@ -239,6 +275,8 @@ export default function Enderecos({navigation}){
                     </View>
                 </Modal>
             </View>
+            
+            
         </>
     )
 } 
@@ -310,6 +348,44 @@ const styles = StyleSheet.create({
     gb:{
         height: '5%', 
         width: '100%'
+    },
+
+    //triste
+    container2:{
+        height: '100%', 
+        width: '100%',
+        justifyContent: 'center', 
+        alignItems: 'center',
+        backgroundColor: 'white'
+    },
+
+    nlTxt:{
+        fontSize: 20, color: '#666', 
+        textAlign: 'center', 
+        fontWeight: 'bold',
+        width: 250
+    },
+
+    btLogar:{
+        backgroundColor: '#23AFDB', 
+        width: 155, 
+        height: 40, 
+        borderRadius: 10, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+
+    txtLogar:{
+        color: '#fff', 
+        fontSize: 17, 
+        fontWeight: 'bold'
+    },
+
+    gif:{
+        width: 110,
+        height: 110,
+        marginBottom: 10,
+        marginTop: 10
     }
 
 })

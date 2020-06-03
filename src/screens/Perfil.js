@@ -213,9 +213,10 @@ const styles = StyleSheet.create({
     },
 
     nlTxt:{
-        fontSize: 22, color: '#666', 
+        fontSize: 20, color: '#666', 
         textAlign: 'center', 
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        width: 250
     },
 
     btLogar:{

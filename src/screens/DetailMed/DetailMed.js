@@ -6,11 +6,9 @@ import Remedio from '../../../assets/imgs/remedio.png';
 import api from '../../services/api';
 import styles from './style';
 
-
 export default function DetailMed() {
   const navigation = useNavigation();
   const route = useRoute();
-  
   const medicament = route.params.medicament;
   const nomeEstablishment = route.params.nomeEstabelecimento;
   var auxNome;
@@ -27,9 +25,9 @@ export default function DetailMed() {
   const [statusEstabelecimento, setStatusEstabelecimento] = useState('');
   */
 
- function navigateToEstabelecimento(idEstabelecimento) {
-  navigation.navigate('PerfilEstabelecimento', { idEstabelecimento });
-}
+  function navigateToEstabelecimento(idEstabelecimento) {
+    navigation.navigate('PerfilEstabelecimento', { idEstabelecimento });
+  }
 
   async function loadDadosEstablishment(idEstabelecimento) {
     const response = await api.get('/Establishment', { params: {idEstabelecimento} });
@@ -47,17 +45,15 @@ export default function DetailMed() {
       setStatusEstabelecimento(item.statusEstabelecimento);
       */
     });
-
   }
 
-  function navigateToPedido(medicament, nomeEstabelecimento) {
-    navigation.navigate('Pedido', { medicament, nomeEstabelecimento });  
+  async function navigateToPedido(medicament, nomeEstabelecimento) {
+      navigation.navigate('Pedido', { medicament, nomeEstabelecimento});
   }
 
   if(nomeEstablishment==null){
     loadDadosEstablishment(medicament.idEstabelecimento);
     auxNome = nomeEstabelecimento;
-    
   }else{
     auxNome = nomeEstablishment;
   }

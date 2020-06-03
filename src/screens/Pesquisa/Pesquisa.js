@@ -12,7 +12,7 @@ export default function Pesquisa(){
     <SearchBar cor={'#23AFDB'}/>
     <View style={styles.container}>
       <View style={{width: '100%', height: '90%', alignItems: 'center',justifyContent: 'center'}}>
-        <Text>Pesquise um Medicamento</Text>
+        <Text style={{fontSize: 17, color: '#666', textAlign: 'center', width: 250}}>Pesquise um Medicamento</Text>
       </View>  
     </View>  
     </>

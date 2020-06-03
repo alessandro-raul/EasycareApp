@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, Image} from 'react-native';
 import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
-
+import gifTriste from '../../../assets/imgs/gifTriste2.gif';
 import Remedio from '../../../assets/imgs/remedio.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -13,7 +13,6 @@ import styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../../componentes/Header';
 
-
 export default function Pedido(){
   const navigation = useNavigation();
   const [quant, setQuant] = useState(1);
@@ -21,24 +20,33 @@ export default function Pedido(){
   const [numLogCliente, setNumLogCliente] = useState();
   const [statusEnd, setStatusEnd] = useState(true);
   const [tem, setTem] = useState(true);
-  var medicament;
-  var auxNome;
-  const route = useRoute();
+  const [status, setStatus] = useState(false);
+  var descMed;
+  var descDosagem;
+  var nomeEstabelecimento;
+  var precoMed;
 
-  try{
-    medicament = route.params.medicament;
-    auxNome = route.params.nomeEstabelecimento;
-  }catch{
-    console.log('hm')
-  }
- 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
             pegarIdEndereco();
+            
     });
     return unsubscribe;
   }, [navigation]);
 
+  try {
+    const route = useRoute();
+    const medicament = route.params.medicament;
+    const auxNome = route.params.nomeEstabelecimento;
+    descMed = medicament.descMed;
+    descDosagem = medicament.descDosagem;
+    nomeEstabelecimento = auxNome.nomeEstabelecimento;
+    precoMed = medicament.precoMed;
+    setStatus(true);
+  } catch (error) {
+    console.log(error);
+  }
+ 
   function addQuant() {
     if(quant<10) {
       setQuant(quant+1);
@@ -51,29 +59,26 @@ export default function Pedido(){
     }
   }
 
+  function navigateToHome(){
+    navigation.navigate('Home', {screen: 'Home'})
+  }
+
   function navigateToEnderecos() {
     navigation.navigate('Enderecos');
   }
 
   function navigateToCupom(){
     navigation.navigate('Cupom');
-}
+  }
 
-function navigateToPagamentoPerfil(){
-  navigation.navigate('PagamentoPerfil');
-}
+  function navigateToPagamentoPerfil(){
+    navigation.navigate('PagamentoPerfil');
+  }
 
   async function pegarIdEndereco(){
     try{
       idd = await AsyncStorage.getItem("idEnderecoCliente");
       console.log(idd);
-      
-     /* if (idd != null){ 
-        setTem(true);
-      } else {
-        setTem(false);
-      }*/
-      
       pegarEndereco();
     }catch(error){
       console.log(error);
@@ -87,24 +92,37 @@ function navigateToPagamentoPerfil(){
       console.log(data);
     
       if (data == "Nenhum usuário encontrado" || data== undefined){ 
-        setTem(false);
-    } else {
-        setTem(true);
-    }
+          setTem(false);
+      } else {
+          setTem(true);
+      }
       data.map(item => {
         setLogCliente(item.logCliente);
         setNumLogCliente(item.numLogCliente);
-      
       });   
 
-    }catch(error){
+    } catch(error){
       console.log(error);
     } 
   }
   
   return(  
     <>  
-    <Header text="Pedido"/>  
+    <Header text="Pedido"/>
+
+    {!status &&
+        <View style={styles.container2}>
+          <Text style={styles.nlTxt}>Você ainda não iniciou nenhum pedido...</Text>
+          <Image source={gifTriste} style={styles.gif}/>
+          <TouchableOpacity style={styles.btLogar} onPress={navigateToHome}>
+              <Text style={styles.txtLogar}>Comprar agora!</Text>
+          </TouchableOpacity>
+        </View>
+    }
+
+
+
+    {status &&
     <View style={styles.container}>
 
       <TouchableNativeFeedback onPress={navigateToEnderecos} style={styles.contEntrega}>
@@ -131,10 +149,10 @@ function navigateToPagamentoPerfil(){
           <Image source={Remedio} style={styles.imgProd}/>  
         </View>
         <View style={styles.dadosProd}>
-          <Text style={styles.subTitle}>{medicament.descMed}, {medicament.descDosagem}</Text>
+          <Text style={styles.subTitle}>{descMed}, {descDosagem}</Text>
           <View style={styles.dadosFarma}>
             <Text style={styles.contMenor}>Vendido por </Text>
-            <Text style={{fontWeight: '700'}}>{auxNome}</Text>
+            <Text style={{fontWeight: '700'}}>{nomeEstabelecimento}</Text>
           </View>
           <View style={styles.quant}>
             <Text style={styles.subTitleBold}>Quantidade:</Text>
@@ -156,7 +174,7 @@ function navigateToPagamentoPerfil(){
         <Text style={styles.subTitle}>Frete:</Text>
         <Text style={styles.subTitleMaiorBold}>Total:</Text>
         <Text style={styles.cont}>
-       R$ {medicament.precoMed},00
+       R$ {precoMed},00
         </Text>
         <Text style={styles.cont}>R$ 5,00</Text>
         <Text style={styles.cont}>R$ 20,00</Text>
@@ -184,6 +202,7 @@ function navigateToPagamentoPerfil(){
         <Text style={styles.btText}>Pedir</Text>  
       </TouchableOpacity>
     </View>
+  }
     </>
   )
 }
