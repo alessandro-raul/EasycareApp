@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import Header from '../componentes/Header'
 import Input from '../componentes/inputBasico'
 
@@ -13,7 +13,16 @@ export default function CadatrarCartao(){
                     <Text style={styles.txt}>Insira o cupom abaixo</Text>
                 </View>
                 <View style={styles.inputView}>
-                    <Input placeholder="Código do cupom"></Input>
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.input}
+                            returnKeyType="done"
+                            autoCapitalize="characters"
+                            autoCompleteType="off"
+                            autoCorrect={false}
+                            placeholderTextColor="#666"
+                            placeholder="Código do cupom"
+                        />
+                    </View>
                 </View>
 
                 <View style={styles.btAddView}>
@@ -66,5 +75,21 @@ const styles = StyleSheet.create({
         textAlign:"center", 
         fontSize: 17, 
         color: 'white'
-    }
+    },
+
+    inputContainer: {
+        borderColor: 'rgba(70,70,70, 0.31)',
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingLeft: 20,
+        marginTop: 25,
+        flexDirection: 'row',
+       
+      },
+    
+      input: {
+        fontSize: 16,
+        color: '#666',
+        flex: 1
+      }
 })

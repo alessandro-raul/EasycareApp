@@ -117,7 +117,7 @@ export default function Cadastro({navigation}){
         
             <View style = {styles.formContainer}>
                 <>
-                    <InputComIcom placeholder = "Email" icon='mail'  onChangeText={emailCliente => setEmailCliente(emailCliente)} /> 
+                    <InputComIcom placeholder = "Email" icon='mail'  onChangeText={emailCliente => setEmailCliente(emailCliente)} returnKeyType="numeric" /> 
                     <InputComIcom placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} secureTextEntry={true} />
                     <InputComIcom placeholder = "Telefone" keyboardType='numeric' icon='smartphone' onChangeText={telefoneCliente=> setTelefoneCliente(telefoneCliente)}/>
                 </>

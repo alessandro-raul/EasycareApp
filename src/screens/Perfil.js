@@ -10,11 +10,15 @@ import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import IconFeather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
 export default function TelaPerfil({navigation}){
 
     const [nomeCliente, setNomeCliente] = useState(''); 
     const [statusLogin, setStatusLogin] = useState(0);
     const [showLoader, setShowLoader] = useState(true);
+
+    const [visible, setVisible] = useState(false);
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -41,6 +45,7 @@ export default function TelaPerfil({navigation}){
         try {
             const nome = await AsyncStorage.getItem("nomeCliente");
             setNomeCliente(nome);
+            setTimeout(() => setVisible(true),1000);
         } catch (error) {
             console.log(error);
         }
@@ -116,9 +121,15 @@ export default function TelaPerfil({navigation}){
                 </View>
 
                 <View style={styles.infos}>
-                    <View style={styles.nomeCliente}>
-                        <Text style={styles.nomeClienteTxt}>{nomeCliente}</Text>
-                    </View>
+                    <ShimmerPlaceholder
+                        style={styles.shimmerNome}
+                        autoRun={true}
+                        visible={visible}
+                    >
+                        <View style={styles.nomeCliente}>
+                            <Text style={styles.nomeClienteTxt}>{nomeCliente}</Text>
+                        </View>
+                    </ShimmerPlaceholder>
                     <View style={{marginTop: '3%'}}>
                         <TouchableOpacity style={styles.btEditar} onPress={navigateToEditarPerfil}>
                             <Text style={styles.txtEditar}>Editar perfil</Text>
@@ -213,9 +224,10 @@ const styles = StyleSheet.create({
     },
 
     nlTxt:{
-        fontSize: 22, color: '#666', 
+        fontSize: 20, color: '#666', 
         textAlign: 'center', 
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        width: 250
     },
 
     btLogar:{
@@ -324,5 +336,10 @@ const styles = StyleSheet.create({
     gif:{
         width: 150,
         height: 150
-    }
+    },
+
+    shimmerNome: {
+        borderRadius: 10,
+        height: 30,
+    },
 })

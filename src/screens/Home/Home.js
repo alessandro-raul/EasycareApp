@@ -14,16 +14,20 @@ import SearchBarHome from '../../componentes/SearchBarHome';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+
 export default function Home({ navigation }) {
   const [medicaments, setMedicaments] = useState([]);
   const [logCliente, setLogCliente] = useState();
   const [numLogCliente, setNumLogCliente] = useState();
   const [tem, setTem] = useState(false);
-  const [estabelecimentos, setEstabelecimentos] = useState();
+  const [estabelecimentos, setEstabelecimentos] = useState();  
   const todos = "true";
   var idd;
   var statusIntro;
   console.disableYellowBox = true;
+
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     gerenciaIntroducao();
@@ -34,6 +38,7 @@ export default function Home({ navigation }) {
       pegarIdEndereco();
       loadMedicaments();  
       loadEstabelecimentos(); 
+      setTimeout(() => setVisible(true),1000);
     });
     return unsubscribe;
   }, [navigation]);
@@ -120,48 +125,12 @@ export default function Home({ navigation }) {
       <StatusBar backgroundColor='white'/>
       <Header text="Easycare"/>
       <View style={styles.container}>   
-<<<<<<< HEAD
         <ScrollView style={{height: '100%'}}>
           <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
-              <Icon name='place' size={25} color='#23AFDB'/>
+              <Icon name='map-pin' size={22} color='#23AFDB'/>
               {tem &&
               <View style={styles.viewLocalizacao}>
               <Text style={styles.txtLocalizacao}>{logCliente}, {numLogCliente}</Text>
-=======
-      <ScrollView style={{height: '100%', marginTop: 20}}>
-     
-        <TouchableOpacity onPress={navigateToEnderecos} style={styles.localizacao}>
-            <Icon name='map-pin' size={22} color='#23AFDB'/>
-
-            {tem &&
-            <View style={styles.viewLocalizacao}>
-            <Text style={styles.txtLocalizacao}>{logCliente}, {numLogCliente}</Text>
-            </View>
-            }
-
-            {!tem &&
-              <Text style={styles.txtLocalizacao}>Selecione um endereço</Text>
-            }
-
-        </TouchableOpacity>
-
-        <View style={styles.contSearch}>
-          <SearchBarHome press={() => navigateToSearch() }/>
-        </View> 
-
-        <View style={styles.contScroll}>
-          <HeaderScroll title="Ofertas recentes" icon="arrow-right" size={26} />                     
-          <FlatList
-            data={medicaments}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={medicament => String(medicament.idMedicamento)}
-            style={styles.scrollMedic}
-            renderItem={({ item:medicament }) => (
-            <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
-              <View style={styles.contImg}>
-                <Image source={Remedio} style={styles.imgMedic} />
->>>>>>> b7b21b7c4e394791b9a07a4f967d68794a30c113
               </View>
               }
 
@@ -175,7 +144,7 @@ export default function Home({ navigation }) {
           </View> 
 
           <View style={styles.contScroll}>
-            <HeaderScroll title="Ofertas recentes" icon="arrow-forward" size={26} />                     
+            <HeaderScroll title="Ofertas recentes" icon="arrow-right" size={26} />                     
             <FlatList
               data={medicaments}
               horizontal={true}
@@ -183,52 +152,64 @@ export default function Home({ navigation }) {
               keyExtractor={medicament => String(medicament.idMedicamento)}
               style={styles.scrollMedic}
               renderItem={({ item:medicament }) => (
-              <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
-                <View style={styles.contImg}>
-                  <Image source={Remedio} style={styles.imgMedic} />
-                </View>
-                <View style={styles.contDesc}>
-                  <View style={styles.descMedic}>
-                    <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
-                    <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
-                    <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
-                  </View>              
-                
-                  <View style={styles.dadosCompra}>
-                    <Image source={Drogaria} style={styles.imgFarma} />
-                    <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
-                  </View>
-                </View>
-<<<<<<< HEAD
-=======
-              </View>
-            </TouchableOpacity>
-          )}
-          /> 
-        
-        </View>   
-
-         <View style={styles.contScroll}>
-          <HeaderScroll title="Comprados anteriormente" icon="arrow-right" size={26} />                     
-          <FlatList
-          data={medicaments}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={medicament => String(medicament.idMedicamento)}
-          style={styles.scrollMedic}
-          renderItem={({ item:medicament }) => (
-          <View style={styles.medicContainer}>
-            <View style={styles.contImg}>
-              <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.hitBox}>
-                <Image source={Remedio} style={styles.imgMedic} />
->>>>>>> b7b21b7c4e394791b9a07a4f967d68794a30c113
-              </TouchableOpacity>
+                  <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
+                    <View style={styles.contImg}>
+                      <ShimmerPlaceHolder
+                        style={styles.shimmerImg}
+                        autoRun={true}
+                        visible={visible}
+                      >
+                        <Image source={Remedio} style={styles.imgMedic} />
+                      </ShimmerPlaceHolder>
+                    </View>
+                    <View style={styles.contDesc}>
+                      <View style={styles.descMedic}>
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerText}
+                          autoRun={true}
+                          visible={visible}
+                        >
+                          <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
+                        </ShimmerPlaceHolder>
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerText}
+                          autoRun={true}
+                          visible={visible}
+                        >
+                          <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
+                        </ShimmerPlaceHolder>
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerText}
+                          autoRun={true}
+                          visible={visible}
+                        >
+                          <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
+                        </ShimmerPlaceHolder>
+                      </View>              
+                      <View style={styles.dadosCompra}>
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerImgFarma}
+                          autoRun={true}
+                          visible={visible}
+                        >
+                          <Image source={Drogaria} style={styles.imgFarma} />
+                        </ShimmerPlaceHolder>
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerPreco}
+                          autoRun={true}
+                          visible={visible}
+                        >
+                          <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
+                        </ShimmerPlaceHolder>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
             )}
             /> 
           </View>
 
           <View style={styles.contScroll}>
-            <HeaderScroll title="Comprados recentemente" icon="arrow-forward" size={26} />                     
+            <HeaderScroll title="Comprados recentemente" icon="arrow-right" size={26} />                     
             <FlatList
               data={medicaments}
               horizontal={true}
@@ -238,17 +219,53 @@ export default function Home({ navigation }) {
               renderItem={({ item:medicament }) => (
               <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
                 <View style={styles.contImg}>
-                  <Image source={Remedio} style={styles.imgMedic} />
+                  <ShimmerPlaceHolder
+                    style={styles.shimmerImg}
+                    autoRun={true}
+                    visible={visible}
+                  >
+                    <Image source={Remedio} style={styles.imgMedic} />
+                  </ShimmerPlaceHolder>
                 </View>
                 <View style={styles.contDesc}>
                   <View style={styles.descMedic}>
-                    <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
-                    <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
-                    <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
+                    <ShimmerPlaceHolder
+                      style={styles.shimmerText}
+                      autoRun={true}
+                      visible={visible}
+                    >
+                      <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
+                    </ShimmerPlaceHolder>
+                    <ShimmerPlaceHolder
+                      style={styles.shimmerText}
+                      autoRun={true}
+                      visible={visible}
+                    >
+                      <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
+                    </ShimmerPlaceHolder>
+                    <ShimmerPlaceHolder
+                      style={styles.shimmerText}
+                      autoRun={true}
+                      visible={visible}
+                    >
+                      <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
+                    </ShimmerPlaceHolder>
                   </View>              
                   <View style={styles.dadosCompra}>
-                    <Image source={Drogaria} style={styles.imgFarma} />
-                    <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
+                    <ShimmerPlaceHolder
+                      style={styles.shimmerImgFarma}
+                      autoRun={true}
+                      visible={visible}
+                    >
+                      <Image source={Drogaria} style={styles.imgFarma} />
+                    </ShimmerPlaceHolder>
+                    <ShimmerPlaceHolder
+                      style={styles.shimmerPreco}
+                      autoRun={true}
+                      visible={visible}
+                    >
+                      <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
+                    </ShimmerPlaceHolder>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -256,7 +273,7 @@ export default function Home({ navigation }) {
           </View>   
 
           <View style={{marginTop: '1%'}}>
-            <HeaderScroll title="Estabelecimentos próximos" icon="arrow-forward" size={26} />
+            <HeaderScroll title="Estabelecimentos próximos" icon="arrow-right" size={26} />
             <FlatList
               data={estabelecimentos}
               showsVerticalScrollIndicator={true}
@@ -267,46 +284,34 @@ export default function Home({ navigation }) {
                   <TouchableOpacity onPress={()=> navigateToEstabelecimento(estabelecimento.idEstabelecimento)}>
                     <View style={styles.farmaContainer}>
                       <View style={styles.viewImg}>
-                        <Image source={Drogaria} style={styles.ImgFarma} />
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerImgFarm}
+                          autoRun={true}
+                          visible={visible}
+                        >
+                          <Image source={Drogaria} style={styles.ImgFarma} />
+                        </ShimmerPlaceHolder>
                       </View>
                       <View style={styles.viewDados}>
-                        <Text style={styles.title}>{estabelecimento.nomeEstabelecimento} - {estabelecimento.bairroLogEstabelecimento}</Text>
-                        <Text style={styles.subTitle}>1,6 km - R$ 5,00</Text>
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerTextEstabelecimento}
+                          autoRun={true}
+                          visible={visible}                        
+                        >
+                          <Text style={styles.title}>{estabelecimento.nomeEstabelecimento} - {estabelecimento.bairroLogEstabelecimento}</Text>
+                        </ShimmerPlaceHolder>
+                        <ShimmerPlaceHolder
+                          style={styles.shimmerTextEstabelecimento}
+                          autoRun={true}
+                          visible={visible}                      
+                        >
+                          <Text style={styles.subTitle}>1,6 km - R$ 5,00</Text>
+                        </ShimmerPlaceHolder>
                       </View>
                     </View>
                   </TouchableOpacity>
                 </View>)}/>
           </View>
-<<<<<<< HEAD
-=======
-          )}
-        /> 
-        </View>
-
-        <HeaderScroll title="Estabelecimentos proximos" icon="arrow-right" size={26} />
-        <FlatList
-          data={estabelecimentos}
-          showsVerticalScrollIndicator={true}
-          keyExtractor={estabelecimentos => String(estabelecimentos.idEstabelecimento)}
-          style={{marginBottom: 130}}
-          renderItem={({ item:estabelecimento }) => (
-            <View style={{paddingHorizontal: 32,}}>
-            <TouchableOpacity onPress={()=> navigateToEstabelecimento(estabelecimento.idEstabelecimento)}>
-            <View style={styles.farmaContainer}>
-              <View style={styles.viewImg}>
-                <Image source={Drogaria} style={styles.ImgFarma} />
-              </View>
-              <View style={styles.viewDados}>
-                <Text style={styles.title}>{estabelecimento.nomeEstabelecimento} - {estabelecimento.bairroLogEstabelecimento}</Text>
-                <Text style={styles.subTitle}>1,6 km - R$ 5,00</Text>
-              </View>
-              
-            </View>
-            </TouchableOpacity>
-            </View>
-          )}
-        />
->>>>>>> b7b21b7c4e394791b9a07a4f967d68794a30c113
         </ScrollView>
       </View>
     </>

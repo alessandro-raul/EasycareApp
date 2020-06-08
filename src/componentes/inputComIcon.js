@@ -22,6 +22,11 @@ export default class InputComIcon extends Component {
         <TextInput
           style={[styles.input, this.props.style]}
           placeholderTextColor="#666"
+          returnKeyType={this.props.returnKeyType}
+          autoCapitalize={this.props.autoCapitalize}
+          autoCompleteType={this.props.autoCompleteType}
+          keyboardType={this.props.keyboardType}
+          blurOnSubmit={this.props.blurOnSubmit}
           {...this.props}>
         </TextInput>
       </View>

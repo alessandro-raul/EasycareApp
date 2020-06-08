@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -7,11 +7,11 @@ export default StyleSheet.create({
     paddingHorizontal: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff'  
+    backgroundColor: '#fff',
   },
 
   subTitle: {
-    fontSize: 18,  
+    fontSize: 18,
   },
 
   subTitleBold: {
@@ -24,21 +24,21 @@ export default StyleSheet.create({
     fontWeight: '700',
   },
 
-  cont:{
+  cont: {
     fontSize: 16,
   },
-  
+
   contEntrega: {
     width: '95%',
-    height: 'auto', 
+    height: 'auto',
     paddingHorizontal: 20,
     paddingVertical: 20,
-    flexDirection: 'row',  
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderStyle: "solid",
-    borderBottomColor: "#ACACAC",
+    borderStyle: 'solid',
+    borderBottomColor: '#ACACAC',
   },
 
   local: {
@@ -52,11 +52,11 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
     flexDirection: 'row',
-    alignItems: "center",
+    alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderStyle: "solid",
-    borderBottomColor: "#ACACAC",
+    borderStyle: 'solid',
+    borderBottomColor: '#ACACAC',
   },
 
   imgProd: {
@@ -72,7 +72,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
 
-  quant:{
+  quant: {
     marginTop: '5%',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -84,7 +84,7 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
   },
 
-  contPedido:{
+  contPedido: {
     width: '100%',
     height: 120,
     paddingHorizontal: 20,
@@ -94,8 +94,8 @@ export default StyleSheet.create({
     alignContent: 'space-between',
     flexWrap: 'wrap',
     borderBottomWidth: 1,
-    borderStyle: "solid",
-    borderBottomColor: "#ACACAC",
+    borderStyle: 'solid',
+    borderBottomColor: '#ACACAC',
   },
 
   contCupom: {
@@ -108,14 +108,14 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderStyle: "solid",
-    borderBottomColor: "#ACACAC",
+    borderStyle: 'solid',
+    borderBottomColor: '#ACACAC',
   },
-  
+
   dadosCupom: {
     width: '70%',
   },
-  
+
   contPagto: {
     width: '95%',
     height: 'auto',
@@ -126,7 +126,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  
+
   dadosPagto: {
     width: '70%',
   },
@@ -134,18 +134,53 @@ export default StyleSheet.create({
   btPedir: {
     width: 170,
     height: 40,
-    marginTop: 20, 
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20, 
+    borderRadius: 20,
     backgroundColor: '#23AFDB',
-  
   },
 
   btText: {
     color: '#fff',
-    fontSize: 17
+    fontSize: 17,
   },
 
+  container2: {
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
 
+  nlTxt: {
+    fontSize: 20,
+    color: '#666',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    width: 280,
+  },
+
+  btLogar: {
+    backgroundColor: '#23AFDB',
+    width: 155,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  txtLogar: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+
+  gif: {
+    width: 130,
+    height: 130,
+    marginTop: 10,
+    marginBottom: 10,
+  },
 });

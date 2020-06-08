@@ -40,6 +40,8 @@ target 'easycare' do
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'easycareTests' do
     inherit! :search_paths
     # Pods for testing

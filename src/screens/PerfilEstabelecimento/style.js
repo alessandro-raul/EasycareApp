@@ -1,22 +1,22 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
-export default styles = StyleSheet.create({
+export default (styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width,
     height: '100%',
-    backgroundColor: '#fff',  
+    backgroundColor: '#fff',
   },
 
-  viewLogoFarma:{
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: 95,
+  viewLogoFarma: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 95,
   },
 
   logoFarma: {
     width: 60,
     height: 60,
-    borderRadius: 50
+    borderRadius: 50,
   },
 
   cont: {
@@ -24,8 +24,8 @@ export default styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 32,
     borderTopWidth: 1,
-    borderColor: 'rgba(70,70,70,0.3)', 
-    backgroundColor: '#fff',  
+    borderColor: 'rgba(70,70,70,0.3)',
+    backgroundColor: '#fff',
   },
 
   infosFarma: {
@@ -34,28 +34,28 @@ export default styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  nomeFarmaView:{
+  nomeFarmaView: {
     width: '100%',
     paddingHorizontal: 10,
     minHeight: 30,
     flexDirection: 'row',
-    marginBottom: '4%'
+    marginBottom: '4%',
   },
 
   nomeFarmaTxt: {
     fontSize: 20,
     width: '85%',
     paddingTop: 3,
-    fontWeight: 'bold', 
-    color: 'grey'
+    fontWeight: 'bold',
+    color: 'grey',
   },
 
-  btMais:{
-    width:40,
+  btMais: {
+    width: 40,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: '8%'
+    marginLeft: '8%',
   },
 
   taxaEntregaView: {
@@ -63,13 +63,13 @@ export default styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
     paddingHorizontal: 20,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   taxaEntregaTxt: {
     fontSize: 15,
     color: 'grey',
-    marginLeft: '3%'
+    marginLeft: '3%',
   },
 
   btLigar: {
@@ -77,47 +77,47 @@ export default styles = StyleSheet.create({
     height: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30,  
-    backgroundColor: '#23AFDB',   
+    borderRadius: 30,
+    backgroundColor: '#23AFDB',
   },
 
   textBtLigar: {
     color: '#fff',
-    fontSize: 16,  
+    fontSize: 16,
   },
 
   imgFarma: {
     marginLeft: '8%',
     width: 30,
     height: 30,
-    borderRadius: 5,  
+    borderRadius: 5,
   },
 
   contOferta: {
-    flex:1,
+    flex: 1,
     marginTop: 40,
-    alignItems: "center",
-    backgroundColor: '#fff',  
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
 
-  categoriasView:{
+  categoriasView: {
     width: '100%',
     paddingTop: 20,
-    marginBottom: 4
+    marginBottom: 4,
   },
 
   scrollCategorias: {
-     marginTop: '3%',
+    marginTop: '3%',
   },
 
-  txtCategoria:{
-      color: '#666',
-      //textAlign: 'center',
-      paddingHorizontal: 29,
-      fontSize: 18
+  txtCategoria: {
+    color: '#666',
+    //textAlign: 'center',
+    paddingHorizontal: 29,
+    fontSize: 18,
   },
 
-  btCategoria:{
+  btCategoria: {
     marginLeft: 22,
     backgroundColor: '#23AFDB',
     height: 35,
@@ -127,20 +127,20 @@ export default styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  txtBt:{
+  txtBt: {
     color: '#fff',
     paddingHorizontal: 10,
-    fontSize: 15
+    fontSize: 15,
   },
 
   subTitle: {
     fontSize: 18,
-    color: "#3977A0",
+    color: '#3977A0',
   },
 
-  containerTab:{
-      flex: 1,
-      alignItems: 'center'
+  containerTab: {
+    flex: 1,
+    alignItems: 'center',
   },
 
   contScroll: {
@@ -148,32 +148,32 @@ export default styles = StyleSheet.create({
     width: '100%',
     marginTop: '1%',
     justifyContent: 'center',
-    alignItems: 'center',  
+    alignItems: 'center',
   },
-  
-  scrollMedic: {  
+
+  scrollMedic: {
     width: '100%',
   },
 
   medicContainer: {
     width: 130,
     height: '100%',
-    marginLeft:22,
+    marginLeft: 22,
     padding: 7,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'rgba(70,70,70,0.3)',
-    //backgroundColor: 'red',  
+    //backgroundColor: 'red',
   },
-  
+
   contImg: {
     width: '90%',
     height: '40%',
     alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: '#333',  
+    //backgroundColor: '#333',
   },
 
   imgMedic: {
@@ -192,7 +192,7 @@ export default styles = StyleSheet.create({
   },
 
   dadosCompra: {
-    width:'100%',
+    width: '100%',
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
@@ -200,11 +200,11 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 5,
     //backgroundColor:'#fff'
   },
-  
+
   imgFarma: {
     width: 25,
     height: 25,
-    borderRadius: 20,  
+    borderRadius: 20,
   },
 
   descMedic: {
@@ -218,24 +218,86 @@ export default styles = StyleSheet.create({
   },
 
   nameMedic: {
-    fontSize: 14, 
-    color: '#707070', 
-  }, 
+    fontSize: 14,
+    color: '#707070',
+  },
 
   nameLab: {
     fontWeight: '700',
-    fontSize: 14, 
-    color: '#707070', 
+    fontSize: 14,
+    color: '#707070',
   },
 
   dosagemMedic: {
-    fontSize: 14, 
-    color: '#707070', 
+    fontSize: 14,
+    color: '#707070',
   },
 
   precoMedic: {
     fontSize: 14,
-    color: '#1F9433'  
+    color: '#1F9433',
   },
 
-});
+  shimmerFoto: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+  },
+
+  shimmerDadosFarma: {
+    width:'100%',
+    marginBottom: 20,
+    height: 25,
+    borderRadius: 10
+  },
+
+  shimmerTaxa: {
+    width: '60%',
+    marginTop: 20,
+    marginBottom: 20,
+    height: 20,
+    borderRadius: 10,
+  },
+
+  shimmerCategorias: {
+    width: '85%',
+    height: 35,
+    paddingHorizontal: 16,
+    borderRadius: 45,
+  },
+
+  shimmerImg: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+  },
+
+  shimmerText: {
+    width: '100%',
+    borderRadius: 5,
+  },
+
+  shimmerPreco: {
+    width: '100%',
+    borderRadius: 5,
+  },
+
+  shimmerImgFarma: {
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+  },
+
+  shimmerTextEstabelecimento: {
+    width: '90%',
+    height: 14,
+    marginTop: 5,
+  },
+
+  shimmerImgFarm: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+  },
+
+}));

@@ -6,24 +6,13 @@ import Remedio from '../../../assets/imgs/remedio.png';
 import api from '../../services/api';
 import styles from './style';
 
-export default function DetailMed() {
+export default function DetailProd() {
   const navigation = useNavigation();
   const route = useRoute();
-  const medicament = route.params.medicament;
+  const product = route.params.product;
   const nomeEstablishment = route.params.nomeEstabelecimento;
-  var auxNome;
-
   const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
-  const [taxaDeEntregaEstabelecimento, setTaxaDeEntregaEstabelecimento] = useState();
-
-  /*const [logEstabelecimento, setLogEstabelecimento] = useState(0);
-  const [numLogEstabelecimento, setNumLogEstabelecimento] = useState(0);
-  const [cepLogEstabelecimento, setCepLogEstabelecimento] = useState(0);
-  const [bairroLogEstabelecimento, setBairroLogEstabelecimento] = useState('');
-  const [cidadeLogEstabelecimento, setCidadeLogEstabelecimento] = useState('');
-  const [ufLogEstabelecimento, setUfLogEstabelecimento] = useState('');
-  const [statusEstabelecimento, setStatusEstabelecimento] = useState('');
-  */
+  var auxNome;
 
   function navigateToEstabelecimento(idEstabelecimento) {
     navigation.navigate('PerfilEstabelecimento', {idEstabelecimento});
@@ -36,26 +25,15 @@ export default function DetailMed() {
     var data = response.data.response;
     data.map(item => {
       setNomeEstabelecimento(item.nomeEstabelecimento);
-      setTaxaDeEntregaEstabelecimento(item.taxaDeEntregaEstabelecimento);
-      /*
-      setCnpjEstabelecimento(item.cnpjEstabelecimento);
-      setLogEstabelecimento(item.logEstabelecimento);
-      setNumLogEstabelecimento(item.numLogEstabelecimento);
-      setCepLogEstabelecimento(item.cepLogEstabelecimento);
-      setBairroLogEstabelecimento(item.bairroLogEstabelecimento);
-      setCidadeLogEstabelecimento(item.cidadeLogEstabelecimento);
-      setUfLogEstabelecimento(item.ufLogEstabelecimento);
-      setStatusEstabelecimento(item.statusEstabelecimento);
-      */
     });
   }
 
-  async function navigateToPedido(medicament, nomeEstabelecimento, taxaDeEntregaEstabelecimento) {
-    navigation.navigate('Pedido', {medicament, nomeEstabelecimento, taxaDeEntregaEstabelecimento});
+  async function navigateToPedido(product, nomeEstabelecimento) {
+    navigation.navigate('Pedido', {product, nomeEstabelecimento});
   }
 
   if (nomeEstablishment == null) {
-    loadDadosEstablishment(medicament.idEstabelecimento);
+    loadDadosEstablishment(product.idEstabelecimento);
     auxNome = nomeEstabelecimento;
   } else {
     auxNome = nomeEstablishment;
@@ -70,12 +48,10 @@ export default function DetailMed() {
         </View>
         <View style={styles.descMed}>
           <View>
-            <Text style={styles.title}>
-              {medicament.descMed}, {medicament.descDosagem}
-            </Text>
+            <Text style={styles.title}>{product.nomeProduto}</Text>
             <TouchableOpacity
               onPress={() =>
-                navigateToEstabelecimento(medicament.idEstabelecimento)
+                navigateToEstabelecimento(product.idEstabelecimento)
               }>
               <Text style={styles.descFarma}>
                 Vendido por
@@ -89,12 +65,12 @@ export default function DetailMed() {
               {/*Intl.NumberFormat('pt-BR', {
             style: 'currency', currency: 'BRL'
             }).format(medicament.precoMed)*/}
-              R$ {medicament.precoMed},00
+              R$ {product.precoProduto},00
             </Text>
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigateToPedido(medicament, nomeEstabelecimento, taxaDeEntregaEstabelecimento)}
+          onPress={() => navigateToPedido(product, auxNome)}
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>

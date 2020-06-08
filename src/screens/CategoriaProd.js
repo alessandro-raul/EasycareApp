@@ -15,30 +15,29 @@ import Remedio from '../../assets/imgs/remedio.png';
 import Drogaria from '../../assets/imgs/drogariasp.png';
 
 export default function Categoria({navigation}) {
-  const [medicaments, setMedicaments] = useState([]);
+  const [products, setProducts] = useState([]);
   const route = useRoute();
   navigation = useNavigation();
   const nomeCategoria = route.params.nomeCategoria;
   const idEstabelecimento = route.params.idEstabelecimento;
 
   useEffect(() => {
-    loadMedicaments(idEstabelecimento, nomeCategoria);
+    loadProducts(idEstabelecimento, nomeCategoria);
   }, []);
 
-  async function loadMedicaments(idEstabelecimento, nomeCategoria) {
-    const response = await api.get('/Medicament', {
+  async function loadProducts(idEstabelecimento, nomeCategoria) {
+    const response = await api.get('/Product', {
       params: {
         idEstabelecimento: idEstabelecimento,
         nomeCategoria: nomeCategoria,
       },
     });
     const data = response.data.response;
-    setMedicaments(data);
+    setProducts(data);
   }
 
-  function navigateToDetailMed(medicament, nomeEstabelecimento) {
-    console.log(medicament);
-    navigation.navigate('DetailMed', {medicament, nomeEstabelecimento});
+  function navigateToDetailProd(product, nomeEstabelecimento) {
+    navigation.navigate('DetailProd', {product, nomeEstabelecimento});
   }
 
   const largura = Dimensions.get('screen').width;
@@ -56,37 +55,31 @@ export default function Categoria({navigation}) {
       <View style={styles.container}>
         <View style={styles.contScroll}>
           <FlatList
-            data={medicaments}
-            horizontal={false}
-            numColumns={numColumns}
+            data={products}
+            horizontal={true}
             showsHorizontalScrollIndicator={false}
-            keyExtractor={medicament => String(medicament.idMedicamento)}
+            keyExtractor={products => String(products.idProduto)}
             style={styles.scrollMedic}
-            renderItem={({item: medicament}) => (
+            renderItem={({item: products}) => (
               <TouchableOpacity
-                onPress={() => navigateToDetailMed(medicament)}
-                style={styles.medicContainer}>
+                style={styles.medicContainer}
+                onPress={() =>
+                  navigateToDetailProd(products, nomeEstabelecimento)
+                }>
                 <View style={styles.contImg}>
                   <Image source={Remedio} style={styles.imgMedic} />
                 </View>
                 <View style={styles.contDesc}>
                   <View style={styles.descMedic}>
-                    <Text style={styles.nameMedic}>
-                      {medicament.descMed}, {medicament.composicaoMed}
-                    </Text>
+                    <Text style={styles.nameMedic}>{products.nomeProduto}</Text>
                     <Text style={styles.nameLab}>
-                      {medicament.nomeLaboratorio}
+                      {products.nomeFabricante}
                     </Text>
-                    <Text style={styles.dosagemMedic}>
-                      {medicament.descDosagem}
-                      {medicament.tipoDosagem}
-                    </Text>
+                    <Text style={styles.dosagemMedic}>{products.qtdMl}</Text>
                   </View>
-
                   <View style={styles.dadosCompra}>
-                    <Image source={Drogaria} style={styles.imgFarma} />
                     <Text style={styles.precoMedic}>
-                      R$ {medicament.precoMed},00
+                      R$ {products.precoProduto},00
                     </Text>
                   </View>
                 </View>

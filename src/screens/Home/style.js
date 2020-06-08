@@ -109,6 +109,7 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     paddingVertical: 10,
+  
     //backgroundColor: 'yellow',
   },
 
@@ -203,6 +204,48 @@ export default StyleSheet.create({
     color: 'rgba(70,70,70, 0.5)',
   },
 
+  shimmerCard: {
+    width: 130,
+    height: "100%",
+    borderRadius: 5,
+    marginLeft:22, 
+    backgroundColor: '#333',
+  },
 
+  shimmerImg: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+  },
+
+  shimmerText: {
+    width: '100%',
+    borderRadius: 5,
+  },
+
+  shimmerPreco: {
+    width: '72%',
+    borderRadius: 5,
+    marginLeft: 5,
+
+  },
+
+  shimmerImgFarma: {
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+  },
+
+  shimmerTextEstabelecimento: {
+    width: '90%',
+    height: 14,
+    marginTop: 5,
+  },
+
+  shimmerImgFarm: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+  },
 
 });

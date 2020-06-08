@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image,TouchableOpacity, ScrollView, FlatList} from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -11,8 +18,10 @@ import SearchBarHome from '../../componentes/SearchBarHome';
 import api from '../../services/api';
 import styles from './style';
 import HeaderScroll from '../../componentes/HeaderScroll';
-import {Tab, Tabs } from 'native-base';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import {Tab, Tabs} from 'native-base';
+import {TouchableNativeFeedback} from 'react-native-gesture-handler';
+
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 export default function PerfilEstabelecimento({navigation}) {
   navigation = useNavigation();
@@ -27,16 +36,33 @@ export default function PerfilEstabelecimento({navigation}) {
   const [bairroLogEstabelecimento, setBairroLogEstabelecimento] = useState('');
   const [cidadeLogEstabelecimento, setCidadeLogEstabelecimento] = useState('');
   const [ufLogEstabelecimento, setUfLogEstabelecimento] = useState('');
+  const [taxaDeEntregaEstabelecimento, setTaxaDeEntregaEstabelecimento] = useState('');
   const [statusEstabelecimento, setStatusEstabelecimento] = useState('');
-  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [productCategories, setProductCategories] = useState([]);
   const [medicaments, setMedicaments] = useState([]);
-  
+  const [categories, setCategories] = useState([]);
+
   const idEstabelecimento = route.params.idEstabelecimento;
 
+  const [visible, setVisible] = useState(false);
+
+
+  useEffect(() => {
+    loadDadosEstablishment(idEstabelecimento);
+    loadMedicaments(idEstabelecimento);
+    loadCategories(idEstabelecimento);
+    loadProducts(idEstabelecimento);
+    loadProductCategories(idEstabelecimento);
+    setTimeout(() => setVisible(true),1000);
+  }, []);
+
   async function loadDadosEstablishment(idEstabelecimento) {
-    const response = await api.get('/Establishment', { params: {idEstabelecimento} });
+    const response = await api.get('/Establishment', {
+      params: {idEstabelecimento},
+    });
     var data = response.data.response;
-    data.map(item =>{
+    data.map(item => {
       setNomeEstabelecimento(item.nomeEstabelecimento);
       setCnpjEstabelecimento(item.cnpjEstabelecimento);
       setLogEstabelecimento(item.logEstabelecimento);
@@ -45,189 +71,607 @@ export default function PerfilEstabelecimento({navigation}) {
       setBairroLogEstabelecimento(item.bairroLogEstabelecimento);
       setCidadeLogEstabelecimento(item.cidadeLogEstabelecimento);
       setUfLogEstabelecimento(item.ufLogEstabelecimento);
+      setTaxaDeEntregaEstabelecimento(item.taxaDeEntregaEstabelecimento);
       setStatusEstabelecimento(item.statusEstabelecimento);
     });
-      loadMedicaments(idEstabelecimento);
-      loadCategories(idEstabelecimento);
   }
 
-  function navigateToDetailEstabelecimento(idEstabelecimento, nomeEstabelecimento, cnpjEstabelecimento, logEstabelecimento, numLogEstabelecimento, bairroLogEstabelecimento, cidadeLogEstabelecimento, ufLogEstabelecimento, cepLogEstabelecimento) {
-    navigation.navigate('DetailEstabelecimento', { idEstabelecimento, nomeEstabelecimento, cnpjEstabelecimento, logEstabelecimento, numLogEstabelecimento, bairroLogEstabelecimento, cidadeLogEstabelecimento, ufLogEstabelecimento, cepLogEstabelecimento });
+  function navigateToDetailEstabelecimento(
+    idEstabelecimento,
+    nomeEstabelecimento,
+    cnpjEstabelecimento,
+    logEstabelecimento,
+    numLogEstabelecimento,
+    bairroLogEstabelecimento,
+    cidadeLogEstabelecimento,
+    ufLogEstabelecimento,
+    cepLogEstabelecimento,
+  ) {
+    navigation.navigate('DetailEstabelecimento', {
+      idEstabelecimento,
+      nomeEstabelecimento,
+      cnpjEstabelecimento,
+      logEstabelecimento,
+      numLogEstabelecimento,
+      bairroLogEstabelecimento,
+      cidadeLogEstabelecimento,
+      ufLogEstabelecimento,
+      cepLogEstabelecimento,
+    });
   }
 
-  function navigateToCategoria(nomeCategoria, idEstabelecimento){
-    navigation.navigate('Categoria', {nomeCategoria, idEstabelecimento})
+  function navigateToCategoria(nomeCategoria, idEstabelecimento) {
+    navigation.navigate('Categoria', {nomeCategoria, idEstabelecimento});
   }
 
+  function navigateToCategoriaProd(nomeCategoria, idEstabelecimento) {
+    navigation.navigate('CategoriaProd', {nomeCategoria, idEstabelecimento});
+  }
+
+  //Medicamentos e suas categorias
   async function loadMedicaments(idEstabelecimento) {
-    const response = await api.get('/Medicament', { params: {idEstabelecimento,}});
+    const response = await api.get('/Medicament', {
+      params: {idEstabelecimento},
+    });
     const data = response.data.response;
     setMedicaments(data);
   }
 
   async function loadCategories(idEstabelecimento) {
-    const response = await api.get('/MedicamentCategories/', { params: {idEstabelecimento,}});
+    const response = await api.get('/MedicamentCategories/', {
+      params: {idEstabelecimento},
+    });
     const data = response.data.response;
     setCategories(data);
   }
 
-  function navigateToTodos(idEstabelecimento){
-    console.log("aa");
-    navigation.navigate('Todos', {idEstabelecimento})
+  //Produtos e suas categorias
+  async function loadProducts(idEstabelecimento) {
+    const response = await api.get('/Product', {params: {idEstabelecimento}});
+    const data = response.data.response;
+    setProducts(data);
+  }
+
+  async function loadProductCategories(idEstabelecimento) {
+    const response = await api.get('/ProductCategories/', {
+      params: {idEstabelecimento},
+    });
+    const data = response.data.response;
+    setProductCategories(data);
+  }
+
+  function navigateToTodos(idEstabelecimento) {
+    navigation.navigate('Todos', {idEstabelecimento});
   }
 
   function navigateToDetailMed(medicament, nomeEstabelecimento) {
-    console.log(medicament);
-    navigation.navigate('DetailMed', { medicament, nomeEstabelecimento })
+    navigation.navigate('DetailMed', {medicament, nomeEstabelecimento});
   }
 
-  useEffect(() => {
-    loadDadosEstablishment(idEstabelecimento);
-  }, []);
+  function navigateToDetailProd(product, nomeEstabelecimento) {
+    navigation.navigate('DetailProd', {product, nomeEstabelecimento});
+  }
 
-  return(
+  return (
     <>
-    <MeuHeader text={nomeEstabelecimento}/>
-    <ScrollView>
-    <View style={styles.container}>
-    <View style={styles.viewLogoFarma}>
-      <Image style={styles.logoFarma} source={logo}/>
-    </View>
-    <View style={styles.infosFarma}>
-      <View style={styles.nomeFarmaView}>
-        <Text style={styles.nomeFarmaTxt}>{nomeEstabelecimento} - {bairroLogEstabelecimento}</Text>
-        <TouchableOpacity style={styles.btMais} onPress={()=>navigateToDetailEstabelecimento(idEstabelecimento, nomeEstabelecimento, cnpjEstabelecimento, logEstabelecimento, numLogEstabelecimento, bairroLogEstabelecimento, cidadeLogEstabelecimento, ufLogEstabelecimento, cepLogEstabelecimento)}>
-            <Icon name='navigate-next' size={35} color="#23AFDB" />
-        </TouchableOpacity>
-      </View>
-      <SearchBarHome/>
-      <View style={styles.taxaEntregaView}>
-        <IconAwesome name='motorcycle' size={18} color="#23AFDB" />
-        <Text style={styles.taxaEntregaTxt}>Taxa de entrega = R$5,00</Text>
-      </View>
-    </View>
+      <MeuHeader text={nomeEstabelecimento} />
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.viewLogoFarma}>
+            <ShimmerPlaceHolder
+              style={styles.shimmerFoto}
+              autoRun={true}
+              visible={visible}
+            >
+              <Image style={styles.logoFarma} source={logo} />
+            </ShimmerPlaceHolder>
+          </View>
+          <View style={styles.infosFarma}>
+            <ShimmerPlaceHolder
+              style={styles.shimmerDadosFarma}
+              autoRun={true}
+              visible={visible}
+            >
+              <View style={styles.nomeFarmaView}>
+                <Text style={styles.nomeFarmaTxt}>
+                  {nomeEstabelecimento} - {bairroLogEstabelecimento}
+                </Text>
+                <TouchableOpacity
+                  style={styles.btMais}
+                  onPress={() =>
+                    navigateToDetailEstabelecimento(
+                      idEstabelecimento,
+                      nomeEstabelecimento,
+                      cnpjEstabelecimento,
+                      logEstabelecimento,
+                      numLogEstabelecimento,
+                      bairroLogEstabelecimento,
+                      cidadeLogEstabelecimento,
+                      ufLogEstabelecimento,
+                      cepLogEstabelecimento,
+                    )
+                  }>
+                  <Icon name="navigate-next" size={35} color="#23AFDB" />
+                </TouchableOpacity>
+              </View>
+            </ShimmerPlaceHolder>
+            <SearchBarHome />
+            <ShimmerPlaceHolder
+              style={styles.shimmerTaxa}
+              autoRun={true}
+              visible={visible}
+            >
+              <View style={styles.taxaEntregaView}>
+                  <IconAwesome name="motorcycle" size={18} color="#23AFDB" />
+                  <Text style={styles.taxaEntregaTxt}>
+                    Taxa de entrega = R$ {taxaDeEntregaEstabelecimento},00
+                  </Text>
+              </View>
+            </ShimmerPlaceHolder>
+          </View>
 
-    <Tabs tabStyle={{backgroundColor: 'white', borderWidth: 0}} tabBarPosition='top' locked={true} tabBarUnderlineStyle={{backgroundColor: '#23AFDB'}} initialPage={0}>
-              <Tab heading="Medicamentos" textStyle={{color: 'gray'}} activeTextStyle={{color: '#23AFDB'}}  activeTabStyle={{backgroundColor: 'white'}} tabStyle={{backgroundColor: 'white'}}>
-                <View style={[ styles.containerTab, { backgroundColor: '#fff' } ]}>
-                  <View style={styles.categoriasView}>
+          <Tabs
+            tabStyle={{backgroundColor: 'white', borderWidth: 0}}
+            tabBarPosition="top"
+            locked={true}
+            tabBarUnderlineStyle={{backgroundColor: '#23AFDB'}}
+            initialPage={0}>
+            {/* ABA DE MEDICAMENTOS*/}
+            <Tab
+              heading="Medicamentos"
+              textStyle={{color: 'gray'}}
+              activeTextStyle={{color: '#23AFDB'}}
+              activeTabStyle={{backgroundColor: 'white'}}
+              tabStyle={{backgroundColor: 'white'}}>
+              <View style={[styles.containerTab, {backgroundColor: '#fff'}]}>
+                <View style={styles.categoriasView}>
                   <Text style={styles.txtCategoria}>Categorias</Text>
-                    <ScrollView
+                  <ScrollView
                     style={styles.scrollCategorias}
                     horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
+                        <FlatList
+                          data={categories}
+                          initialNumToRender
+                          horizontal={true}
+                          showsHorizontalScrollIndicator={false}
+                          keyExtractor={categories =>
+                            String(categories.idCategoriaMed)
+                          }
+                          style={styles.scrollMedic}
+                          renderItem={({item: categories}) => (
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerCategorias}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <TouchableNativeFeedback
+                                style={styles.btCategoria}
+                                onPress={() =>
+                                  navigateToCategoria(
+                                    categories.nomeCategoria,
+                                    idEstabelecimento,
+                                  )
+                                }>
+                                <Text style={styles.txtBt}>
+                                  {categories.nomeCategoria}
+                                </Text>
+                              </TouchableNativeFeedback>
+                            </ShimmerPlaceHolder>
+                          )}
+                        />
+                  </ScrollView>
+                </View>
+                <View style={styles.contScroll}>
+                  <HeaderScroll title="Ofertas" icon="arrow-right" size={26} />
+                  <FlatList
+                    data={medicaments}
+                    horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    >
-                       <FlatList
-                      data={categories}
+                    keyExtractor={medicament =>
+                      String(medicament.idMedicamento)
+                    }
+                    style={styles.scrollMedic}
+                    renderItem={({item: medicament}) => (
+                      <TouchableOpacity
+                        onPress={() => navigateToDetailMed(medicament)}
+                        style={styles.medicContainer}
+                      >
+                        <View style={styles.contImg}>
+                          <ShimmerPlaceHolder
+                            style={styles.shimmerImg}
+                            autoRun={true}
+                            visible={visible}
+                          >
+                            <Image source={Remedio} style={styles.imgMedic} />
+                          </ShimmerPlaceHolder>
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <ShimmerPlaceHolder
+                            style={styles.shimmerText}
+                            autoRun={true}
+                            visible={visible}
+                            >
+                              <Text style={styles.nameMedic}>
+                                {medicament.descMed}, {medicament.composicaoMed}
+                              </Text>
+                            </ShimmerPlaceHolder>  
+                            
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.nameLab}>
+                                {medicament.nomeLaboratorio}
+                              </Text>
+                            </ShimmerPlaceHolder>
+
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.dosagemMedic}>
+                                {medicament.descDosagem}
+                                {medicament.tipoDosagem}
+                              </Text>
+                            </ShimmerPlaceHolder>
+                          </View>
+
+                          <View style={styles.dadosCompra}>
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerPreco}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.precoMedic}>
+                                R$ {medicament.precoMed},00
+                              </Text>
+                            </ShimmerPlaceHolder>  
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+                <View style={styles.contScroll}>
+                  <HeaderScroll
+                    title="Mais vendidos"
+                    icon="arrow-right"
+                    size={26}
+                  />
+                  <FlatList
+                    data={medicaments}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={medicament =>
+                      String(medicament.idMedicamento)
+                    }
+                    style={styles.scrollMedic}
+                    renderItem={({item: medicament}) => (
+                      <TouchableOpacity
+                        onPress={() => navigateToDetailMed(medicament)}
+                        style={styles.medicContainer}>
+                        <View style={styles.contImg}>
+                          <ShimmerPlaceHolder
+                            style={styles.shimmerImg}
+                            autoRun={true}
+                            visible={visible}
+                          >
+                            <Image source={Remedio} style={styles.imgMedic} />
+                          </ShimmerPlaceHolder>
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.nameMedic}>
+                                {medicament.descMed}, {medicament.composicaoMed}
+                              </Text>
+                            </ShimmerPlaceHolder>
+
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.nameLab}>
+                                {medicament.nomeLaboratorio}
+                              </Text>
+                            </ShimmerPlaceHolder>
+
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.dosagemMedic}>
+                                {medicament.descDosagem}
+                                {medicament.tipoDosagem}
+                              </Text>
+                            </ShimmerPlaceHolder>
+                          </View>
+
+                          <View style={styles.dadosCompra}>
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerPreco}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.precoMedic}>
+                                R$ {medicament.precoMed},00
+                              </Text>
+                            </ShimmerPlaceHolder>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+
+                <View style={styles.contScroll}>
+                  <HeaderScroll
+                    title="Todos"
+                    icon="arrow-right"
+                    size={26}
+                    function={() => navigateToTodos(idEstabelecimento)}
+                  />
+                  <FlatList
+                    data={medicaments}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={medicament =>
+                      String(medicament.idMedicamento)
+                    }
+                    style={styles.scrollMedic}
+                    renderItem={({item: medicament}) => (
+                      <TouchableOpacity
+                        onPress={() => navigateToDetailMed(medicament)}
+                        style={styles.medicContainer}>
+                        <View style={styles.contImg}>
+                          <ShimmerPlaceHolder
+                            style={styles.shimmerImg}
+                            autoRun={true}
+                            visible={visible}
+                          >
+                            <Image source={Remedio} style={styles.imgMedic} />
+                          </ShimmerPlaceHolder>
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.nameMedic}>
+                                {medicament.descMed}, {medicament.composicaoMed}
+                              </Text>
+                            </ShimmerPlaceHolder>
+
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.nameLab}>
+                                {medicament.nomeLaboratorio}
+                              </Text>
+                            </ShimmerPlaceHolder>
+
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerText}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.dosagemMedic}>
+                                {medicament.descDosagem}
+                                {medicament.tipoDosagem}
+                              </Text>
+                            </ShimmerPlaceHolder>
+                          </View>
+
+                          <View style={styles.dadosCompra}>
+                            <ShimmerPlaceHolder
+                              style={styles.shimmerPreco}
+                              autoRun={true}
+                              visible={visible}
+                            >
+                              <Text style={styles.precoMedic}>
+                                R$ {medicament.precoMed},00
+                              </Text>
+                            </ShimmerPlaceHolder>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+              </View>
+            </Tab>
+
+            {/* ABA DE PRODUTOS*/}
+            <Tab
+              heading="Outros"
+              textStyle={{color: 'gray'}}
+              activeTextStyle={{color: '#23AFDB'}}
+              activeTabStyle={{backgroundColor: 'white'}}
+              tabStyle={{backgroundColor: 'white'}}>
+              <View style={[styles.containerTab, {backgroundColor: '#fff'}]}>
+                <View style={styles.categoriasView}>
+                  <Text style={styles.txtCategoria}>Categorias</Text>
+                  <ScrollView
+                    style={styles.scrollCategorias}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
+                    <FlatList
+                      data={productCategories}
                       initialNumToRender
                       horizontal={true}
                       showsHorizontalScrollIndicator={false}
-                      keyExtractor={categories => String(categories.idCategoriaMed)}
+                      keyExtractor={productCategories =>
+                        String(productCategories.idCategoria)
+                      }
                       style={styles.scrollMedic}
-                      renderItem={({ item:categories }) => (
-                      <TouchableNativeFeedback style={styles.btCategoria} onPress={()=>navigateToCategoria(categories.nomeCategoria, idEstabelecimento)}>
-                        <Text style={styles.txtBt}>{categories.nomeCategoria}</Text>
-                      </TouchableNativeFeedback>
-                      )} />
-                      
-                    </ScrollView>
-                  </View>
-                  <View style={styles.contScroll}>
-                    <HeaderScroll title="Ofertas" icon="arrow-right" size={26} />                     
-                    <FlatList
-                      data={medicaments}
-                      horizontal={true}
-                      showsHorizontalScrollIndicator={false}
-                      keyExtractor={medicament => String(medicament.idMedicamento)}
-                      style={styles.scrollMedic}
-                      renderItem={({ item:medicament }) => (
-                      <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
-                        <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
-                        </View>
-                        <View style={styles.contDesc}>
-                          <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
-                            <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
-                            <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
-                          </View>              
-                        
-                          <View style={styles.dadosCompra}>
-                         
-                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}/> 
-                  </View>   
-                  <View style={styles.contScroll}>
-                    <HeaderScroll title="Mais vendidos" icon="arrow-right" size={26} />                     
-                    <FlatList
-                      data={medicaments}
-                      horizontal={true}
-                      showsHorizontalScrollIndicator={false}
-                      keyExtractor={medicament => String(medicament.idMedicamento)}
-                      style={styles.scrollMedic}
-                      renderItem={({ item:medicament }) => (
-                      <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
-                        <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
-                        </View>
-                        <View style={styles.contDesc}>
-                          <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
-                            <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
-                            <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
-                          </View>              
-                        
-                          <View style={styles.dadosCompra}>
-                         
-                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}/> 
-                  </View> 
-
-                  <View style={styles.contScroll}>
-                    <HeaderScroll title="Todos" icon="arrow-right" size={26} function={()=> navigateToTodos(idEstabelecimento)}/>                     
-                    <FlatList
-                      data={medicaments}
-                      horizontal={true}
-                      showsHorizontalScrollIndicator={false}
-                      keyExtractor={medicament => String(medicament.idMedicamento)}
-                      style={styles.scrollMedic}
-                      renderItem={({ item:medicament }) => (
-                      <TouchableOpacity onPress={() => navigateToDetailMed(medicament)} style={styles.medicContainer}>
-                        <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
-                        </View>
-                        <View style={styles.contDesc}>
-                          <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>{medicament.descMed}, {medicament.composicaoMed}</Text>
-                            <Text style={styles.nameLab}>{medicament.nomeLaboratorio}</Text>
-                            <Text style={styles.dosagemMedic}>{medicament.descDosagem}{medicament.tipoDosagem}</Text>
-                          </View>              
-                        
-                          <View style={styles.dadosCompra}>
-                         
-                            <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}/> 
-                  </View> 
+                      renderItem={({item: productCategories}) => (
+                        <TouchableNativeFeedback
+                          style={styles.btCategoria}
+                          onPress={() =>
+                            navigateToCategoriaProd(
+                              productCategories.nomeCategoria,
+                              idEstabelecimento,
+                            )
+                          }>
+                          <Text style={styles.txtBt}>
+                            {productCategories.nomeCategoria}
+                          </Text>
+                        </TouchableNativeFeedback>
+                      )}
+                    />
+                  </ScrollView>
                 </View>
 
-              </Tab>
-              <Tab heading="Outros" textStyle={{color: 'gray'}} activeTextStyle={{color: '#23AFDB'}}  activeTabStyle={{backgroundColor: 'white'}} tabStyle={{backgroundColor: 'white'}}>
-                <View style={[ styles.containerTab, { backgroundColor: '#fff' } ]}>
-                      <Text>Outros produtos</Text>  
+                <View style={styles.contScroll}>
+                  <HeaderScroll title="Ofertas" icon="arrow-right" size={26} />
+                  <FlatList
+                    data={products}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={products => String(products.idProduto)}
+                    style={styles.scrollMedic}
+                    renderItem={({item: products}) => (
+                      <TouchableOpacity
+                        style={styles.medicContainer}
+                        onPress={() =>
+                          navigateToDetailProd(products, nomeEstabelecimento)
+                        }>
+                        <View style={styles.contImg}>
+                          <Image source={Remedio} style={styles.imgMedic} />
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>
+                              {products.nomeProduto}
+                            </Text>
+                            <Text style={styles.nameLab}>
+                              {products.nomeFabricante}
+                            </Text>
+                            <Text style={styles.dosagemMedic}>
+                              {products.qtdMl}
+                            </Text>
+                          </View>
+                          <View style={styles.dadosCompra}>
+                            <Text style={styles.precoMedic}>
+                              R$ {products.precoProduto},00
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
                 </View>
-              </Tab>
-            </Tabs>
+
+                <View style={styles.contScroll}>
+                  <HeaderScroll
+                    title="Mais vendidos"
+                    icon="arrow-right"
+                    size={26}
+                  />
+                  <FlatList
+                    data={medicaments}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={medicament =>
+                      String(medicament.idMedicamento)
+                    }
+                    style={styles.scrollMedic}
+                    renderItem={({item: medicament}) => (
+                      <TouchableOpacity
+                        onPress={() => navigateToDetailMed(medicament)}
+                        style={styles.medicContainer}>
+                        <View style={styles.contImg}>
+                          <Image source={Remedio} style={styles.imgMedic} />
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>
+                              {medicament.descMed}, {medicament.composicaoMed}
+                            </Text>
+                            <Text style={styles.nameLab}>
+                              {medicament.nomeLaboratorio}
+                            </Text>
+                            <Text style={styles.dosagemMedic}>
+                              {medicament.descDosagem}
+                              {medicament.tipoDosagem}
+                            </Text>
+                          </View>
+                          <View style={styles.dadosCompra}>
+                            <Text style={styles.precoMedic}>
+                              R$ {medicament.precoMed},00
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+
+                <View style={styles.contScroll}>
+                  <HeaderScroll
+                    title="Todos"
+                    icon="arrow-right"
+                    size={26}
+                    function={() => navigateToTodos(idEstabelecimento)}
+                  />
+                  <FlatList
+                    data={medicaments}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={medicament =>
+                      String(medicament.idMedicamento)
+                    }
+                    style={styles.scrollMedic}
+                    renderItem={({item: medicament}) => (
+                      <TouchableOpacity
+                        onPress={() => navigateToDetailMed(medicament)}
+                        style={styles.medicContainer}>
+                        <View style={styles.contImg}>
+                          <Image source={Remedio} style={styles.imgMedic} />
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>
+                              {medicament.descMed}, {medicament.composicaoMed}
+                            </Text>
+                            <Text style={styles.nameLab}>
+                              {medicament.nomeLaboratorio}
+                            </Text>
+                            <Text style={styles.dosagemMedic}>
+                              {medicament.descDosagem}
+                              {medicament.tipoDosagem}
+                            </Text>
+                          </View>
+                          <View style={styles.dadosCompra}>
+                            <Text style={styles.precoMedic}>
+                              R$ {medicament.precoMed},00
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+              </View>
+            </Tab>
+          </Tabs>
         </View>
-    </ScrollView>
+      </ScrollView>
     </>
-  )  
+  );
 }
