@@ -171,16 +171,40 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
-  txtLogar: {
-    color: '#fff',
-    fontSize: 17,
-    fontWeight: 'bold',
-  },
+  container2:{
+    height: '100%', 
+    width: '100%',
+    justifyContent: 'center', 
+    alignItems: 'center',
+    backgroundColor: 'white'
+},
 
-  gif: {
+nlTxt:{
+    fontSize: 20, color: '#666', 
+    textAlign: 'center', 
+    fontWeight: 'bold',
+    width: 280
+},
+
+btLogar:{
+    backgroundColor: '#23AFDB', 
+    width: 155, 
+    height: 40, 
+    borderRadius: 10, 
+    justifyContent: 'center', 
+    alignItems: 'center'
+},
+
+txtLogar:{
+    color: '#fff', 
+    fontSize: 17, 
+    fontWeight: 'bold'
+},
+
+gif:{
     width: 130,
     height: 130,
     marginTop: 10,
-    marginBottom: 10,
-  },
+    marginBottom: 10
+}
 });

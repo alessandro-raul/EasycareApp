@@ -40,30 +40,19 @@ export default function Pedido() {
     return unsubscribe;
   }, [navigation]);
 
-    try {
-      precoProd = route.params.medicament.precoMed;
-      nomeEstabelecimento = route.params.nomeEstabelecimento;
-      taxaEntrega = route.params.taxaDeEntregaEstabelecimento;
-      descProduct = route.params.medicament.descMed + ', ' +  route.params.medicament.descDosagem;
-      setStatus(true);
-    } catch {
-      console.log('erro 1');
-    }
-  
-    
-    /*try {
-      precoProd = route.params.product.precoProduto;
-      nomeEstabelecimento = route.params.nomeEstabelecimento;
-      taxaEntrega = route.params.taxaDeEntregaEstabelecimento;
-      descProduct = route.params.product.nomeProduto;
-      setStatus(true);
-    } catch (error) {
-      console.log('erro 2');
-    }*/
-  
-   
-  
-
+  try {
+    const route = useRoute();
+    const medicament = route.params.medicament;
+    const auxNome = route.params.nomeEstabelecimento;
+    descMed = medicament.descMed;
+    descDosagem = medicament.descDosagem;
+    nomeEstabelecimento = auxNome.nomeEstabelecimento;
+    precoMed = medicament.precoMed;
+    setStatus(true);
+  } catch (error) {
+    console.log(error);
+  }
+ 
   function addQuant() {
     if (quant < 10) {
       setQuant(quant + 1);
@@ -116,111 +105,111 @@ export default function Pedido() {
       data.map(item => {
         setLogCliente(item.logCliente);
         setNumLogCliente(item.numLogCliente);
-      });
-    } catch (error) {
-      //console.log(error);
-    }
+      });   
+
+    } catch(error){
+      console.log(error);
+    } 
   }
+  
+  return( <>
+    <Header text="Pedido" />
 
-  return (
-    <>
-      <Header text="Pedido" />
+    {!status && (
+      <View style={styles.container2}>
+        <Text style={styles.nlTxt}>
+          Você ainda não iniciou nenhum pedido...
+        </Text>
+        <Image source={gifTriste} style={styles.gif} />
+        <TouchableOpacity style={styles.btLogar} onPress={navigateToHome}>
+          <Text style={styles.txtLogar}>Comprar agora!</Text>
+        </TouchableOpacity>
+      </View>
+    )}
 
-      {!status && (
-        <View style={styles.container2}>
-          <Text style={styles.nlTxt}>
-            Você ainda não iniciou nenhum pedido...
-          </Text>
-          <Image source={gifTriste} style={styles.gif} />
-          <TouchableOpacity style={styles.btLogar} onPress={navigateToHome}>
-            <Text style={styles.txtLogar}>Comprar agora!</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+    {status && (
+      <View style={styles.container}>
+        <TouchableNativeFeedback
+          onPress={navigateToEnderecos}
+          style={styles.contEntrega}>
+          <View style={styles.icons}>
+            <IconFeather name="map-pin" size={28} color="#23AFDB" />
+          </View>
+          <View style={styles.local}>
+            <Text style={styles.subTitleBold}>Entregar em:</Text>
 
-      {status && (
-        <View style={styles.container}>
-          <TouchableNativeFeedback
-            onPress={navigateToEnderecos}
-            style={styles.contEntrega}>
-            <View style={styles.icons}>
-              <IconFeather name="map-pin" size={28} color="#23AFDB" />
+            {tem && (
+              <Text style={styles.cont}>
+                {logCliente}, {numLogCliente}
+              </Text>
+            )}
+
+            {!tem && <Text style={styles.cont}>Selecione um endereço</Text>}
+          </View>
+          <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
+        </TouchableNativeFeedback>
+
+        <View style={styles.contProd}>
+          <View>
+            <Image source={Remedio} style={styles.imgProd} />
+          </View>
+          <View style={styles.dadosProd}>
+            <Text style={styles.subTitle}>{descProduct}</Text>
+            <View style={styles.dadosFarma}>
+              <Text style={styles.contMenor}>Vendido por </Text>
+              <Text style={{fontWeight: '700'}}>{nomeEstabelecimento}</Text>
             </View>
-            <View style={styles.local}>
-              <Text style={styles.subTitleBold}>Entregar em:</Text>
-
-              {tem && (
-                <Text style={styles.cont}>
-                  {logCliente}, {numLogCliente}
-                </Text>
-              )}
-
-              {!tem && <Text style={styles.cont}>Selecione um endereço</Text>}
-            </View>
-            <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
-          </TouchableNativeFeedback>
-
-          <View style={styles.contProd}>
-            <View>
-              <Image source={Remedio} style={styles.imgProd} />
-            </View>
-            <View style={styles.dadosProd}>
-              <Text style={styles.subTitle}>{descProduct}</Text>
-              <View style={styles.dadosFarma}>
-                <Text style={styles.contMenor}>Vendido por </Text>
-                <Text style={{fontWeight: '700'}}>{nomeEstabelecimento}</Text>
-              </View>
-              <View style={styles.quant}>
-                <Text style={styles.subTitleBold}>Quantidade:</Text>
-                <View style={styles.controls}>
-                  <TouchableOpacity onPress={() => removeQuant()}>
-                    <Icon name="remove" size={24} color="#23AFDB" />
-                  </TouchableOpacity>
-                  <Text style={styles.cont}>{quant}</Text>
-                  <TouchableOpacity onPress={() => addQuant()}>
-                    <Icon name="add" size={24} color="#23AFDB" />
-                  </TouchableOpacity>
-                </View>
+            <View style={styles.quant}>
+              <Text style={styles.subTitleBold}>Quantidade:</Text>
+              <View style={styles.controls}>
+                <TouchableOpacity onPress={() => removeQuant()}>
+                  <Icon name="remove" size={24} color="#23AFDB" />
+                </TouchableOpacity>
+                <Text style={styles.cont}>{quant}</Text>
+                <TouchableOpacity onPress={() => addQuant()}>
+                  <Icon name="add" size={24} color="#23AFDB" />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
-
-          <View style={styles.contPedido}>
-            <Text style={styles.subTitle}>Subtotal:</Text>
-            <Text style={styles.subTitle}>Frete:</Text>
-            <Text style={styles.subTitleMaiorBold}>Total:</Text>
-            <Text style={styles.cont}>R$ {precoProd},00</Text>
-            <Text style={styles.cont}>R$ {taxaEntrega},00</Text>
-            <Text style={styles.cont}>R$ {parseInt(precoProd)+parseInt(taxaEntrega)},00</Text>
-          </View>
-
-          <TouchableNativeFeedback
-            onPress={navigateToCupom}
-            style={styles.contCupom}>
-            <IconComunity name="cards-outline" size={28} color="#23AFDB" />
-            <View style={styles.dadosCupom}>
-              <Text style={styles.subTitleBold}>Cupom:</Text>
-              <Text style={styles.cont}>Inserir cupom</Text>
-            </View>
-            <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
-          </TouchableNativeFeedback>
-
-          <TouchableNativeFeedback
-            onPress={navigateToPagamentoPerfil}
-            style={styles.contPagto}>
-            <IconFeather name="credit-card" size={26} color="#23AFDB" />
-            <View style={styles.dadosPagto}>
-              <Text style={styles.subTitleBold}>Pagamento:</Text>
-              <Text style={styles.cont}>Formas de pagamento</Text>
-            </View>
-            <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
-          </TouchableNativeFeedback>
-
-          <TouchableOpacity style={styles.btPedir}>
-            <Text style={styles.btText}>Pedir</Text>
-          </TouchableOpacity>
         </View>
-      )}
+
+        <View style={styles.contPedido}>
+          <Text style={styles.subTitle}>Subtotal:</Text>
+          <Text style={styles.subTitle}>Frete:</Text>
+          <Text style={styles.subTitleMaiorBold}>Total:</Text>
+          <Text style={styles.cont}>R$ {precoProd},00</Text>
+          <Text style={styles.cont}>R$ {taxaEntrega},00</Text>
+          <Text style={styles.cont}>R$ {parseInt(precoProd)+parseInt(taxaEntrega)},00</Text>
+        </View>
+
+        <TouchableNativeFeedback
+          onPress={navigateToCupom}
+          style={styles.contCupom}>
+          <IconComunity name="cards-outline" size={28} color="#23AFDB" />
+          <View style={styles.dadosCupom}>
+            <Text style={styles.subTitleBold}>Cupom:</Text>
+            <Text style={styles.cont}>Inserir cupom</Text>
+          </View>
+          <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={navigateToPagamentoPerfil}
+          style={styles.contPagto}>
+          <IconFeather name="credit-card" size={26} color="#23AFDB" />
+          <View style={styles.dadosPagto}>
+            <Text style={styles.subTitleBold}>Pagamento:</Text>
+            <Text style={styles.cont}>Formas de pagamento</Text>
+          </View>
+          <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
+        </TouchableNativeFeedback>
+
+        <TouchableOpacity style={styles.btPedir}>
+          <Text style={styles.btText}>Pedir</Text>
+        </TouchableOpacity>
+      </View>
+    )}
     </>
   );
 }
