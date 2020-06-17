@@ -12,7 +12,16 @@ export default function DetailProd() {
   const product = route.params.product;
   const nomeEstablishment = route.params.nomeEstabelecimento;
   const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
+  const [taxaDeEntregaEstabelecimento, setTaxaDeEntregaEstabelecimento] = useState();
+  const [tipoProduto, setTipoProduto] = useState('Produto');
   var auxNome;
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadDadosEstablishment(product.idEstabelecimento);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   function navigateToEstabelecimento(idEstabelecimento) {
     navigation.navigate('PerfilEstabelecimento', {idEstabelecimento});
@@ -25,18 +34,12 @@ export default function DetailProd() {
     var data = response.data.response;
     data.map(item => {
       setNomeEstabelecimento(item.nomeEstabelecimento);
+      setTaxaDeEntregaEstabelecimento(item.taxaDeEntregaEstabelecimento);
     });
   }
 
-  async function navigateToPedido(product, nomeEstabelecimento) {
-    navigation.navigate('Pedido', {product, nomeEstabelecimento});
-  }
-
-  if (nomeEstablishment == null) {
-    loadDadosEstablishment(product.idEstabelecimento);
-    auxNome = nomeEstabelecimento;
-  } else {
-    auxNome = nomeEstablishment;
+  async function navigateToPedido(idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto) {
+    navigation.navigate('Pedido', {idProduto,nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto});
   }
 
   return (
@@ -48,14 +51,14 @@ export default function DetailProd() {
         </View>
         <View style={styles.descMed}>
           <View>
-            <Text style={styles.title}>{product.nomeProduto}</Text>
+  <Text style={styles.title}>{product.nomeProduto}, {product.qtdMl} {product.tipoDosagem}</Text>
             <TouchableOpacity
               onPress={() =>
                 navigateToEstabelecimento(product.idEstabelecimento)
               }>
               <Text style={styles.descFarma}>
                 Vendido por
-                <Text style={styles.nameFarm}> {auxNome}</Text>
+                <Text style={styles.nameFarm}> {nomeEstabelecimento}</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -70,7 +73,7 @@ export default function DetailProd() {
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigateToPedido(product, auxNome)}
+          onPress={() => navigateToPedido(product.idProduto, product.nomeProduto, product.qtdMl, nomeEstabelecimento, taxaDeEntregaEstabelecimento, product.precoProduto, product.tipoDosagem, tipoProduto)}
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>

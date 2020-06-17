@@ -1,10 +1,13 @@
 import React, { useState} from "react"
-import {StyleSheet, View, FlatList, ScrollView, Alert, Text, Image, Dimensions, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, StatusBar, SafeAreaView, ScrollViewBase, TextInput, ImageBackground, KeyboardAvoidingView, Button} from 'react-native';
+import {StyleSheet, View, FlatList, ScrollView, Alert, Text, Image, Dimensions, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, TouchableNativeFeedback, StatusBar, SafeAreaView, ScrollViewBase, TextInput, ImageBackground, KeyboardAvoidingView, Button} from 'react-native';
 import HeaderLogin from '../componentes/HeaderLogin';
 import Logo from '../../assets/imgs/icon2.png';
 import InputComIcom from '../componentes/inputComIcon';
 import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
+
+import Icon from 'react-native-vector-icons/Feather';
+
 
 export default function TelaLogin({navigation}){
 
@@ -144,15 +147,73 @@ export default function TelaLogin({navigation}){
                         <View style = {styles.formContainer}>
                             {stageNew &&
                             <>
-                                <InputComIcom placeholder = "Email" icon='mail'  onChangeText={emailCliente => setEmailCliente(emailCliente)} /> 
-                                <InputComIcom placeholder = "Senha" icon='lock' onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} secureTextEntry={true} />
+                                <View style={styles.inputContainer}>
+                                    <TouchableWithoutFeedback>
+                                        <Icon style={styles.icon} name="mail" size={20} color="#666" />
+                                    </TouchableWithoutFeedback>
+                                    <TextInput 
+                                        style={styles.input}
+                                        placeholder = "Email" 
+                                        returnKeyType="next" 
+                                        autoCapitalize="none"
+                                        keyboardType="email-address" 
+                                        blurOnSubmit={false} 
+                                        onChangeText={emailCliente => setEmailCliente(emailCliente)} 
+                                        onSubmitEditing={() => this.input2.focus()}
+                                    /> 
+                                </View>
+                                <View style={styles.inputContainer}>
+                                    <TouchableWithoutFeedback>
+                                        <Icon style={styles.icon} name="lock" size={20} color="#666" />
+                                    </TouchableWithoutFeedback>
+                                    <TextInput 
+                                        style={styles.input}
+                                        placeholder = "Senha" 
+                                        returnKeyType="go" 
+                                        autoCapitalize="none"
+                                        blurOnSubmit={false} 
+                                        onChangeText={senhaCliente => setSenhaCliente(senhaCliente)} 
+                                        secureTextEntry={true} 
+                                        ref={(input) => {this.input2 = input;}}
+                                        onSubmitEditing={stageNew ? Logar : Cadastrar}                            
+                                    />
+                                </View>    
                             </>
                             }
 
                             {!stageNew &&
                             <>
-                            <InputComIcom placeholder = "Nome" icon='user' onChangeText={nomeCliente=>setNomeCliente(nomeCliente)} />
-                            <InputComIcom placeholder = "CPF" keyboardType='numeric' icon='clipboard' onChangeText={cpfCliente=>setCpfCliente(cpfCliente)}/>
+                            <View style={styles.inputContainer}>
+                                <TouchableWithoutFeedback>
+                                    <Icon style={styles.icon} name="lock" size={20} color="#666" />
+                                </TouchableWithoutFeedback>
+                            <TextInput 
+                                style={styles.input}
+                                placeholder = "Nome" 
+                                icon='user'
+                                returnKeyType="next" 
+                                autoCapitalize="sentences"
+                                keyboardType="default"
+                                blurOnSubmit={false}
+                                onChangeText={nomeCliente=>setNomeCliente(nomeCliente)}
+                                onSubmitEditing={() => this.input3.focus()}
+                            />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <TouchableWithoutFeedback>
+                                    <Icon style={styles.icon} name="lock" size={20} color="#666" />
+                                </TouchableWithoutFeedback>
+                                <TextInput 
+                                    style={styles.input}
+                                    placeholder = "CPF" 
+                                    keyboardType='numeric'
+                                    returnKeyType="go" 
+                                    icon='clipboard' 
+                                    onChangeText={cpfCliente=>setCpfCliente(cpfCliente)}
+                                    ref={(input) => {this.input3 = input;}}
+                                    onSubmitEditing={stageNew ? Logar : Cadastrar}
+                                />
+                            </View>
                             </>
                             }
 
@@ -247,4 +308,27 @@ const styles = StyleSheet.create({
         //marginBottom: 50
        
     },    
+
+    inputContainer: {
+        borderColor: 'rgba(70,70,70, 0.31)',
+        borderWidth: 1,
+        borderRadius: 50,
+        paddingLeft: 20,
+        marginTop: 25,
+        flexDirection: 'row'
+      },
+    
+      icon: {
+        alignSelf: 'center',
+        paddingRight: 20,
+        marginLeft: 10,
+        color: 'rgba(0,0,0,0.7)'
+      },
+    
+      input: {
+        fontSize: 16,
+        color: '#666',
+        flex: 1
+      }
+      
 });

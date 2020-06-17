@@ -19,6 +19,10 @@ export default StyleSheet.create({
     fontWeight: '700',
   },
 
+  subTitlePgto: {
+    fontSize: 16,
+  },
+
   subTitleMaiorBold: {
     fontSize: 18,
     fontWeight: '700',

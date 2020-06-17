@@ -20,6 +20,7 @@ import Todos from './screens/Todos';
 import Categoria from './screens/Categoria';
 import CategoriaProd from './screens/CategoriaProd';
 import PagamentoPerfil from './screens/PagamentoPerfil';
+import Pagamento from './screens/Pagamento';
 import Cartao from './screens/Cartao';
 import CadastrarCartao from './screens/CadastrarCartao';
 import Cupom from './screens/Cupom';
@@ -54,6 +55,7 @@ function Routes() {
       <AppStack.Screen name="Enderecos" component={Enderecos} />
       <AppStack.Screen name="AdicionarEndereco" component={AdicionarEndereco} />
       <AppStack.Screen name="PagamentoPerfil" component={PagamentoPerfil} />
+      <AppStack.Screen name="Pagamento" component={Pagamento} />
       <AppStack.Screen name="Cartao" component={Cartao} />
       <AppStack.Screen name="CadastrarCartao" component={CadastrarCartao} />
       <AppStack.Screen name="Cupom" component={Cupom} />

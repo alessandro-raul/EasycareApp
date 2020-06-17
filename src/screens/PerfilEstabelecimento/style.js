@@ -5,6 +5,7 @@ export default (styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: '100%',
     backgroundColor: '#fff',
+    paddingBottom: 10
   },
 
   viewLogoFarma: {

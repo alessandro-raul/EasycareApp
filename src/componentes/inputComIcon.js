@@ -27,6 +27,7 @@ export default class InputComIcon extends Component {
           autoCompleteType={this.props.autoCompleteType}
           keyboardType={this.props.keyboardType}
           blurOnSubmit={this.props.blurOnSubmit}
+          ref={this.props.ref}
           {...this.props}>
         </TextInput>
       </View>

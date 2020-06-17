@@ -10,7 +10,7 @@ import {
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
-import IconFeather from 'react-native-vector-icons/Feather';
+//import IconFeather from 'react-native-vector-icons/Feather';
 import MeuHeader from '../../componentes/Header';
 import logo from '../../../assets/imgs/drogariasp.png';
 import Remedio from '../../../assets/imgs/remedio.png';
@@ -39,22 +39,26 @@ export default function PerfilEstabelecimento({navigation}) {
   const [taxaDeEntregaEstabelecimento, setTaxaDeEntregaEstabelecimento] = useState('');
   const [statusEstabelecimento, setStatusEstabelecimento] = useState('');
   const [products, setProducts] = useState([]);
+  const [productsOffers, setProductsOffers] = useState([]);
   const [productCategories, setProductCategories] = useState([]);
   const [medicaments, setMedicaments] = useState([]);
+  const [medicamentsOffers, setMedicamentsOffers] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const idEstabelecimento = route.params.idEstabelecimento;
-
+  const todos = true;
+  const promocoesEstabelecimento = true;
   const [visible, setVisible] = useState(false);
 
 
   useEffect(() => {
     loadDadosEstablishment(idEstabelecimento);
-    loadMedicaments(idEstabelecimento);
+    loadMedicaments(idEstabelecimento, todos);
+    loadMedicamentsOffers(idEstabelecimento, promocoesEstabelecimento);
     loadCategories(idEstabelecimento);
     loadProducts(idEstabelecimento);
+    loadProductsOffers(idEstabelecimento, promocoesEstabelecimento);
     loadProductCategories(idEstabelecimento);
-    setTimeout(() => setVisible(true),1000);
   }, []);
 
   async function loadDadosEstablishment(idEstabelecimento) {
@@ -109,17 +113,24 @@ export default function PerfilEstabelecimento({navigation}) {
   }
 
   //Medicamentos e suas categorias
-  async function loadMedicaments(idEstabelecimento) {
-    const response = await api.get('/Medicament', {
-      params: {idEstabelecimento},
-    });
+  async function loadMedicaments(idEstabelecimento, todos) {
+    const response = await api.get('/Medicament', {params:{idEstabelecimento: idEstabelecimento, todos: todos}});
     const data = response.data.response;
     setMedicaments(data);
+    setTimeout(() => setVisible(true),1800);
+  }
+
+  async function loadMedicamentsOffers(idEstabelecimento, promocoesEstabelecimento){
+    const response = await api.get('/Medicament', {
+      params: {idEstabelecimento, promocoesEstabelecimento},
+    });
+    const data = response.data.response;
+    setMedicamentsOffers(data);
   }
 
   async function loadCategories(idEstabelecimento) {
     const response = await api.get('/MedicamentCategories/', {
-      params: {idEstabelecimento},
+      params: {idEstabelecimento: idEstabelecimento},
     });
     const data = response.data.response;
     setCategories(data);
@@ -127,9 +138,17 @@ export default function PerfilEstabelecimento({navigation}) {
 
   //Produtos e suas categorias
   async function loadProducts(idEstabelecimento) {
-    const response = await api.get('/Product', {params: {idEstabelecimento}});
+    const response = await api.get('/Product', {params:{idEstabelecimento: idEstabelecimento, todos: todos}});
     const data = response.data.response;
     setProducts(data);
+  }
+
+  async function loadProductsOffers(idEstabelecimento, promocoesEstabelecimento){
+    const response = await api.get('/Product', {
+      params: {idEstabelecimento, promocoesEstabelecimento},
+    });
+    const data = response.data.response;
+    setProductsOffers(data);
   }
 
   async function loadProductCategories(idEstabelecimento) {
@@ -263,9 +282,9 @@ export default function PerfilEstabelecimento({navigation}) {
                   </ScrollView>
                 </View>
                 <View style={styles.contScroll}>
-                  <HeaderScroll title="Ofertas" icon="arrow-right" size={26} />
+                  <HeaderScroll title="Ofertas" icon="keyboard-arrow-right" size={26} />
                   <FlatList
-                    data={medicaments}
+                    data={medicamentsOffers}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={medicament =>
@@ -339,7 +358,7 @@ export default function PerfilEstabelecimento({navigation}) {
                 <View style={styles.contScroll}>
                   <HeaderScroll
                     title="Mais vendidos"
-                    icon="arrow-right"
+                    icon="keyboard-arrow-right"
                     size={26}
                   />
                   <FlatList
@@ -418,7 +437,7 @@ export default function PerfilEstabelecimento({navigation}) {
                 <View style={styles.contScroll}>
                   <HeaderScroll
                     title="Todos"
-                    icon="arrow-right"
+                    icon="keyboard-arrow-right"
                     size={26}
                     function={() => navigateToTodos(idEstabelecimento)}
                   />
@@ -538,7 +557,92 @@ export default function PerfilEstabelecimento({navigation}) {
                 </View>
 
                 <View style={styles.contScroll}>
-                  <HeaderScroll title="Ofertas" icon="arrow-right" size={26} />
+                  <HeaderScroll title="Ofertas" icon="keyboard-arrow-right" size={26} />
+                  <FlatList
+                    data={productsOffers}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={products => String(products.idProduto)}
+                    style={styles.scrollMedic}
+                    renderItem={({item: products}) => (
+                      <TouchableOpacity
+                        style={styles.medicContainer}
+                        onPress={() =>
+                          navigateToDetailProd(products, nomeEstabelecimento)
+                        }>
+                        <View style={styles.contImg}>
+                          <Image source={Remedio} style={styles.imgMedic} />
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>
+                              {products.nomeProduto}
+                            </Text>
+                            <Text style={styles.nameLab}>
+                              {products.nomeFabricante}
+                            </Text>
+                            <Text style={styles.dosagemMedic}>
+                              {products.qtdMl} {products.tipoDosagem}
+                            </Text>
+                          </View>
+                          <View style={styles.dadosCompra}>
+                            <Text style={styles.precoMedic}>
+                              R$ {products.precoProduto},00
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+
+                <View style={styles.contScroll}>
+                  <HeaderScroll
+                    title="Mais vendidos"
+                    icon="keyboard-arrow-right"
+                    size={26}
+                  />
+                  <FlatList
+                    data={medicaments}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={medicament =>
+                      String(medicament.idMedicamento)
+                    }
+                    style={styles.scrollMedic}
+                    renderItem={({item: medicament}) => (
+                      <TouchableOpacity
+                        onPress={() => navigateToDetailMed(medicament)}
+                        style={styles.medicContainer}>
+                        <View style={styles.contImg}>
+                          <Image source={Remedio} style={styles.imgMedic} />
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>
+                              {medicament.descMed}, {medicament.composicaoMed}
+                            </Text>
+                            <Text style={styles.nameLab}>
+                              {medicament.nomeLaboratorio}
+                            </Text>
+                            <Text style={styles.dosagemMedic}>
+                              {medicament.descDosagem}
+                              {medicament.tipoDosagem}
+                            </Text>
+                          </View>
+                          <View style={styles.dadosCompra}>
+                            <Text style={styles.precoMedic}>
+                              R$ {medicament.precoMed},00
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
+
+                <View style={styles.contScroll}>
+                  <HeaderScroll title="Todos" icon="keyboard-arrow-right" size={26} />
                   <FlatList
                     data={products}
                     horizontal={true}
@@ -563,103 +667,12 @@ export default function PerfilEstabelecimento({navigation}) {
                               {products.nomeFabricante}
                             </Text>
                             <Text style={styles.dosagemMedic}>
-                              {products.qtdMl}
+                              {products.qtdMl} {products.tipoDosagem}
                             </Text>
                           </View>
                           <View style={styles.dadosCompra}>
                             <Text style={styles.precoMedic}>
                               R$ {products.precoProduto},00
-                            </Text>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-
-                <View style={styles.contScroll}>
-                  <HeaderScroll
-                    title="Mais vendidos"
-                    icon="arrow-right"
-                    size={26}
-                  />
-                  <FlatList
-                    data={medicaments}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={medicament =>
-                      String(medicament.idMedicamento)
-                    }
-                    style={styles.scrollMedic}
-                    renderItem={({item: medicament}) => (
-                      <TouchableOpacity
-                        onPress={() => navigateToDetailMed(medicament)}
-                        style={styles.medicContainer}>
-                        <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
-                        </View>
-                        <View style={styles.contDesc}>
-                          <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>
-                              {medicament.descMed}, {medicament.composicaoMed}
-                            </Text>
-                            <Text style={styles.nameLab}>
-                              {medicament.nomeLaboratorio}
-                            </Text>
-                            <Text style={styles.dosagemMedic}>
-                              {medicament.descDosagem}
-                              {medicament.tipoDosagem}
-                            </Text>
-                          </View>
-                          <View style={styles.dadosCompra}>
-                            <Text style={styles.precoMedic}>
-                              R$ {medicament.precoMed},00
-                            </Text>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-
-                <View style={styles.contScroll}>
-                  <HeaderScroll
-                    title="Todos"
-                    icon="arrow-right"
-                    size={26}
-                    function={() => navigateToTodos(idEstabelecimento)}
-                  />
-                  <FlatList
-                    data={medicaments}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={medicament =>
-                      String(medicament.idMedicamento)
-                    }
-                    style={styles.scrollMedic}
-                    renderItem={({item: medicament}) => (
-                      <TouchableOpacity
-                        onPress={() => navigateToDetailMed(medicament)}
-                        style={styles.medicContainer}>
-                        <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
-                        </View>
-                        <View style={styles.contDesc}>
-                          <View style={styles.descMedic}>
-                            <Text style={styles.nameMedic}>
-                              {medicament.descMed}, {medicament.composicaoMed}
-                            </Text>
-                            <Text style={styles.nameLab}>
-                              {medicament.nomeLaboratorio}
-                            </Text>
-                            <Text style={styles.dosagemMedic}>
-                              {medicament.descDosagem}
-                              {medicament.tipoDosagem}
-                            </Text>
-                          </View>
-                          <View style={styles.dadosCompra}>
-                            <Text style={styles.precoMedic}>
-                              R$ {medicament.precoMed},00
                             </Text>
                           </View>
                         </View>

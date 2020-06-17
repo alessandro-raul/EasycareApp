@@ -10,7 +10,14 @@ export default function SearchBar(props){
         <TouchableOpacity>
           <Icon name="search" size={22} color={props.cor}/>
         </TouchableOpacity>
-        <TextInput style={styles.input} placeholderTextColor="#666" placeholder="Pesquisar"></TextInput>
+        <TextInput style={styles.input}
+          placeholder="Pesquisar"
+          returnKeyType="done"
+          autoCapitalize="sentences"
+          placeholderTextColor="#666"
+          onSubmitEditing={this.props.onSubmitEditing}
+          blurOnSubmit={true}
+        ></TextInput>
       </View>
     </View>
   )

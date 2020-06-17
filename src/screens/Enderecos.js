@@ -116,6 +116,7 @@ export default function Enderecos({navigation}){
             const id = await AsyncStorage.getItem("idEnderecoCliente");
             console.log(id);
             await api.delete('/UserAdress/', {params:{idEnderecoCliente: id}});
+            await AsyncStorage.setItem("idEnderecoCliente", '');
             setModal(false);
             pegarId();
         }catch(error){

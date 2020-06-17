@@ -3,13 +3,15 @@ import { StyleSheet, Dimensions } from "react-native";
 export default StyleSheet.create({
   container: {
     width: '100%',
-    height: Dimensions.get('window').height,
+    height: '100%',
+    paddingBottom: 60,
     //paddingLeft: 32,
     backgroundColor: '#fff',
   },
 
   contSearch: {
-    marginTop: '5%',
+    marginTop: '7.5%',
+    marginBottom: '1.2%',
     paddingLeft: 25,
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,7 +42,7 @@ export default StyleSheet.create({
 
   /*Card Scroll Ofertas*/
   contScroll: {
-    height: 330,
+    height: 350,
     width: '100%',
     marginTop: '1%',
     justifyContent: 'center',
@@ -48,7 +50,8 @@ export default StyleSheet.create({
   },
   
   scrollMedic: {  
-    width: '100%',
+    width: '100%'
+   
   },
 
   medicContainer: {
@@ -139,28 +142,29 @@ export default StyleSheet.create({
   localizacao:{
     flexDirection:'row',
     width: '70%',
-    paddingLeft: 30, 
+    paddingLeft: 42, 
     paddingTop: 20,
     alignItems: 'center',
     paddingHorizontal: 15,
   },
 
   viewLocalizacao:{
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     borderColor: 'rgba(0,0,0, 0.20)'
   },
 
   txtLocalizacao:{
-    marginLeft: '2%',
+    marginLeft: '4%',
     fontSize: 15.4,
     marginTop: "1%",
+
     color: 'gray'
     //textDecorationLine:'underline'
   },
 
   farmaContainer: {
     width: '100%',
-    height: 85,
+    height: 75,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -180,8 +184,8 @@ export default StyleSheet.create({
   },
 
   ImgFarma: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     borderRadius: 25,
   },
 
@@ -247,5 +251,44 @@ export default StyleSheet.create({
     height: 40,
     borderRadius: 25,
   },
+
+  //scroll estabelecimentos próximos
+  farmaProxContainer:{
+    width: 100,
+    height: 130,
+    //backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10
+  },
+
+  ImgFarmaProx: {
+    width: 40,
+    height: 40,
+    marginBottom: 10,
+    borderRadius: 25,
+  },
+
+  titleProx:{
+    fontSize: 14,
+    fontWeight: '700',
+    color: 'rgba(70,70,70, 0.8)',
+    textAlign: 'center'
+  },
+
+  subtitleProx:{
+    fontSize: 14,
+    color: 'rgba(70,70,70, 0.8)',
+    textAlign: 'center'
+  },
+
+  carroselImages:{
+    width: '100%',
+    height: 220,
+    marginBottom: 10
+  }
+
+
+  
 
 });

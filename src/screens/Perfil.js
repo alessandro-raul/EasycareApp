@@ -9,7 +9,6 @@ import gifTriste from '../../assets/imgs/gifTriste.gif';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import IconFeather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 export default function TelaPerfil({navigation}){

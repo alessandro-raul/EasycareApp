@@ -2,6 +2,8 @@ import React from 'react'
 import { Text,   StyleSheet, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+//import Ubuntu from '../../assets/fonts/ubuntu.ttf'
+
 
 export default function Header(props){
 

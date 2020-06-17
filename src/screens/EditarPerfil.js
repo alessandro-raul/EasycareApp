@@ -141,7 +141,7 @@ export default function EditarPerfil({navigation}){
                 [
                   { text: "OK", onPress: () => voltar() }
                 ],
-                { cancelable: false });
+                { cancelable: false});
         }catch(error){
             console.log(error)
         }

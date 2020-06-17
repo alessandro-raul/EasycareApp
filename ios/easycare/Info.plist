@@ -76,6 +76,14 @@
 		<string>Roboto_medium.ttf</string>
 		<string>Roboto.ttf</string>
 		<string>rubicon-icon-font.ttf</string>
+		<string>ubuntu-b.ttf</string>
+		<string>ubuntu-bi.ttf</string>
+		<string>ubuntu-l.ttf</string>
+		<string>ubuntu-li.ttf</string>
+		<string>ubuntu-m.ttf</string>
+		<string>ubuntu-mi.ttf</string>
+		<string>ubuntu-r.ttf</string>
+		<string>ubuntu-ri.ttf</string>
 	</array>
 </dict>
 </plist>
