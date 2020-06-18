@@ -12,12 +12,11 @@ export default function HeaderScroll(props){
   }
 
   return(
-    <TouchableOpacity style={styles.headerContainer} onPress={props.function}>
+    <View style={styles.headerContainer} onPress={props.function}>
       <View style={styles.cont}>
-        <Text style={styles.title}>{props.title}</Text>    
-        <Icon name={props.icon} size={props.size} color={"#666"} />        
+        <Text style={styles.title}>{props.title}</Text>         
       </View>  
-    </TouchableOpacity>  
+    </View>  
   )
   
 }

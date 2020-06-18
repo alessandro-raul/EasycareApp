@@ -86,7 +86,7 @@ export default function Categoria({navigation}) {
                   <View style={styles.dadosCompra}>
                     <Image source={Drogaria} style={styles.imgFarma} />
                     <Text style={styles.precoMedic}>
-                    {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(medicament.precoMed)}
+                      R$ {medicament.precoMed},00
                     </Text>
                   </View>
                 </View>
@@ -101,17 +101,21 @@ export default function Categoria({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('window').width,
+    width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems:"center",
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    backgroundColor: 'white',
   },
 
   contScroll: {
     flexDirection: 'row',
     //backgroundColor: 'green',
     alignItems: 'center',
-    width: '100%',
+    width: Dimensions.get('window').width,
+    height: '100%'
   },
 
   scrollMedic: {
@@ -121,7 +125,8 @@ const styles = StyleSheet.create({
   medicContainer: {
     width: 130,
     height: 330,
-    marginLeft: 23,
+    marginLeft: 11.5,
+    marginRight: 11.5,
     marginTop: 22,
     padding: 7,
     borderRadius: 5,

@@ -44,10 +44,10 @@ export default function Home({ navigation }) {
   useLayoutEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       pegarIdEndereco();
+      loadEstabelecimentos(); 
       loadMedicaments();
       loadMedicamentsOffers(promocoesGeral);
       loadProductsOffers(promocoesGeral);  
-      loadEstabelecimentos(); 
       setTimeout(() => setVisible(true),1000);
     });
     return unsubscribe;
@@ -171,7 +171,7 @@ export default function Home({ navigation }) {
           </View>
             <SliderBox images={images}  sliderBoxHeight={240}/>
           <View style={{marginTop: '2%'}}>
-          <HeaderScroll title="Estabelecimentos próximos" icon="keyboard-arrow-right" size={22} />
+          <HeaderScroll title="Estabelecimentos próximos"/>
             <View style={{paddingHorizontal: 15}}>
             <FlatList
               data={estabelecimentos}
@@ -208,7 +208,7 @@ export default function Home({ navigation }) {
         </View>
 
           <View style={styles.contScroll}>
-            <HeaderScroll title="Comprados recentemente" icon="keyboard-arrow-right" size={22} />                     
+            <HeaderScroll title="Comprados recentemente"/>                     
             <FlatList
               data={medicaments}
               horizontal={true}
@@ -263,7 +263,7 @@ export default function Home({ navigation }) {
                       autoRun={true}
                       visible={visible}
                     >
-                    <Text style={styles.precoMedic}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(medicament.precoMed)}</Text>       
+                      <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
                     </ShimmerPlaceHolder>
                   </View>
                 </View>
@@ -272,7 +272,7 @@ export default function Home({ navigation }) {
           </View>   
          
           <View style={{marginTop:'1%'}}>
-            <HeaderScroll title="Estabelecimentos" icon="keyboard-arrow-right" size={22} />
+            <HeaderScroll title="Estabelecimentos" />
             <FlatList
               data={estabelecimentos}
               showsVerticalScrollIndicatomer={true}

@@ -21,10 +21,11 @@ export default function EditarPerfil({navigation}){
     const [emailCliente, setEmailCliente] = useState('');
     const [senhaCliente, setSenhaCliente] = useState('');
     const [telefoneCliente, setTelefoneCliente] = useState('');
+    const [inicial, setInicial] = useState('');
+    const [showLoader, setShowLoader] = useState(false);
+    const [showLoader2, setShowLoader2] = useState(true);
     var idLoginCliente;
     var idFoneCliente;
-
-    const [showLoader, setShowLoader] = useState(false);
     
     async function pegarDados(){
         try {
@@ -40,6 +41,8 @@ export default function EditarPerfil({navigation}){
           setEmailCliente(email);
           setSenhaCliente(senha);
           setTelefoneCliente(telefone);
+          setInicial(nome.charAt(0));
+          setShowLoader2(false);
         } catch (error) {
             setShowLoader(false);
             alert(error);
@@ -158,12 +161,15 @@ export default function EditarPerfil({navigation}){
             <ScrollView style={styles.fundo}>
                 <View style={styles.banner}>
                     <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
-                        <Image source={Brendon} style={styles.imgPerfil}/>
-                    </View>
-                    <View style={{width:'100%', height:'20%',}}>
-                        <TouchableOpacity style={styles.imgPerfilTouch}>
-                            <Icons name='camera' size={20} color="white" style={{padding: 6}}></Icons>
-                        </TouchableOpacity> 
+                        <View style={styles.imgPerfil}>
+                            {!showLoader2 &&
+                                <Text style={styles.txtInicial}>{inicial}</Text>
+                                //<Text style={styles.txtLogin}>Salvar</Text>
+                            }
+                            {showLoader2 &&
+                                <ActivityIndicator animating={showLoader2} size="large" color="#1d97bd" />
+                            }
+                        </View>
                     </View>
                 </View>
 
@@ -216,19 +222,21 @@ const styles = StyleSheet.create({
         borderRadius: 70,
         marginTop: 40,
         height: 120,
-        width: 120
+        width: 120,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        borderWidth: 2,
+        borderColor: '#1d97bd',
+        backgroundColor: '#fff',
     },
 
-    imgPerfilTouch:{
-        alignContent: 'center',
-        marginLeft: '55%',
-        marginTop: '5%',
-        width: 33,
-        height: 33,
-        borderRadius: 30,
-        backgroundColor: '#23AFDB'
+    txtInicial: {
+        fontSize: 48,
+        color: '#666',
+        alignSelf: 'center',
     },
-    
+
     form:{
         justifyContent: 'center',
         alignItems: 'center'

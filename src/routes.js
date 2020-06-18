@@ -28,6 +28,7 @@ import CadastrarCupom from './screens/CadastrarCupom';
 import Notificacoes from './screens/Notificacoes';
 import EditarEndereco from './screens/EditarEndereco';
 import Resultado from './screens/Resultado/Resultado';
+import PesquisaMedicamento from './screens/PesquisaMedicamento/PesquisaMedicamento'
 
 const AppStack = createStackNavigator();
 
@@ -63,6 +64,7 @@ function Routes() {
       <AppStack.Screen name="Notificacoes" component={Notificacoes} />
       <AppStack.Screen name="DetailMed" component={DetailMed} />
       <AppStack.Screen name="DetailProd" component={DetailProd} />
+      <AppStack.Screen name="PesquisaMedicamento" component={PesquisaMedicamento} />
       <AppStack.Screen name="EditarEndereco" component={EditarEndereco} />
       <AppStack.Screen name="Resultado" component={Resultado} />
       <AppStack.Screen

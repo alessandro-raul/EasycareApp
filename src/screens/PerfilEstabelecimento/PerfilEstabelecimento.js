@@ -171,6 +171,9 @@ export default function PerfilEstabelecimento({navigation}) {
     navigation.navigate('DetailProd', {product, nomeEstabelecimento});
   }
 
+  function navigateToSearchMedicamento(idEstabelecimento) {
+    navigation.navigate('PesquisaMedicamento', {idEstabelecimento: idEstabelecimento});
+  }
   return (
     <>
       <MeuHeader text={nomeEstabelecimento} />
@@ -214,7 +217,7 @@ export default function PerfilEstabelecimento({navigation}) {
                 </TouchableOpacity>
               </View>
             </ShimmerPlaceHolder>
-            <SearchBarHome />
+            <SearchBarHome press={() => navigateToSearchMedicamento(idEstabelecimento)}/>
             <ShimmerPlaceHolder
               style={styles.shimmerTaxa}
               autoRun={true}
@@ -223,7 +226,7 @@ export default function PerfilEstabelecimento({navigation}) {
               <View style={styles.taxaEntregaView}>
                   <IconAwesome name="motorcycle" size={18} color="#23AFDB" />
                   <Text style={styles.taxaEntregaTxt}>
-                    Taxa de entrega = {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(taxaDeEntregaEstabelecimento)}
+                    Taxa de entrega = R$ {taxaDeEntregaEstabelecimento},00
                   </Text>
               </View>
             </ShimmerPlaceHolder>
@@ -346,7 +349,7 @@ export default function PerfilEstabelecimento({navigation}) {
                               visible={visible}
                             >
                               <Text style={styles.precoMedic}>
-                              {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(medicament.precoMed)}
+                                R$ {medicament.precoMed},00
                               </Text>
                             </ShimmerPlaceHolder>  
                           </View>
@@ -424,7 +427,7 @@ export default function PerfilEstabelecimento({navigation}) {
                               visible={visible}
                             >
                               <Text style={styles.precoMedic}>
-                              {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(medicament.precoMed)}
+                                R$ {medicament.precoMed},00
                               </Text>
                             </ShimmerPlaceHolder>
                           </View>
@@ -503,7 +506,7 @@ export default function PerfilEstabelecimento({navigation}) {
                               visible={visible}
                             >
                               <Text style={styles.precoMedic}>
-                              {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(medicament.precoMed)}
+                                R$ {medicament.precoMed},00
                               </Text>
                             </ShimmerPlaceHolder>
                           </View>
@@ -587,7 +590,7 @@ export default function PerfilEstabelecimento({navigation}) {
                           </View>
                           <View style={styles.dadosCompra}>
                             <Text style={styles.precoMedic}>
-                            {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(products.precoProduto)}
+                              R$ {products.precoProduto},00
                             </Text>
                           </View>
                         </View>
@@ -596,7 +599,50 @@ export default function PerfilEstabelecimento({navigation}) {
                   />
                 </View>
 
-            
+                <View style={styles.contScroll}>
+                  <HeaderScroll
+                    title="Mais vendidos"
+                    icon="keyboard-arrow-right"
+                    size={26}
+                  />
+                  <FlatList
+                    data={medicaments}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={medicament =>
+                      String(medicament.idMedicamento)
+                    }
+                    style={styles.scrollMedic}
+                    renderItem={({item: medicament}) => (
+                      <TouchableOpacity
+                        onPress={() => navigateToDetailMed(medicament)}
+                        style={styles.medicContainer}>
+                        <View style={styles.contImg}>
+                          <Image source={Remedio} style={styles.imgMedic} />
+                        </View>
+                        <View style={styles.contDesc}>
+                          <View style={styles.descMedic}>
+                            <Text style={styles.nameMedic}>
+                              {medicament.descMed}, {medicament.composicaoMed}
+                            </Text>
+                            <Text style={styles.nameLab}>
+                              {medicament.nomeLaboratorio}
+                            </Text>
+                            <Text style={styles.dosagemMedic}>
+                              {medicament.descDosagem}
+                              {medicament.tipoDosagem}
+                            </Text>
+                          </View>
+                          <View style={styles.dadosCompra}>
+                            <Text style={styles.precoMedic}>
+                              R$ {medicament.precoMed},00
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </View>
 
                 <View style={styles.contScroll}>
                   <HeaderScroll title="Todos" icon="keyboard-arrow-right" size={26} />
@@ -629,7 +675,7 @@ export default function PerfilEstabelecimento({navigation}) {
                           </View>
                           <View style={styles.dadosCompra}>
                             <Text style={styles.precoMedic}>
-                            {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(products.precoProduto)}
+                              R$ {products.precoProduto},00
                             </Text>
                           </View>
                         </View>

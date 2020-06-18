@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Text, StyleSheet, View, Image, Alert } from 'react-native';
+import { Text, StyleSheet, View, Image, Alert, ActivityIndicator } from 'react-native';
 import Header from '../componentes/Header';
 import Brendon from '../../assets/imgs/brendon.jpg'
-import { ScrollView, TouchableOpacity, TouchableNativeFeedback, TouchableHighlight, ActivityIndicator } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity, TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import gifTriste from '../../assets/imgs/gifTriste.gif';
@@ -16,6 +16,7 @@ export default function TelaPerfil({navigation}){
     const [nomeCliente, setNomeCliente] = useState(''); 
     const [statusLogin, setStatusLogin] = useState(0);
     const [showLoader, setShowLoader] = useState(true);
+    const [inicial, setInicial] = useState('');
 
     const [visible, setVisible] = useState(false);
 
@@ -44,7 +45,11 @@ export default function TelaPerfil({navigation}){
         try {
             const nome = await AsyncStorage.getItem("nomeCliente");
             setNomeCliente(nome);
+            
+            setInicial(nome.charAt(0));
+            //setTimeout(() => setInicial(nome.charAt(0)),1000);
             setTimeout(() => setVisible(true),1000);
+            setTimeout(() => setShowLoader(false), 1000);
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +58,7 @@ export default function TelaPerfil({navigation}){
     async function pegarEndereco(){
         const endereco = await AsyncStorage.getItem("logCliente");
         const numLog = await AsyncStorage.getItem("numLogCliente");
-        console.log(endereco, numLog);
+        //console.log(endereco, numLog);
     }
 
     function navigateToPagamentoPerfil(){
@@ -113,7 +118,17 @@ export default function TelaPerfil({navigation}){
            <ScrollView style={styles.fundo}>
                 <View style={styles.banner}>
                     <View style={{backgroundColor: '#23AFDB', width:'100%', height:'60%', alignItems:'center'}}>
-                        <Image source={Brendon} style={styles.imgPerfil}/>
+                        {/*<Image source={Brendon} style={styles.imgPerfil}/>*/}
+                        <View style={styles.imgPerfil}>
+                            {!showLoader &&
+                                <Text style={styles.txtInicial}>{inicial}</Text>
+                            //<Text style={styles.txtLogin}>Salvar</Text>
+                            }
+
+                            {showLoader &&
+                                <ActivityIndicator animating={showLoader} size="large" color="#1d97bd" />
+                            }
+                        </View>
                     </View>
                     <View style={{width:'100%', height:'20%'}}>
                     </View>
@@ -253,7 +268,19 @@ const styles = StyleSheet.create({
         borderRadius: 70,
         marginTop: 40,
         height: 120,
-        width: 120
+        width: 120,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        borderWidth: 2,
+        borderColor: '#1d97bd',
+        backgroundColor: '#fff',
+    },
+
+    txtInicial: {
+        fontSize: 48,
+        color: '#666',
+        alignSelf: 'center',
     },
 
     infos:{
@@ -339,6 +366,7 @@ const styles = StyleSheet.create({
 
     shimmerNome: {
         borderRadius: 10,
-        height: 30,
+        height: 25,
+        width: 130,
     },
 })
