@@ -90,7 +90,7 @@ export default StyleSheet.create({
   },
 
   dadosCompra: {
-    width:'100%',
+    width:'95%',
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',

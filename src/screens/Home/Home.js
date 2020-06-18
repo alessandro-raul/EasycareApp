@@ -263,7 +263,7 @@ export default function Home({ navigation }) {
                       autoRun={true}
                       visible={visible}
                     >
-                      <Text style={styles.precoMedic}>R$ {medicament.precoMed},00</Text>       
+                    <Text style={styles.precoMedic}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(medicament.precoMed)}</Text>       
                     </ShimmerPlaceHolder>
                   </View>
                 </View>

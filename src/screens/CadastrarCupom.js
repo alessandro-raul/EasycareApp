@@ -1,10 +1,67 @@
-import React from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
-import Header from '../componentes/Header'
-import Input from '../componentes/inputBasico'
+import React from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import Header from '../componentes/Header';
+import Input from '../componentes/inputBasico';
+import { useState } from 'react';
+import api from '../services/api';
+import { useRoute } from '@react-navigation/native';
 
 
-export default function CadatrarCartao(){
+export default function CadatrarCupom({navigation}){
+    const [cupom, setCupom] = useState();
+    const route = useRoute();
+    const idCliente = route.params.idCliente;
+
+    async function buscarCupom(){
+        try{
+        const response = await api.get('/Cupom/', {params: {cupom: cupom}});
+        const data = response.data.response;
+     
+        if(data == "Cupom não encontrado"){
+            alert(data);
+        }else{
+           verificaCupom(data);
+        }
+        }catch(error){
+            console.log(error);
+        }
+    }
+
+    async function verificaCupom(data){
+        var idCupom;
+        
+        data.map(item => {
+            idCupom = item.idCupom;
+        });
+      
+        const response = await api.get('/CuponsCliente/', {params: {idCupom: idCupom, idCliente: idCliente}});
+        const data2 = response.data.response;
+        console.log(data2)
+      
+        if(data2 == "Erro de parametros: BAD REQUEST" || data2 == ''){
+           console.log('válido');
+           aplicaCupom(data);
+        }else{
+           alert('Cupom já utilizado!');
+        }
+    }
+
+    async function aplicaCupom(data){
+        var idCupom;
+        var cupom;
+        var valorCupom;
+        data.map(item => {
+            idCupom = item.idCupom;
+            cupom = item.cupom;
+            valorCupom = item.valorCupom;
+        });
+        navigateToPedido(idCupom, cupom, valorCupom);
+    }
+
+    function navigateToPedido(idCupom, cupom, valorCupom){
+        navigation.navigate('Pedido', {idCupom, cupom, valorCupom});
+    }
+
     return(
         <>
             <Header text="Adicionar Cupom"/>
@@ -21,12 +78,13 @@ export default function CadatrarCartao(){
                             autoCorrect={false}
                             placeholderTextColor="#666"
                             placeholder="Código do cupom"
+                            onChangeText={cupom => setCupom(cupom)}
                         />
                     </View>
                 </View>
 
                 <View style={styles.btAddView}>
-                    <TouchableOpacity style={styles.btAdd} >
+                    <TouchableOpacity style={styles.btAdd} onPress={()=> buscarCupom()}>
                         <Text style={styles.txtAdd}>Adicionar</Text>
                     </TouchableOpacity>
                 </View>

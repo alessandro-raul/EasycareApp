@@ -90,7 +90,7 @@ export default StyleSheet.create({
 
   contPedido: {
     width: '100%',
-    height: 120,
+    height: 140,
     paddingHorizontal: 20,
     paddingVertical: 20,
     marginTop: 2,

@@ -79,7 +79,7 @@ export default function Categoria({navigation}) {
                   </View>
                   <View style={styles.dadosCompra}>
                     <Text style={styles.precoMedic}>
-                      R$ {products.precoProduto},00
+                    {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(products.precoProduto)}
                     </Text>
                   </View>
                 </View>

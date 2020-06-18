@@ -15,6 +15,9 @@ export default function DetailMed() {
   const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
   const [taxaDeEntregaEstabelecimento, setTaxaDeEntregaEstabelecimento] = useState();
   const [tipoProduto, setTipoProduto] = useState('Medicamento');
+  const idCupom = "null";
+  const valorCupom = 0;
+  const cupom = "";
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -38,8 +41,8 @@ export default function DetailMed() {
     });
   }
 
-  async function navigateToPedido(idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto) {
-    navigation.navigate('Pedido', {idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto});
+  async function navigateToPedido(idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom) {
+    navigation.navigate('Pedido', {idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom});
   }
 
   return (
@@ -67,15 +70,14 @@ export default function DetailMed() {
           <View>
             <Text style={styles.precoMed}>R$ 20,00</Text>
             <Text style={styles.precoPromo}>
-              {/*Intl.NumberFormat('pt-BR', {
+              {Intl.NumberFormat('pt-BR', {
             style: 'currency', currency: 'BRL'
-            }).format(medicament.precoMed)*/}
-              R$ {medicament.precoMed},00
+            }).format(medicament.precoMed)}
             </Text>
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigateToPedido(medicament.idMedicamento, medicament.descMed, medicament.descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, medicament.precoMed, medicament.tipoDosagem, tipoProduto)}
+          onPress={() => navigateToPedido(medicament.idMedicamento, medicament.descMed, medicament.descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, medicament.precoMed, medicament.tipoDosagem, tipoProduto, idCupom)}
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>

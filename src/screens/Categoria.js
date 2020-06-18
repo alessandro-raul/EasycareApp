@@ -86,7 +86,7 @@ export default function Categoria({navigation}) {
                   <View style={styles.dadosCompra}>
                     <Image source={Drogaria} style={styles.imgFarma} />
                     <Text style={styles.precoMedic}>
-                      R$ {medicament.precoMed},00
+                    {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(medicament.precoMed)}
                     </Text>
                   </View>
                 </View>

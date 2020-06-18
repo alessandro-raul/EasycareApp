@@ -14,6 +14,9 @@ export default function DetailProd() {
   const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
   const [taxaDeEntregaEstabelecimento, setTaxaDeEntregaEstabelecimento] = useState();
   const [tipoProduto, setTipoProduto] = useState('Produto');
+  const idCupom = "null";
+  const valorCupom = 0;
+  const cupom = "";
   var auxNome;
 
   React.useEffect(() => {
@@ -38,8 +41,8 @@ export default function DetailProd() {
     });
   }
 
-  async function navigateToPedido(idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto) {
-    navigation.navigate('Pedido', {idProduto,nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto});
+  async function navigateToPedido(idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom) {
+    navigation.navigate('Pedido', {idProduto,nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom});
   }
 
   return (
@@ -65,15 +68,15 @@ export default function DetailProd() {
           <View>
             <Text style={styles.precoMed}>R$ 20,00</Text>
             <Text style={styles.precoPromo}>
-              {/*Intl.NumberFormat('pt-BR', {
+              {Intl.NumberFormat('pt-BR', {
             style: 'currency', currency: 'BRL'
-            }).format(medicament.precoMed)*/}
-              R$ {product.precoProduto},00
+            }).format(product.precoProduto)}
+              
             </Text>
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigateToPedido(product.idProduto, product.nomeProduto, product.qtdMl, nomeEstabelecimento, taxaDeEntregaEstabelecimento, product.precoProduto, product.tipoDosagem, tipoProduto)}
+          onPress={() => navigateToPedido(product.idProduto, product.nomeProduto, product.qtdMl, nomeEstabelecimento, taxaDeEntregaEstabelecimento, product.precoProduto, product.tipoDosagem, tipoProduto, idCupom, valorCupom, cupom)}
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>

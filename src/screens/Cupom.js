@@ -1,15 +1,40 @@
 import React from 'react';
-import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, StatusBar, TouchableOpacity, FlatList } from 'react-native';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
-
+import { useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import api from '../services/api';
 
 export default function Cupom({navigation}){
+    const [idCliente, setIdCliente] = useState('');
+    const [cupom, setCupom] = useState([]);
+    
+    useEffect(() => {
+       pegarIdCliente();
+    });
 
-    function navigateToCadastrarCupom(){
-        navigation.navigate("CadastrarCupom")
+      
+    async function pegarIdCliente() {
+        try {
+            const idCliente = await AsyncStorage.getItem('idCliente');
+            setIdCliente(idCliente);
+            pegarCupons();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function pegarCupons(){
+        try {
+            const response = await api.get('/CuponsCliente/', {params: {idCliente: idCliente}});
+            const data = response.data.response;
+            setCupom(data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return(
@@ -18,50 +43,29 @@ export default function Cupom({navigation}){
             <Header text="Cupons"/>
             <View style={styles.fundo}>
                 <View style={styles.mcView}>
-                    <Text style={styles.txt}>Meus cupons</Text>
+                    <Text style={styles.txt}>Cupons já utilizados</Text>
                 </View>
                 <View style={styles.opcoes}>
+                <FlatList
+                        data={cupom}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={cupom =>
+                        String(cupom.idcuponscliente)
+                        }
+                        style={{marginBottom: 130, marginTop: 30, height: '100%'}}
+                        renderItem={({item: cupom}) => (
                     <View style={styles.btView}>
+                   
                         <View style={styles.bt}> 
                                 <IconComunity name='cards-outline' color='rgba(0,0,0,0.7)' size={25}/>
                                 <View style={styles.btTxtView}>
-                                    <Text style={styles.btTxt}>Cupom: 100-OFF</Text>
-                                    <Text style={styles.btTxt}>Valor: R$100</Text>
+                                    <Text style={styles.btTxt}>Cupom: {cupom.cupom}</Text>
+                                    <Text style={styles.btTxt}>Valor: {cupom.valorCupom}%</Text>
                                 </View>
-                                <TouchableOpacity>
-                                    <Icon name='delete' color='red' size={22}/>
-                                </TouchableOpacity>
+                               
                         </View>
                     </View>
-                    <View style={styles.btView}>
-                        <View style={styles.bt}> 
-                                <IconComunity name='cards-outline' color='rgba(0,0,0,0.7)' size={25}/>
-                                <View style={styles.btTxtView}>
-                                    <Text style={styles.btTxt}>Cupom: 100-OFF</Text>
-                                    <Text style={styles.btTxt}>Valor: R$100</Text>
-                                </View>
-                                <TouchableOpacity>
-                                    <Icon name='delete' color='red' size={22}/>
-                                </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.btView}>
-                        <View style={styles.bt}> 
-                                <IconComunity name='cards-outline' color='rgba(0,0,0,0.7)' size={25}/>
-                                <View style={styles.btTxtView}>
-                                    <Text style={styles.btTxt}>Cupom: 100-OFF</Text>
-                                    <Text style={styles.btTxt}>Valor: R$100</Text>
-                                </View>
-                                <TouchableOpacity>
-                                    <Icon name='delete' color='red' size={22}/>
-                                </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.btAddView}>
-                    <TouchableOpacity style={styles.btAdd} onPress={navigateToCadastrarCupom}>
-                        <Text style={styles.txtAdd}>Adicionar cupom</Text>
-                    </TouchableOpacity>
+                    )}/>
                 </View>
             </View>
         </>
@@ -88,20 +92,20 @@ const styles = StyleSheet.create({
     },
     
     opcoes:{
-        marginTop: 20,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
     }, 
 
     btView:{
-        marginBottom: "5%"
+        marginBottom: "5%",
+        alignItems: 'center'
     },
     
     bt:{
         borderWidth: 1, 
         borderColor: "rgba(70,70,70,0.4)", 
-        width: '85%',
+        width: '90%',
         height: 70,
         borderRadius: 8,  
         alignItems:'center', 
