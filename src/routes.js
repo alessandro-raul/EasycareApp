@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   createStackNavigator,
-  cardStyleInterpolator,
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 import Introducao from './screens/IntrodutionAppScroll';
@@ -28,7 +27,16 @@ import CadastrarCupom from './screens/CadastrarCupom';
 import Notificacoes from './screens/Notificacoes';
 import EditarEndereco from './screens/EditarEndereco';
 import Resultado from './screens/Resultado/Resultado';
-import PesquisaMedicamento from './screens/PesquisaMedicamento/PesquisaMedicamento'
+import PesquisaMedicamento from './screens/PesquisaMedicamento/PesquisaMedicamento';
+import TelaAjuda from './screens/TelasAjuda/TelaAjuda';
+import ProblemasComPedido from './screens/TelasAjuda/ProblemasComPedido';
+import ProblemasComProduto from './screens/TelasAjuda/ProblemasComProduto';
+import ProblemasComPagamento from './screens/TelasAjuda/ProblemasComPagamento';
+import ProblemasComCupom from './screens/TelasAjuda/ProblemasComCupom';
+import ProblemasNaConta from './screens/TelasAjuda/ProblemasNaConta/ProblemasNaConta';
+import AlterarDados from './screens/TelasAjuda/ProblemasNaConta/AlterarDados';
+import ProblemasComEndereco from './screens/TelasAjuda/ProblemasNaConta/ProblemasComEndereco';
+import TelaSac from './screens/TelasAjuda/TelaSac';
 
 const AppStack = createStackNavigator();
 
@@ -67,6 +75,15 @@ function Routes() {
       <AppStack.Screen name="PesquisaMedicamento" component={PesquisaMedicamento} />
       <AppStack.Screen name="EditarEndereco" component={EditarEndereco} />
       <AppStack.Screen name="Resultado" component={Resultado} />
+      <AppStack.Screen name="TelaAjuda" component={TelaAjuda} />
+      <AppStack.Screen name="ProblemasComPedido" component={ProblemasComPedido} />
+      <AppStack.Screen name="ProblemasComProduto" component={ProblemasComProduto} />
+      <AppStack.Screen name="ProblemasComPagamento" component={ProblemasComPagamento} /> 
+      <AppStack.Screen name="ProblemasComCupom" component={ProblemasComCupom} /> 
+      <AppStack.Screen name="ProblemasNaConta" component={ProblemasNaConta} /> 
+      <AppStack.Screen name="AlterarDados" component={AlterarDados} /> 
+      <AppStack.Screen name="ProblemasComEndereco" component={ProblemasComEndereco} /> 
+      <AppStack.Screen name="TelaSac" component={TelaSac} /> 
       <AppStack.Screen
         name="PerfilEstabelecimento"
         component={PerfilEstabelecimento}

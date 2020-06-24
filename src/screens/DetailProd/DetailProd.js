@@ -41,8 +41,8 @@ export default function DetailProd() {
     });
   }
 
-  async function navigateToPedido(idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom) {
-    navigation.navigate('Pedido', {idProduto,nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom});
+  async function navigateToPedido(idProduto, nomeProduto, descDosagem, idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom) {
+    navigation.navigate('Pedido', {idProduto,nomeProduto, descDosagem, idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom});
   }
 
   return (
@@ -76,7 +76,7 @@ export default function DetailProd() {
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigateToPedido(product.idProduto, product.nomeProduto, product.qtdMl, nomeEstabelecimento, taxaDeEntregaEstabelecimento, product.precoProduto, product.tipoDosagem, tipoProduto, idCupom, valorCupom, cupom)}
+          onPress={() => navigateToPedido(product.idProduto, product.nomeProduto, product.qtdMl, product.idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, product.precoProduto, product.tipoDosagem, tipoProduto, idCupom, valorCupom, cupom)}
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>

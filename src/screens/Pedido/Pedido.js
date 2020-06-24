@@ -34,6 +34,7 @@ export default function Pedido() {
   const [descDosagem, setDescDosagem] = useState();
   const [tipoDosagem, setTipoDosagem] = useState();
   const [taxaEntrega, setTaxaDeEntregaEstabelecimento] = useState();
+  const [idEstabelecimento, setIdEstabelecimento] = useState();
   const [nomeEstabelecimento, setNomeEstabeleciemnto] = useState();
   const [idEnderecoCliente, setIdEnderecoCliente] = useState();
   const [tipoProduto, setTipoProduto] = useState();
@@ -47,7 +48,7 @@ export default function Pedido() {
 
   var data = new Date();
   var dataVenda = data.getFullYear()+'/'+data.getMonth()+'/'+data.getDay();
-  var horaVenda = data.getHours()-3+':'+data.getMinutes()+':'+data.getSeconds();
+  var horaVenda = data.getHours()+':'+data.getMinutes()+':'+data.getSeconds();
   
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -77,6 +78,7 @@ export default function Pedido() {
       setDescDosagem(route.params.descDosagem);
       setTipoDosagem(route.params.tipoDose);
       setFormaDePagamento(route.params.formaDePagamento);
+      setIdEstabelecimento(route.params.idEstabelecimento);
       setIdCupom(route.params.idCupom);
       setCupom(route.params.cupom);
       setValorCupom(route.params.valorCupom);
@@ -111,7 +113,8 @@ export default function Pedido() {
   }
 
   function navigateToHome() {
-    navigation.navigate('Home', {screen: 'Home'});
+    navigation.navigate('Cupom');
+    //navigation.navigate('Home', {screen: 'Home'});
   }
 
   function navigateToEnderecos() {
@@ -187,6 +190,7 @@ export default function Pedido() {
         observacaoVenda: 'null',
         idCliente: idCliente,
         idEnderecoCliente: idd,
+        idEstabelecimento: idEstabelecimento,
         idCupom: idCupom,
         precoFrete: taxaEntrega,
         idProduto: idProduto,
@@ -204,6 +208,7 @@ export default function Pedido() {
         observacaoVenda: 'null',
         idCliente: idCliente,
         idEnderecoCliente: idd,
+        idEstabelecimento: idEstabelecimento,
         idCupom: idCupom,
         precoFrete: taxaEntrega,
         idMedicamento: idProduto,

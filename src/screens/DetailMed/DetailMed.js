@@ -13,11 +13,14 @@ export default function DetailMed() {
   const nomeEstablishment = route.params.nomeEstabelecimento;
   var auxNome;
   const [nomeEstabelecimento, setNomeEstabelecimento] = useState('');
-  const [taxaDeEntregaEstabelecimento, setTaxaDeEntregaEstabelecimento] = useState();
+  const [
+    taxaDeEntregaEstabelecimento,
+    setTaxaDeEntregaEstabelecimento,
+  ] = useState();
   const [tipoProduto, setTipoProduto] = useState('Medicamento');
-  const idCupom = "null";
+  const idCupom = 'null';
   const valorCupom = 0;
-  const cupom = "";
+  const cupom = '';
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -41,8 +44,34 @@ export default function DetailMed() {
     });
   }
 
-  async function navigateToPedido(idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom) {
-    navigation.navigate('Pedido', {idProduto, nomeProduto, descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom});
+  async function navigateToPedido(
+    idProduto,
+    nomeProduto,
+    descDosagem,
+    idEstabelecimento,
+    nomeEstabelecimento,
+    taxaDeEntregaEstabelecimento,
+    precoProduto,
+    tipoDose,
+    tipoProduto,
+    idCupom,
+    valorCupom,
+    cupom,
+  ) {
+    navigation.navigate('Pedido', {
+      idProduto,
+      nomeProduto,
+      descDosagem,
+      idEstabelecimento,
+      nomeEstabelecimento,
+      taxaDeEntregaEstabelecimento,
+      precoProduto,
+      tipoDose,
+      tipoProduto,
+      idCupom,
+      valorCupom,
+      cupom,
+    });
   }
 
   return (
@@ -55,7 +84,8 @@ export default function DetailMed() {
         <View style={styles.descMed}>
           <View>
             <Text style={styles.title}>
-              {medicament.descMed}, {medicament.descDosagem} {medicament.tipoDosagem}
+              {medicament.descMed}, {medicament.descDosagem}{' '}
+              {medicament.tipoDosagem}
             </Text>
             <TouchableOpacity
               onPress={() =>
@@ -71,13 +101,27 @@ export default function DetailMed() {
             <Text style={styles.precoMed}>R$ 20,00</Text>
             <Text style={styles.precoPromo}>
               {Intl.NumberFormat('pt-BR', {
-            style: 'currency', currency: 'BRL'
-            }).format(medicament.precoMed)}
+                style: 'currency',
+                currency: 'BRL',
+              }).format(medicament.precoMed)}
             </Text>
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigateToPedido(medicament.idMedicamento, medicament.descMed, medicament.descDosagem, nomeEstabelecimento, taxaDeEntregaEstabelecimento, medicament.precoMed, medicament.tipoDosagem, tipoProduto, idCupom)}
+          onPress={() =>
+            navigateToPedido(
+              medicament.idMedicamento,
+              medicament.descMed,
+              medicament.descDosagem,
+              medicament.idEstabelecimento,
+              nomeEstabelecimento,
+              taxaDeEntregaEstabelecimento,
+              medicament.precoMed,
+              medicament.tipoDosagem,
+              tipoProduto,
+              idCupom,
+            )
+          }
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>

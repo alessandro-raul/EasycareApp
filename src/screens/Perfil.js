@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Text, StyleSheet, View, Image, Alert, ActivityIndicator } from 'react-native';
 import Header from '../componentes/Header';
-import Brendon from '../../assets/imgs/brendon.jpg'
-import { ScrollView, TouchableOpacity, TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import gifTriste from '../../assets/imgs/gifTriste.gif';
-import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import IconFeather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
@@ -85,6 +82,10 @@ export default function TelaPerfil({navigation}){
         navigation.navigate('Enderecos');
     }
 
+    function navigateToAjuda(){
+        navigation.navigate('TelaAjuda')
+    }
+
     async function navigateToPreLog(){
         try{
             await AsyncStorage.clear();
@@ -112,8 +113,7 @@ export default function TelaPerfil({navigation}){
             {statusLogin==0 &&
             <View style={styles.container2}>
             </View>
-            }
-
+           }
            {statusLogin==1 &&
            <ScrollView style={styles.fundo}>
                 <View style={styles.banner}>
@@ -193,7 +193,7 @@ export default function TelaPerfil({navigation}){
                     </View>
 
                     <View style={styles.bt}> 
-                        <TouchableOpacity onPress={pegarEndereco} style={styles.touch}>
+                        <TouchableOpacity onPress={navigateToAjuda} style={styles.touch}>
                             <IconFeather name='help-circle' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Ajuda</Text>
@@ -211,7 +211,6 @@ export default function TelaPerfil({navigation}){
                             <IconFeather name='log-out' size={24} color='#23AFDB'  />
                         </TouchableOpacity>
                     </View>
-
                 </View>
             </ScrollView>
             }
@@ -220,10 +219,10 @@ export default function TelaPerfil({navigation}){
                 <View style={styles.container2}>
                     <Text style={styles.nlTxt}>Você ainda não se logou...</Text>
                     <Image source={gifTriste} style={styles.gif}/>
-                        <TouchableOpacity style={styles.btLogar} onPress={navigateToPreLog}>
-                            <Text style={styles.txtLogar}>Logar agora!</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity style={styles.btLogar} onPress={navigateToPreLog}>
+                        <Text style={styles.txtLogar}>Logar agora!</Text>
+                    </TouchableOpacity>
+                </View>
             }
     </View>
     )
@@ -271,7 +270,6 @@ const styles = StyleSheet.create({
         width: 120,
         alignItems: 'center',
         justifyContent: 'center',
-
         borderWidth: 2,
         borderColor: '#1d97bd',
         backgroundColor: '#fff',
