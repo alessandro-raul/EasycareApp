@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -10,12 +10,12 @@ export default StyleSheet.create({
   },
 
   contSearch: {
-    marginTop: 20,
-    marginBottom: 25,
+    marginTop: '7.5%',
+    marginBottom: '1.2%',
     paddingLeft: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '95%',
+    width: "95%"
   },
 
   contScroll2: {
@@ -23,12 +23,12 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: '1%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center',  
   },
 
   medicContainer2: {
     width: 130,
-    marginLeft: 22,
+    marginLeft:22,
     padding: 7,
     paddingTop: 20,
     alignItems: 'center',
@@ -36,8 +36,9 @@ export default StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'rgba(70,70,70,0.3)',
-    //backgroundColor: 'red',
+    //backgroundColor: 'red',  
   },
+  
 
   /*Card Scroll Ofertas*/
   contScroll: {
@@ -45,31 +46,32 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: '1%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center',  
   },
-
-  scrollMedic: {
-    width: '100%',
+  
+  scrollMedic: {  
+    width: '100%'
+   
   },
 
   medicContainer: {
     width: 130,
-    marginLeft: 22,
+    marginLeft:22,
     padding: 7,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: 'rgba(70,70,70,0.3)',
-    //backgroundColor: 'red',
+    //backgroundColor: 'red',  
   },
-
+  
   contImg: {
     width: 100,
     height: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: '#333',
+    //backgroundColor: '#333',  
   },
 
   imgMedic: {
@@ -88,7 +90,7 @@ export default StyleSheet.create({
   },
 
   dadosCompra: {
-    width: '100%',
+    width:'100%',
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
@@ -96,11 +98,11 @@ export default StyleSheet.create({
     paddingHorizontal: 5,
     //backgroundColor:'#fff'
   },
-
+  
   imgFarma: {
     width: 25,
     height: 25,
-    borderRadius: 20,
+    borderRadius: 20,  
   },
 
   descMedic: {
@@ -110,53 +112,53 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     paddingVertical: 10,
-
+  
     //backgroundColor: 'yellow',
   },
 
   nameMedic: {
-    fontSize: 14,
-    color: '#707070',
-  },
+    fontSize: 14, 
+    color: '#707070', 
+  }, 
 
   nameLab: {
     fontWeight: '700',
-    fontSize: 14,
-    color: '#707070',
+    fontSize: 14, 
+    color: '#707070', 
   },
 
   dosagemMedic: {
-    fontSize: 14,
-    color: '#707070',
+    fontSize: 14, 
+    color: '#707070', 
   },
 
   precoMedic: {
     fontSize: 14,
-    color: '#1F9433',
+    color: '#1F9433'  
   },
 
   /*fim do card*/
 
-  localizacao: {
-    flexDirection: 'row',
+  localizacao:{
+    flexDirection:'row',
     width: '70%',
-    paddingLeft: 42,
+    paddingLeft: 42, 
     paddingTop: 20,
     alignItems: 'center',
     paddingHorizontal: 15,
   },
 
-  viewLocalizacao: {
+  viewLocalizacao:{
     borderBottomWidth: 0,
-    borderColor: 'rgba(0,0,0, 0.20)',
+    borderColor: 'rgba(0,0,0, 0.20)'
   },
 
-  txtLocalizacao: {
+  txtLocalizacao:{
     marginLeft: '4%',
     fontSize: 15.4,
-    marginTop: '1%',
+    marginTop: "1%",
 
-    color: 'gray',
+    color: 'gray'
     //textDecorationLine:'underline'
   },
 
@@ -208,9 +210,9 @@ export default StyleSheet.create({
 
   shimmerCard: {
     width: 130,
-    height: '100%',
+    height: "100%",
     borderRadius: 5,
-    marginLeft: 22,
+    marginLeft:22, 
     backgroundColor: '#333',
   },
 
@@ -229,6 +231,7 @@ export default StyleSheet.create({
     width: '72%',
     borderRadius: 5,
     marginLeft: 5,
+
   },
 
   shimmerImgFarma: {
@@ -250,13 +253,13 @@ export default StyleSheet.create({
   },
 
   //scroll estabelecimentos próximos
-  farmaProxContainer: {
+  farmaProxContainer:{
     width: 100,
     height: 130,
     //backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 10,
+    marginLeft: 10
   },
 
   ImgFarmaProx: {
@@ -266,22 +269,26 @@ export default StyleSheet.create({
     borderRadius: 25,
   },
 
-  titleProx: {
+  titleProx:{
     fontSize: 14,
     fontWeight: '700',
     color: 'rgba(70,70,70, 0.8)',
-    textAlign: 'center',
+    textAlign: 'center'
   },
 
-  subtitleProx: {
+  subtitleProx:{
     fontSize: 14,
     color: 'rgba(70,70,70, 0.8)',
-    textAlign: 'center',
+    textAlign: 'center'
   },
 
-  carroselImages: {
+  carroselImages:{
     width: '100%',
     height: 220,
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
+
+
+  
+
 });

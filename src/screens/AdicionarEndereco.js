@@ -59,6 +59,56 @@ export default function AdicionarEndereco({navigation}){
     }
 
     async function AdicionaEndereco(){
+        if( (logCliente != undefined) &&
+            (numLogCliente != undefined) &&
+            (cepLogCliente != undefined) &&
+            (cepLogCliente.search('-') != -1) &&
+            (complementoLogCliente != undefined) &&
+            (complementoLogCliente != '') &&
+            (complementoLogCliente != null) &&
+            (tipoEndereco != undefined) &&
+            (tipoEndereco != '') &&
+            (tipoEndereco != null) &&
+            (bairroLogCliente != undefined) &&
+            (cidadeLogCliente != undefined) &&
+            (ufLogCliente != undefined) 
+        ){
+
+            try {
+                const data = {
+                    idCliente: id,
+                    logCliente: logCliente,
+                    numLogCliente: numLogCliente,
+                    cepLogCliente: cepLogCliente,
+                    complementoLogCliente: complementoLogCliente,
+                    bairroLogCliente: bairroLogCliente,
+                    cidadeLogCliente: cidadeLogCliente,
+                    ufLogCliente: ufLogCliente,
+                    tipoEndereco: tipoEndereco
+                }
+                setShowLoader(true);
+                await api.post('/UserAdress/', data);
+                setShowLoader(false);
+                Alert.alert(
+                    "Easycare",
+                    "Endereço adicionado com sucesso!",
+                    [
+                      { text: "OK", onPress: () => voltar() }
+                    ],
+                    { cancelable: false }
+                  );
+            }catch (error) {
+                setShowLoader(false)
+                alert(error);
+            }
+
+        }else {
+            alert('Não foi possivel cadastrar, verifique os campos');
+            //alert(`Dados invalidos, verifique os campos, Cep deve ser preenchido com a pontuação Ex: 00000-000.`);
+            setShowLoader(false);
+        }
+
+        /*
         try {
             const data = {
                 idCliente: id,
@@ -86,6 +136,7 @@ export default function AdicionarEndereco({navigation}){
             setShowLoader(false)
             alert(error);
         }
+        */
     }
 
     function voltar(){
@@ -143,7 +194,7 @@ export default function AdicionarEndereco({navigation}){
                                 autoCompleteType="off"
                                 keyboardType="numeric"
                                 autoCorrect={false}
-                                placeholder="CEP"
+                                placeholder="CEP Ex:12345-67"
                                 placeholderTextColor="#666"
                                 value={cepLogCliente} 
                                 onChangeText={cepLogCliente => setCepLogCliente(cepLogCliente)}

@@ -43,7 +43,61 @@ export default function TelaLogin({navigation}){
             setStageNew(!stageNew);
         }
 
-        async function Cadastrar(){
+        function validaCPF(strCPF) {
+            if(strCPF.length != 0 && strCPF.length === 11){
+                var cpf = strCPF;
+                digitoA = 0;
+                digitoB = 0;
+    
+                for (let i = 0, x = 10; i <= 8; i++, x--) {
+                    digitoA += cpf[i] * x;          
+                }
+    
+                for (let i = 0, x = 11; i <= 9; i++, x--) {
+    
+                    
+                    if(String(i).repeat(11) == cpf){                   
+                        return false;
+                        break;
+                    }
+                    
+    
+                    digitoB += cpf[i] * x;          
+                }
+    
+                somaA = ((digitoA%11) < 2) ? 0 : 11-(digitoA%11);
+                somaB = ((digitoB%11) < 2) ? 0 : 11-(digitoB%11);
+    
+                if(somaA != cpf[9] || somaB != cpf[10]) {
+                    return false;
+                }else {
+                    return true;
+                }
+            }else {
+                return false;
+            }
+
+        }
+
+        async function Cadastrar(cpf){
+            if(validaCPF(cpf) && nomeCliente.length >= 8 && nomeCliente.search(" ") != -1 && (telefoneCliente.length === 11)){
+                //console.log('CPF VALIDO!');
+                try{
+                    const response = await api.post('/User/', data);
+                    resposta = response.data.response;
+                    console.log(resposta);
+                    salvarDados();
+                }catch(error) {
+                    console.log(error);
+                    alert(error) 
+                }
+            }else{
+                alert(`${nomeCliente.length >= 8 && nomeCliente.search(" ") != -1 ? '' : 'Nome inválido, insira nome e sobrenome, Ex: Maria Silva.'} 
+${validaCPF(cpf).valueOf() ? '' : 'CPF inválido, insira um CPF sem pontuções, Ex: 12345678912'}`);
+                //console.log(nomeCliente.length);
+                //console.log(validaCPF(cpf).valueOf() ? 'valido' : 'invalido');
+            }
+            /*
             try{
                 const response = await api.post('/User/', data);
                 resposta = response.data.response;
@@ -53,6 +107,7 @@ export default function TelaLogin({navigation}){
                 console.log(error);
                 alert(error) 
             }
+            */
         }
 
         async function salvarDados(){
@@ -67,7 +122,75 @@ export default function TelaLogin({navigation}){
             }
         }
 
+        function validaEmail(email){
+            usuario = email.substring(0, email.indexOf('@'));
+            dominio = email.substring(email.indexOf('@')+1, email.length)
+    
+            if ((usuario.length >=1) &&
+                (dominio.length >=3) && 
+                (usuario.search("@")==-1) && 
+                (dominio.search("@")==-1) &&
+                (usuario.search(" ")==-1) && 
+                (dominio.search(" ")==-1) &&
+                (dominio.search(".")!=-1) &&      
+                (dominio.indexOf(".") >=1)&& 
+                (dominio.lastIndexOf(".") < dominio.length - 1)) 
+            {
+                return true;
+                //console.log("E-mail válido");
+            }else{
+                //console.log('E-mail inválido');
+                return false;
+            }
+            //console.log(usuario+'@'+dominio);
+        }
+
+        function validaSenha(senha){
+            if( (senha.length != 0) &&
+                (senha.length >= 8) &&
+                (senha.search(" ") == -1))
+            {   
+                //console.log(senha+' valida');
+                return true;
+            }else{
+                //console.log(senha+' Invalida');
+                return false;
+            }
+        }
+        
         async function Logar(){
+            if(validaEmail(emailCliente) && validaSenha(senhaCliente)){
+
+                try{
+                    const response = await api.get('/UserLogin/', {params:{emailCliente: emailCliente, senhaCliente: senhaCliente}});
+                    const data = response.data.response;
+                    
+                    if(data != undefined){
+                     data.map(item => {
+                         valida = item.idLoginCliente,
+                         idClientee = item.idCliente
+                     });
+                    }
+                     if(valida != 0){
+                         pegarDadosCliente();
+                     }else{
+                         Alert.alert(
+                             "Easycare",
+                             "Email ou senha inválidos!",
+                             [
+                               { text: "OK"}
+                             ],
+                             { cancelable: false });
+                     }
+                 }catch(error){
+                     console.log(error);
+                 }
+
+            }else{
+                alert('Não foi possivel logar, verifique se os dados estão corretos');
+            }
+
+            /*
             try{
                const response = await api.get('/UserLogin/', {params:{emailCliente: emailCliente, senhaCliente: senhaCliente}});
                const data = response.data.response;
@@ -92,6 +215,8 @@ export default function TelaLogin({navigation}){
             }catch(error){
                 console.log(error);
             }
+            */
+           
         }
 
         async function pegarDadosCliente(){
@@ -192,8 +317,8 @@ export default function TelaLogin({navigation}){
                                 placeholder = "Nome" 
                                 icon='user'
                                 returnKeyType="next" 
-                                autoCapitalize="sentences"
-                                keyboardType="default"
+                                autoCapitalize="words"
+                                //keyboardType="default"
                                 blurOnSubmit={false}
                                 onChangeText={nomeCliente=>setNomeCliente(nomeCliente)}
                                 onSubmitEditing={() => this.input3.focus()}
@@ -211,14 +336,14 @@ export default function TelaLogin({navigation}){
                                     icon='clipboard' 
                                     onChangeText={cpfCliente=>setCpfCliente(cpfCliente)}
                                     ref={(input) => {this.input3 = input;}}
-                                    onSubmitEditing={stageNew ? Logar : Cadastrar}
+                                    onSubmitEditing={() => stageNew ? Logar : Cadastrar(cpfCliente)}
                                 />
                             </View>
                             </>
                             }
 
                             <View style={styles.bt}>
-                                <TouchableNativeFeedback onPress={stageNew ? Logar : Cadastrar}>                           
+                                <TouchableNativeFeedback onPress={() => stageNew ? Logar : Cadastrar(cpfCliente)}>                           
                                     <View style={styles.btLogar}>
                                         <Text style={styles.txtLogin}> {stageNew ? 'Logar' : 'Prosseguir'} </Text>
                                     </View>
