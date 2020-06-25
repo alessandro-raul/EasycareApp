@@ -37,6 +37,7 @@ import ProblemasNaConta from './screens/TelasAjuda/ProblemasNaConta/ProblemasNaC
 import AlterarDados from './screens/TelasAjuda/ProblemasNaConta/AlterarDados';
 import ProblemasComEndereco from './screens/TelasAjuda/ProblemasNaConta/ProblemasComEndereco';
 import TelaSac from './screens/TelasAjuda/TelaSac';
+import Pedidos from './screens/Pedidos';
 
 const AppStack = createStackNavigator();
 
@@ -84,6 +85,7 @@ function Routes() {
       <AppStack.Screen name="AlterarDados" component={AlterarDados} /> 
       <AppStack.Screen name="ProblemasComEndereco" component={ProblemasComEndereco} /> 
       <AppStack.Screen name="TelaSac" component={TelaSac} /> 
+      <AppStack.Screen name="Pedidos" component={Pedidos} /> 
       <AppStack.Screen
         name="PerfilEstabelecimento"
         component={PerfilEstabelecimento}

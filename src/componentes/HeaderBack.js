@@ -11,15 +11,10 @@ function navigateBack(){
 
     return(
         <View style={styles.header}>
-        <TouchableOpacity style={{marginLeft: '15%'}} onPress={navigateBack}>
-
-
-            <View>
+        <View style={{marginLeft: '5%'}} onPress={navigateBack}>
             <Icon name='navigate-before' size={40} color="#23AFDB" />
-        
-            </View>
-    </TouchableOpacity>
-            <View style={{width: '55%'}}>
+        </View>
+            <View style={{width: '100%', marginLeft: '-13.2%', alignItems: 'center', justifyContent: 'center', }}>
             <Text style={styles.text}>{props.text}</Text>
             </View>
         </View>

@@ -100,7 +100,7 @@ export default function Home({navigation}) {
         params: {idCliente: idCliente},
       });
       const data = response.data.response;
-      if(data != ''){
+      if(data != ""){
         setStatusComprados(true);
       }
       setMedicaments(data);

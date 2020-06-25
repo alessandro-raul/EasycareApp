@@ -51,6 +51,42 @@ export default function Cadastro({navigation}){
         }
     }
 
+    function validaEmail(email){
+        usuario = email.substring(0, email.indexOf('@'));
+        dominio = email.substring(email.indexOf('@')+1, email.length)
+
+        if ((String(usuario).length >=1) &&
+            (String(dominio).length >=3) && 
+            (usuario.search("@")==-1) && 
+            (dominio.search("@")==-1) &&
+            (usuario.search(" ")==-1) && 
+            (dominio.search(" ")==-1) &&
+            (dominio.search(".")!=-1) &&      
+            (dominio.indexOf(".") >=1)&& 
+            (dominio.lastIndexOf(".") < dominio.length - 1)) 
+        {
+            return true;
+            //console.log("E-mail válido");
+        }else{
+            //console.log('E-mail inválido');
+            return false;
+        }
+        //console.log(usuario+'@'+dominio);
+    }
+
+    function validaSenha(senha){
+        if( (String(senha).length != 0) &&
+            (String(senha).length >= 8) &&
+            (senha.search(" ") == -1))
+        {   
+            //console.log(senha+' valida');
+            return true;
+        }else{
+            //console.log(senha+' Invalida');
+            return false;
+        }
+    }
+
     async function cadastrarLoginCliente(){
         const data = {
             idCliente: idCliente,
@@ -58,6 +94,29 @@ export default function Cadastro({navigation}){
             senhaCliente: senhaCliente
         }
 
+        /*
+        validaEmail(data.emailCliente);
+        validaSenha(data.senhaCliente);
+        */
+
+        if(validaEmail(data.emailCliente) && validaSenha(data.senhaCliente) && String(telefoneCliente).length === 11){
+
+            try {
+                await api.post('/UserLogin/', data);
+                cadastrarTelefone();
+    
+            } catch (error) {
+                console.log(error);
+                alert(error);
+            }
+
+        }else{
+            alert(`${validaEmail(data.emailCliente) ? '' : 'Email inválido, verifique-o.'} 
+${validaSenha(data.senhaCliente) ? '' : 'Senha inválida, utilize uma senha com no minímo 8 digitos, sem espaços em branco.'}
+${String(telefoneCliente).length === 11 ? '' : 'Senha inválida, utilize uma senha com no minímo 8 digitos, sem espaços em branco.'}`);
+        }
+        
+        /*
         try {
             await api.post('/UserLogin/', data);
             cadastrarTelefone();
@@ -66,6 +125,7 @@ export default function Cadastro({navigation}){
             console.log(error);
             alert(error);
         }
+        */
     }
 
     async function cadastrarTelefone(){

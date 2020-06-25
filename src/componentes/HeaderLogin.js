@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 37,
         color: '#23AFDB',
-        fontFamily: 'Ubuntu',
+        fontFamily: 'CaviarDreams',
         
     },
 })

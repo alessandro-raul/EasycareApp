@@ -23,10 +23,9 @@ export default function Pedido() {
   const [idCliente, setIdCliente] = useState();
   const [logCliente, setLogCliente] = useState();
   const [numLogCliente, setNumLogCliente] = useState();
-  const [statusEnd, setStatusEnd] = useState(true);
-  const [tem, setTem] = useState(true);
+  const [tem, setTem] = useState(false);
   const [status, setStatus] = useState(false);
-  const [idProduto, setIdProduto] = useState(false);
+  const [idProduto, setIdProduto] = useState();
   const [precoProd, setPrecoProduto] = useState();
   const [subTotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState();
@@ -36,14 +35,13 @@ export default function Pedido() {
   const [taxaEntrega, setTaxaDeEntregaEstabelecimento] = useState();
   const [idEstabelecimento, setIdEstabelecimento] = useState();
   const [nomeEstabelecimento, setNomeEstabeleciemnto] = useState();
-  const [idEnderecoCliente, setIdEnderecoCliente] = useState();
   const [tipoProduto, setTipoProduto] = useState();
   const [formaDePagamento, setFormaDePagamento] = useState('');
   const [cupom, setCupom] = useState();
   const [idCupom, setIdCupom] = useState("null");
   const [valorCupom, setValorCupom] = useState(null);
   const [valorDesconto, setValorDesconto] = useState(0);
-  const [statusVenda, setStatusVenda] = useState('Ativa');
+  const [statusVenda, setStatusVenda] = useState('Ativo');
   const route = useRoute();
 
   var data = new Date();
@@ -84,10 +82,20 @@ export default function Pedido() {
       setValorCupom(route.params.valorCupom);
       setStatus(true);
     } catch (error) {
+      setStatus(false);
       console.log(error);
     }
   }
 
+  /*function validaProd(){
+    console.log(idProduto);
+    if(idProduto != null){
+      setStatus(true);
+    }else{
+      setStatus(false);
+    }
+  }*/
+  
   function attQuant() {
     setSubtotal(quant * parseFloat(precoProd));
     if(valorCupom != null){
@@ -155,7 +163,7 @@ export default function Pedido() {
         setNumLogCliente(item.numLogCliente);
       });
     } catch (error) {
-      //console.log(error);
+      console.log(error);
     }
   }
 
@@ -221,6 +229,7 @@ export default function Pedido() {
     
     try {
       await api.post('/Venda/', dataPedido);
+      setIdProduto(null);
       Alert.alert(
         'Easycare',
         'Compra realizada com sucesso!',

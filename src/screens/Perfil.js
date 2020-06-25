@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Text, StyleSheet, View, Image, Alert, ActivityIndicator } from 'react-native';
 import Header from '../componentes/Header';
-import { ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import Brendon from '../../assets/imgs/brendon.jpg'
+import { ScrollView, TouchableOpacity, TouchableNativeFeedback, TouchableHighlight } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import gifTriste from '../../assets/imgs/gifTriste.gif';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import IconFeather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
@@ -14,7 +17,6 @@ export default function TelaPerfil({navigation}){
     const [statusLogin, setStatusLogin] = useState(0);
     const [showLoader, setShowLoader] = useState(true);
     const [inicial, setInicial] = useState('');
-
     const [visible, setVisible] = useState(false);
 
     React.useEffect(() => {
@@ -34,7 +36,7 @@ export default function TelaPerfil({navigation}){
                 setStatusLogin(2);
             }
         } catch (error) {
-            
+            console.log(error);
         }
     }
 
@@ -56,6 +58,10 @@ export default function TelaPerfil({navigation}){
         const endereco = await AsyncStorage.getItem("logCliente");
         const numLog = await AsyncStorage.getItem("numLogCliente");
         //console.log(endereco, numLog);
+    }
+
+    function navigateToPedidos(){
+        navigation.navigate('Pedidos');
     }
 
     function navigateToPagamentoPerfil(){
@@ -80,10 +86,6 @@ export default function TelaPerfil({navigation}){
 
     function navigateToEnderecos(){
         navigation.navigate('Enderecos');
-    }
-
-    function navigateToAjuda(){
-        navigation.navigate('TelaAjuda')
     }
 
     async function navigateToPreLog(){
@@ -113,7 +115,8 @@ export default function TelaPerfil({navigation}){
             {statusLogin==0 &&
             <View style={styles.container2}>
             </View>
-           }
+            }
+
            {statusLogin==1 &&
            <ScrollView style={styles.fundo}>
                 <View style={styles.banner}>
@@ -130,8 +133,10 @@ export default function TelaPerfil({navigation}){
                             }
                         </View>
                     </View>
+                    {/*
                     <View style={{width:'100%', height:'20%'}}>
                     </View>
+                    */}
                 </View>
 
                 <View style={styles.infos}>
@@ -152,6 +157,16 @@ export default function TelaPerfil({navigation}){
                 </View>
 
                 <View style={styles.opcoes}>
+                <View style={styles.bt}> 
+                        <TouchableOpacity onPress={navigateToPedidos} style={styles.touch}>
+                            <IconFeather name='shopping-bag' color='rgba(0,0,0,0.7)' size={22}/>
+                            <View style={styles.btView}>
+                                <Text style={styles.btTxt}>Pedidos</Text>
+                            </View>
+                            <IconFeather name='arrow-right' size={24} color='#23AFDB' />
+                        </TouchableOpacity>
+                    </View>
+                    
                     <View style={styles.bt}> 
                         <TouchableOpacity onPress={navigateToEnderecos} style={styles.touch}>
                             <IconFeather name='map-pin' color='rgba(0,0,0,0.7)' size={22}/>
@@ -193,7 +208,7 @@ export default function TelaPerfil({navigation}){
                     </View>
 
                     <View style={styles.bt}> 
-                        <TouchableOpacity onPress={navigateToAjuda} style={styles.touch}>
+                        <TouchableOpacity onPress={pegarEndereco} style={styles.touch}>
                             <IconFeather name='help-circle' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Ajuda</Text>
@@ -211,6 +226,7 @@ export default function TelaPerfil({navigation}){
                             <IconFeather name='log-out' size={24} color='#23AFDB'  />
                         </TouchableOpacity>
                     </View>
+
                 </View>
             </ScrollView>
             }
@@ -270,6 +286,7 @@ const styles = StyleSheet.create({
         width: 120,
         alignItems: 'center',
         justifyContent: 'center',
+
         borderWidth: 2,
         borderColor: '#1d97bd',
         backgroundColor: '#fff',
