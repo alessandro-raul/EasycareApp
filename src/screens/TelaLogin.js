@@ -160,13 +160,12 @@ ${validaCPF(cpf).valueOf() ? '' : 'CPF inválido, insira um CPF sem pontuções,
         }
         
         async function Logar(){
-            console.log('logar');
             if(validaEmail(emailCliente) && validaSenha(senhaCliente)){
 
                 try{
                     const response = await api.get('/UserLogin/', {params:{emailCliente: emailCliente, senhaCliente: senhaCliente}});
                     const data = response.data.response;
-                    console.log(data);
+                   
                     if(data != undefined){
                      data.map(item => {
                          valida = item.idLoginCliente,

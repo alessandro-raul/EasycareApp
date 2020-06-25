@@ -10,8 +10,8 @@ export default StyleSheet.create({
   },
 
   contSearch: {
-    marginTop: 20,
-    marginBottom: 25,
+    marginTop: '7.5%',
+    marginBottom: '1.2%',
     paddingLeft: 25,
     alignItems: 'center',
     justifyContent: 'center',
@@ -38,6 +38,7 @@ export default StyleSheet.create({
     borderColor: 'rgba(70,70,70,0.3)',
     //backgroundColor: 'red',  
   },
+  
 
   /*Card Scroll Ofertas*/
   contScroll: {
@@ -227,6 +228,7 @@ export default StyleSheet.create({
     width: '72%',
     borderRadius: 5,
     marginLeft: 5,
+
   },
 
   shimmerImgFarma: {

@@ -235,10 +235,10 @@ export default function TelaPerfil({navigation}){
                 <View style={styles.container2}>
                     <Text style={styles.nlTxt}>Você ainda não se logou...</Text>
                     <Image source={gifTriste} style={styles.gif}/>
-                    <TouchableOpacity style={styles.btLogar} onPress={navigateToPreLog}>
-                        <Text style={styles.txtLogar}>Logar agora!</Text>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity style={styles.btLogar} onPress={navigateToPreLog}>
+                            <Text style={styles.txtLogar}>Logar agora!</Text>
+                        </TouchableOpacity>
+                    </View>
             }
     </View>
     )
