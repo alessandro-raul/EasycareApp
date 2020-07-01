@@ -23,7 +23,9 @@ export default function Home({ navigation }) {
   const [logCliente, setLogCliente] = useState();
   const [numLogCliente, setNumLogCliente] = useState();
   const [tem, setTem] = useState(false);
-  const [estabelecimentos, setEstabelecimentos] = useState();  
+  const [estabelecimentos, setEstabelecimentos] = useState(); 
+  const [statusComprados, setStatusComprados] = useState(false); 
+  const [visible, setVisible] = useState(false);
   const todos = "true";
   var idd;
   var statusIntro;
@@ -34,9 +36,6 @@ export default function Home({ navigation }) {
     require('../../../assets/imgs/ficaadica2.png'),
   ]
 
-  const [visible, setVisible] = useState(false);
-  const promocoesGeral = true;
-
   useEffect(() => {
     gerenciaIntroducao();
   }, []);
@@ -46,8 +45,9 @@ export default function Home({ navigation }) {
       pegarIdEndereco();
       loadEstabelecimentos(); 
       loadMedicaments();
-      loadMedicamentsOffers(promocoesGeral);
-      loadProductsOffers(promocoesGeral);  
+      /*loadMedicamentsOffers(promocoesGeral);
+      loadProductsOffers(promocoesGeral);*/
+      pegarIdCliente();
       setTimeout(() => setVisible(true),1000);
     });
     return unsubscribe;
@@ -55,51 +55,14 @@ export default function Home({ navigation }) {
 
   navigation = useNavigation(); 
 
-  async function gerenciaIntroducao(){
+
+  async function pegarIdCliente(){
     try {
-      statusIntro = await AsyncStorage.getItem("statusIntro");
-        if(statusIntro == null){
-          navigateToIntro();
-        }
+      const idCliente = await AsyncStorage.getItem("idCliente");
+      loadCompradosRecentemente(idCliente);
     } catch (error) {
       console.log(error);
     }
-  }
-
-  function navigateToDetailMed(medicament) {
-    navigation.navigate('DetailMed', { medicament });
-  }
-
-  function navigateToEstabelecimento(idEstabelecimento) {
-    navigation.navigate('PerfilEstabelecimento', { idEstabelecimento });
-  }
-
-  function navigateToIntro() {
-    navigation.navigate('Introducao');
-  }
-
-  function navigateToSearch() {
-    navigation.navigate('Pesquisa');
-  }
-
-  function navigateToEnderecos() {
-    navigation.navigate('Enderecos');
-  }
-
-  /*function navigateToDetailProd(product, nomeEstabelecimento) {
-    navigation.navigate('DetailProd', {product, nomeEstabelecimento});
-  }*/
-
-  async function loadMedicaments() {
-    const response = await api.get('/Medicament/', {params: {todos: todos}});
-    const data = response.data.response;
-    setMedicaments(data);
-  }
-
-  async function loadMedicamentsOffers(promocoesGeral) {
-    const response = await api.get('/Medicament', {params: {promocoesGeral: promocoesGeral}});
-    const data = response.data.response;
-    setMedicamentsOffers(data);
   }
 
   async function loadCompradosRecentemente(idCliente) {
@@ -115,6 +78,29 @@ export default function Home({ navigation }) {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async function gerenciaIntroducao(){
+    try {
+      statusIntro = await AsyncStorage.getItem("statusIntro");
+        if(statusIntro == null){
+          navigateToIntro();
+        }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function loadMedicaments() {
+    const response = await api.get('/Medicament/', {params: {todos: todos}});
+    const data = response.data.response;
+    setMedicaments(data);
+  }
+
+  async function loadMedicamentsOffers(promocoesGeral) {
+    const response = await api.get('/Medicament', {params: {promocoesGeral: promocoesGeral}});
+    const data = response.data.response;
+    setMedicamentsOffers(data);
   }
 
   async function pegarIdEndereco(){
@@ -155,6 +141,30 @@ export default function Home({ navigation }) {
     setEstabelecimentos(data);
   }
   
+  function navigateToDetailMed(medicament) {
+    navigation.navigate('DetailMed', { medicament });
+  }
+
+  function navigateToEstabelecimento(idEstabelecimento) {
+    navigation.navigate('PerfilEstabelecimento', { idEstabelecimento });
+  }
+
+  function navigateToIntro() {
+    navigation.navigate('Introducao');
+  }
+
+  function navigateToSearch() {
+    navigation.navigate('Pesquisa');
+  }
+
+  function navigateToEnderecos() {
+    navigation.navigate('Enderecos');
+  }
+
+  /*function navigateToDetailProd(product, nomeEstabelecimento) {
+    navigation.navigate('DetailProd', {product, nomeEstabelecimento});
+  }*/
+
   return(
     <>
       <StatusBar backgroundColor='white'/>
@@ -213,7 +223,7 @@ export default function Home({ navigation }) {
                 )}/>
           </View>
         </View>
-
+          {statusComprados &&
           <View style={styles.contScroll}>
             <HeaderScroll title="Comprados recentemente"/>                     
             <FlatList
@@ -277,6 +287,7 @@ export default function Home({ navigation }) {
               </TouchableOpacity>
             )}/> 
           </View>   
+          }
          
           <View style={{marginTop:'1%'}}>
             <HeaderScroll title="Estabelecimentos" />

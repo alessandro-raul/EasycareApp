@@ -40,6 +40,7 @@ export default function Cupom({navigation}) {
       });
       const data = response.data.response;
       setCupom(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -54,27 +55,31 @@ export default function Cupom({navigation}) {
           <Text style={styles.txt}>Cupons já utilizados</Text>
         </View>
         <View style={styles.opcoes}>
-          <FlatList
-            data={cupom}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={cupom => String(cupom.idcuponscliente)}
-            style={{marginBottom: 130, marginTop: 30, height: '100%'}}
-            renderItem={({item: cupom}) => (
-              <View style={styles.btView}>
-                <View style={styles.bt}>
-                  <IconComunity
-                    name="cards-outline"
-                    color="rgba(0,0,0,0.7)"
-                    size={25}
-                  />
-                  <View style={styles.btTxtView}>
-                    <Text style={styles.btTxt}>Cupom: {cupom.cupom}</Text>
-                    <Text style={styles.btTxt}>Valor: {cupom.valorCupom}%</Text>
+          {cupom != 'Erro de parametros: BAD REQUEST' && (
+            <FlatList
+              data={cupom}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={cupom => String(cupom.idcuponscliente)}
+              style={{marginBottom: 130, marginTop: 30, height: '100%'}}
+              renderItem={({item: cupom}) => (
+                <View style={styles.btView}>
+                  <View style={styles.bt}>
+                    <IconComunity
+                      name="cards-outline"
+                      color="rgba(0,0,0,0.7)"
+                      size={25}
+                    />
+                    <View style={styles.btTxtView}>
+                      <Text style={styles.btTxt}>Cupom: {cupom.cupom}</Text>
+                      <Text style={styles.btTxt}>
+                        Valor: {cupom.valorCupom}%
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            )}
-          />
+              )}
+            />
+          )}
         </View>
       </View>
     </>

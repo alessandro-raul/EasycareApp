@@ -38,6 +38,7 @@ export default function Pesquisa({navigation}) {
       params: {nomeEstabelecimento: search},
     });
     const data = response.data.response;
+    console.log(data);
     setEstabelecimentos(data);
 
     if (data != null) {

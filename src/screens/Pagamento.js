@@ -7,8 +7,8 @@ import IconFeather from 'react-native-vector-icons/Feather';
 
 
 export default function Pagamento({navigation}){
-    const cartaoTxt = 'Cartão';
-    const dinheiroTxt = 'Dinheiro';
+    const cartaoTxt = 2;
+    const dinheiroTxt = 1;
 
 
     function navigateToPedido(formaDePagamento){

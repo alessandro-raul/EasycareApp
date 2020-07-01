@@ -146,6 +146,7 @@ export default function PerfilEstabelecimento({navigation}) {
     });
     const data = response.data.response;
     setMedicamentsOffers(data);
+    console.log(data)
   }
 
   async function loadCategories(idEstabelecimento) {
@@ -318,6 +319,8 @@ export default function PerfilEstabelecimento({navigation}) {
                         />
                   </ScrollView>
                 </View>
+
+                {medicamentsOffers != '' &&
                 <View style={styles.contScroll}>
                   <HeaderScroll title="Ofertas" icon="keyboard-arrow-right" size={26} />
                   <FlatList
@@ -391,7 +394,7 @@ export default function PerfilEstabelecimento({navigation}) {
                       </TouchableOpacity>
                     )}
                   />
-                </View>
+                </View>}
                 {statusMaisVendido &&
                 <View style={styles.contScroll}>
                   <HeaderScroll
@@ -594,7 +597,7 @@ export default function PerfilEstabelecimento({navigation}) {
                     />
                   </ScrollView>
                 </View>
-
+                {productsOffers != '' &&
                 <View style={styles.contScroll}>
                   <HeaderScroll title="Ofertas" icon="keyboard-arrow-right" size={26} />
                   <FlatList
@@ -633,7 +636,7 @@ export default function PerfilEstabelecimento({navigation}) {
                       </TouchableOpacity>
                     )}
                   />
-                </View>
+                </View>}
                 {statusMaisVendidoProd &&
                   <View style={styles.contScroll}>
                   <HeaderScroll title="Mais vendidos" icon="keyboard-arrow-right" size={26} />

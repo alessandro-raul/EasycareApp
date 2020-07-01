@@ -37,11 +37,12 @@ export default function Pedido() {
   const [nomeEstabelecimento, setNomeEstabeleciemnto] = useState();
   const [tipoProduto, setTipoProduto] = useState();
   const [formaDePagamento, setFormaDePagamento] = useState('');
+  const [formaDePagamentoTxt, setFormaDePagamentoTxt] = useState(' ');
   const [cupom, setCupom] = useState();
   const [idCupom, setIdCupom] = useState("null");
   const [valorCupom, setValorCupom] = useState(null);
   const [valorDesconto, setValorDesconto] = useState(0);
-  const [statusVenda, setStatusVenda] = useState('Ativo');
+  const [statusVenda, setStatusVenda] = useState(1);
   const route = useRoute();
 
   var data = new Date();
@@ -81,6 +82,11 @@ export default function Pedido() {
       setCupom(route.params.cupom);
       setValorCupom(route.params.valorCupom);
       setStatus(true);
+      if(formaDePagamento == 1){
+        setFormaDePagamentoTxt('Dinheiro');
+      }else if (formaDePagamento == 2){
+        setFormaDePagamentoTxt('Cartão');
+      }
     } catch (error) {
       setStatus(false);
       console.log(error);
@@ -203,8 +209,8 @@ export default function Pedido() {
         precoFrete: taxaEntrega,
         idProduto: idProduto,
         idMedicamento: 'null',
-        formaDePagamento : formaDePagamento,
-        statusVenda: statusVenda,
+        idFormaPagamento : formaDePagamento,
+        idStatusVenda: statusVenda,
         qtdProduto: quant,
       };
     } else if (tipoProduto == 'Medicamento') {
@@ -220,9 +226,9 @@ export default function Pedido() {
         idCupom: idCupom,
         precoFrete: taxaEntrega,
         idMedicamento: idProduto,
-        formaDePagamento : formaDePagamento,
+        idFormaPagamento : formaDePagamento,
         idProduto: 'null',
-        statusVenda: statusVenda,
+        idStatusVenda: statusVenda,
         qtdProduto: quant,
       };
     }
@@ -341,7 +347,7 @@ export default function Pedido() {
             style={styles.contPagto}>
             <IconFeather name="credit-card" size={26} color="#23AFDB" />
             <View style={styles.dadosPagto}>
-              <Text><Text style={styles.subTitleBold}>Pagamento:</Text> <Text style={styles.subTitlePgto}>{formaDePagamento}</Text></Text>
+              <Text><Text style={styles.subTitleBold}>Pagamento:</Text> <Text style={styles.subTitlePgto}>{formaDePagamentoTxt}</Text></Text>
               <Text style={styles.cont}>Formas de pagamento</Text>
             </View>
             <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />

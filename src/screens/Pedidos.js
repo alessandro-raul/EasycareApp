@@ -82,7 +82,7 @@ export default function Pedidos({navigation}) {
                   <View style={styles.btTxtView}>
                     <Text style={styles.btTxt}>Número do pedido: <Text style={styles.btTxtBold}>#{pedido.idVenda}</Text></Text>
                     <Text style={styles.btTxt}>Data: <Text style={styles.btTxtBold}>{Moment(pedido.dataVenda).format('DD/MM/YYYY')}</Text></Text>
-                    <Text style={styles.btTxt}>Status: <Text style={styles.btTxtBold}>{pedido.statusVenda}</Text></Text>
+                    <Text style={styles.btTxt}>Status: <Text style={styles.btTxtBold}>{pedido.descStatusVenda}</Text></Text>
                     <Text style={styles.btTxt}>Valor: <Text style={styles.btTxtBold}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(pedido.totalVenda)}</Text></Text>
                   </View>
                 </View>

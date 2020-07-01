@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, TouchableWithoutFeedback,TouchableOpacity, Keyboard, TextInput, FlatList, Image, Dimensions } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  Keyboard,
+  TextInput,
+  FlatList,
+  Image,
+  Dimensions,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Drogaria from '../../../assets/imgs/drogariasp.png';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-
 import Remedio from '../../../assets/imgs/remedio.png';
-
 import styles from './style';
 import api from '../../services/api';
-import { useNavigation,useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-export default function Pesquisa({navigation}){ 
-  
+export default function Pesquisa({navigation}) {
   const [tem, setTem] = useState(false);
   const [medicaments, setMedicaments] = useState([]);
   const [search, setSearch] = useState('');
@@ -19,31 +28,31 @@ export default function Pesquisa({navigation}){
   const route = useRoute();
   const idEstabelecimento = route.params.idEstabelecimento;
 
-
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       setTem(false);
-      
+
       setSearch(null);
-      this.input.clear(); 
+      this.input.clear();
     });
     return unsubscribe;
   }, [navigation]);
 
   async function loadMedicaments() {
-    const response = await api.get('/PesquisaMedicamento', {params:{nomeMedicamento: search,idEstabelecimento: idEstabelecimento}});
+    const response = await api.get('/PesquisaMedicamento', {
+      params: {nomeMedicamento: search, idEstabelecimento: idEstabelecimento},
+    });
     const data = response.data.response;
     setMedicaments(data);
 
-    if(data != null){
+    if (data != null) {
       setTem(true);
-    }else{
+    } else {
       setTem(false);
     }
-
   }
 
-  function navigateToEstabelecimento(idEstabelecimento){
+  function navigateToEstabelecimento(idEstabelecimento) {
     navigation.navigate('PerfilEstabelecimento', {idEstabelecimento});
   }
 
@@ -56,38 +65,55 @@ export default function Pesquisa({navigation}){
     numColumns = 2;
   }
 
-  return(
+  return (
     <>
       <View style={styles.containerSearch}>
         <View style={styles.containerInput}>
           <TouchableOpacity>
-            <Icon name="search" size={22} color={"#23AFDB"}/>
+            <Icon name="search" size={22} color={'#23AFDB'} />
           </TouchableOpacity>
-          <TextInput style={styles.input}
+          <TextInput
+            style={styles.input}
             placeholder="Pesquisar"
             returnKeyType="done"
             autoCapitalize="sentences"
             placeholderTextColor="#666"
             onChangeText={search => setSearch(search)}
             onSubmitEditing={loadMedicaments}
-            ref={(input) => {this.input = input}}
+            ref={input => {
+              this.input = input;
+            }}
             blurOnSubmit={true}
-          ></TextInput>
+          />
         </View>
       </View>
-    {!tem &&
-      <KeyboardAvoidingView style={styles.container}
-        behavior={Platform.OS == "android" ? "padding" : "height"}
-      > 
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{width: '100%', height: '90%', alignItems: 'center',justifyContent: 'center'}}>
-            <Text style={{fontSize: 17, color: '#666', textAlign: 'center', width: 250}}>Pesquise um medicamento</Text>
-          </View>  
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView> 
-    }
-    {tem &&  
-      <View style={styles.container}>
+      {!tem && (
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS == 'android' ? 'padding' : 'height'}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View
+              style={{
+                width: '100%',
+                height: '90%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 17,
+                  color: '#666',
+                  textAlign: 'center',
+                  width: 250,
+                }}>
+                Pesquise um medicamento
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      )}
+      {tem && (
+        <View style={styles.container}>
           <FlatList
             data={medicaments}
             horizontal={false}
@@ -126,8 +152,8 @@ export default function Pesquisa({navigation}){
               </TouchableOpacity>
             )}
           />
-      </View>
-    } 
+        </View>
+      )}
     </>
-  )   
+  );
 }
