@@ -44,7 +44,6 @@ export default function Pesquisa({navigation}) {
     });
     const data = response.data.response;
     setMedicaments(data);
-
     if (data != null) {
       setTem(true);
     } else {
@@ -52,16 +51,15 @@ export default function Pesquisa({navigation}) {
     }
   }
 
-  function navigateToEstabelecimento(idEstabelecimento) {
-    navigation.navigate('PerfilEstabelecimento', {idEstabelecimento});
+  function navigateToDetailMed(medicament) {
+    navigation.navigate('DetailMed', {medicament});
   }
 
   const largura = Dimensions.get('screen').width;
   var numColumns;
-
-  if (largura >= 500) {
+  if (largura >= 500){
     numColumns = 3;
-  } else {
+  }else{
     numColumns = 2;
   }
 

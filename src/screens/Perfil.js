@@ -88,6 +88,10 @@ export default function TelaPerfil({navigation}){
         navigation.navigate('Enderecos');
     }
 
+    function navigateToAjuda(){
+        navigation.navigate('TelaAjuda');
+    }
+
     async function navigateToPreLog(){
         try{
             await AsyncStorage.clear();
@@ -208,7 +212,7 @@ export default function TelaPerfil({navigation}){
                     </View>
 
                     <View style={styles.bt}> 
-                        <TouchableOpacity onPress={pegarEndereco} style={styles.touch}>
+                        <TouchableOpacity onPress={navigateToAjuda} style={styles.touch}>
                             <IconFeather name='help-circle' color='rgba(0,0,0,0.7)' size={22}/>
                             <View style={styles.btView}>
                                 <Text style={styles.btTxt}>Ajuda</Text>

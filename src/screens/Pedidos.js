@@ -74,7 +74,7 @@ export default function Pedidos({navigation}) {
             data={pedido}
             showsVerticalScrollIndicator={false}
             keyExtractor={pedido => String(pedido.idvenda)}
-            style={{marginBottom: 130, marginTop: 30, height: '100%'}}
+            style={{marginBottom: 200, marginTop: 30, height: '100%'}}
             renderItem={({item: pedido}) => (
               <View style={styles.btView}>
                 <View style={styles.bt}>

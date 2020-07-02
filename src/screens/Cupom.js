@@ -40,7 +40,6 @@ export default function Cupom({navigation}) {
       });
       const data = response.data.response;
       setCupom(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
