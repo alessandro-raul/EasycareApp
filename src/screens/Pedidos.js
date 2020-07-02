@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import Header from '../componentes/Header';
 import {useEffect, useState} from 'react';
@@ -39,7 +39,7 @@ export default function Pedidos({navigation}) {
 
   async function pegarPedidos() {
     try {
-        const response = await api.get('/Venda/', {
+      const response = await api.get('/Venda/', {
         params: {idCliente: idCliente},
       });
       const data = response.data.response;
@@ -65,46 +65,68 @@ export default function Pedidos({navigation}) {
         </View>
         */}
 
-        {pedido != "" &&
-        <View style={styles.opcoes}>
-        <View style={styles.mcView}>
-          <Text style={styles.txt}>Meus pedidos</Text>
-        </View>
-          <FlatList
-            data={pedido}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={pedido => String(pedido.idvenda)}
-            style={{marginBottom: 200, marginTop: 30, height: '100%'}}
-            renderItem={({item: pedido}) => (
-              <View style={styles.btView}>
-                <View style={styles.bt}>
-                  <Image source={Remedio} style={styles.imgProd} />
-                  <View style={styles.btTxtView}>
-                    <Text style={styles.btTxt}>Número do pedido: <Text style={styles.btTxtBold}>#{pedido.idVenda}</Text></Text>
-                    <Text style={styles.btTxt}>Data: <Text style={styles.btTxtBold}>{Moment(pedido.dataVenda).format('DD/MM/YYYY')}</Text></Text>
-                    <Text style={styles.btTxt}>Status: <Text style={styles.btTxtBold}>{pedido.descStatusVenda}</Text></Text>
-                    <Text style={styles.btTxt}>Valor: <Text style={styles.btTxtBold}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(pedido.totalVenda)}</Text></Text>
+        {pedido != '' && (
+          <View style={styles.opcoes}>
+            <View style={styles.mcView}>
+              <Text style={styles.txt}>Meus pedidos</Text>
+            </View>
+            <FlatList
+              data={pedido}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={pedido => String(pedido.idvenda)}
+              style={{marginBottom: 200, marginTop: 30, height: '100%'}}
+              renderItem={({item: pedido}) => (
+                <View style={styles.btView}>
+                  <View style={styles.bt}>
+                    <Image source={Remedio} style={styles.imgProd} />
+                    <View style={styles.btTxtView}>
+                      <Text style={styles.btTxt}>
+                        Número do pedido:{' '}
+                        <Text style={styles.btTxtBold}>#{pedido.idVenda}</Text>
+                      </Text>
+                      <Text style={styles.btTxt}>
+                        Data:{' '}
+                        <Text style={styles.btTxtBold}>
+                          {Moment(pedido.dataVenda).format('DD/MM/YYYY')}
+                        </Text>
+                      </Text>
+                      <Text style={styles.btTxt}>
+                        Status:{' '}
+                        <Text style={styles.btTxtBold}>
+                          {pedido.descStatusVenda}
+                        </Text>
+                      </Text>
+                      <Text style={styles.btTxt}>
+                        Valor:{' '}
+                        <Text style={styles.btTxtBold}>
+                          {Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          }).format(pedido.totalVenda)}
+                        </Text>
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            )}/>
-        </View>}
-        {pedido == "" &&
-        <View style={styles.container2}>
+              )}
+            />
+          </View>
+        )}
+        {pedido == '' && (
+          <View style={styles.container2}>
             <Text style={styles.txt2}>Você ainda não realizou pedidos</Text>
             <Image source={gifTriste} style={styles.gif} />
-          <TouchableOpacity style={styles.btLogar} onPress={navigateToHome}>
-            <Text style={styles.txtLogar}>Comprar agora!</Text>
-          </TouchableOpacity>
-        </View>
-        }
+            <TouchableOpacity style={styles.btLogar} onPress={navigateToHome}>
+              <Text style={styles.txtLogar}>Comprar agora!</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-   
   container: {
     backgroundColor: 'white',
     height: '100%',
@@ -115,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   mcView: {
@@ -130,9 +152,11 @@ const styles = StyleSheet.create({
   },
 
   txt2: {
-    fontSize: 17,
-    color: 'rgba(0,0,0,0.9)',
+    fontSize: 20,
+    color: '#666',
     textAlign: 'center',
+    fontWeight: 'bold',
+    width: 280,
   },
 
   opcoes: {
@@ -168,7 +192,7 @@ const styles = StyleSheet.create({
   btTxtView: {
     width: '100%',
     marginLeft: '5%',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   btTxt: {
@@ -179,7 +203,7 @@ const styles = StyleSheet.create({
   btTxtBold: {
     fontSize: 16,
     color: 'rgba(70,70,70,0.8)',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 
   btAddView: {
@@ -201,30 +225,30 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 
-  imgProd:{
-      width: 50,
-      height: 50
+  imgProd: {
+    width: 50,
+    height: 50,
   },
 
-  btLogar:{
-    backgroundColor: '#23AFDB', 
-    width: 155, 
-    height: 40, 
-    borderRadius: 10, 
-    justifyContent: 'center', 
-    alignItems: 'center'
-},
+  btLogar: {
+    backgroundColor: '#23AFDB',
+    width: 155,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
-txtLogar:{
-    color: '#fff', 
-    fontSize: 17, 
-    fontWeight: 'bold'
-},
+  txtLogar: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
 
-gif:{
+  gif: {
     width: 130,
     height: 130,
     marginTop: 10,
-    marginBottom: 10
-}
+    marginBottom: 10,
+  },
 });

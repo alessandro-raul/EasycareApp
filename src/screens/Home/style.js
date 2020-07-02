@@ -11,7 +11,7 @@ export default StyleSheet.create({
 
   contSearch: {
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 25,
     paddingLeft: 25,
     alignItems: 'center',
     justifyContent: 'center',

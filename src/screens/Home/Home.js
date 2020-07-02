@@ -44,7 +44,7 @@ export default function Home({ navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       pegarIdEndereco();
       loadEstabelecimentos(); 
-      loadMedicaments();
+      //loadMedicaments();
       /*loadMedicamentsOffers(promocoesGeral);
       loadProductsOffers(promocoesGeral);*/
       pegarIdCliente();
@@ -91,7 +91,7 @@ export default function Home({ navigation }) {
     }
   }
 
-  async function loadMedicaments() {
+  /*async function loadMedicaments() {
     const response = await api.get('/Medicament/', {params: {todos: todos}});
     const data = response.data.response;
     setMedicaments(data);
@@ -101,7 +101,7 @@ export default function Home({ navigation }) {
     const response = await api.get('/Medicament', {params: {promocoesGeral: promocoesGeral}});
     const data = response.data.response;
     setMedicamentsOffers(data);
-  }
+  }*/
 
   async function pegarIdEndereco(){
     try{

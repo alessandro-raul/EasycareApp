@@ -73,19 +73,34 @@ function Routes() {
       <AppStack.Screen name="Notificacoes" component={Notificacoes} />
       <AppStack.Screen name="DetailMed" component={DetailMed} />
       <AppStack.Screen name="DetailProd" component={DetailProd} />
-      <AppStack.Screen name="PesquisaMedicamento" component={PesquisaMedicamento} />
+      <AppStack.Screen
+        name="PesquisaMedicamento"
+        component={PesquisaMedicamento}
+      />
       <AppStack.Screen name="EditarEndereco" component={EditarEndereco} />
       <AppStack.Screen name="Resultado" component={Resultado} />
       <AppStack.Screen name="TelaAjuda" component={TelaAjuda} />
-      <AppStack.Screen name="ProblemasComPedido" component={ProblemasComPedido} />
-      <AppStack.Screen name="ProblemasComProduto" component={ProblemasComProduto} />
-      <AppStack.Screen name="ProblemasComPagamento" component={ProblemasComPagamento} /> 
-      <AppStack.Screen name="ProblemasComCupom" component={ProblemasComCupom} /> 
-      <AppStack.Screen name="ProblemasNaConta" component={ProblemasNaConta} /> 
-      <AppStack.Screen name="AlterarDados" component={AlterarDados} /> 
-      <AppStack.Screen name="ProblemasComEndereco" component={ProblemasComEndereco} /> 
-      <AppStack.Screen name="TelaSac" component={TelaSac} /> 
-      <AppStack.Screen name="Pedidos" component={Pedidos} /> 
+      <AppStack.Screen
+        name="ProblemasComPedido"
+        component={ProblemasComPedido}
+      />
+      <AppStack.Screen
+        name="ProblemasComProduto"
+        component={ProblemasComProduto}
+      />
+      <AppStack.Screen
+        name="ProblemasComPagamento"
+        component={ProblemasComPagamento}
+      />
+      <AppStack.Screen name="ProblemasComCupom" component={ProblemasComCupom} />
+      <AppStack.Screen name="ProblemasNaConta" component={ProblemasNaConta} />
+      <AppStack.Screen name="AlterarDados" component={AlterarDados} />
+      <AppStack.Screen
+        name="ProblemasComEndereco"
+        component={ProblemasComEndereco}
+      />
+      <AppStack.Screen name="TelaSac" component={TelaSac} />
+      <AppStack.Screen name="Pedidos" component={Pedidos} />
       <AppStack.Screen
         name="PerfilEstabelecimento"
         component={PerfilEstabelecimento}

@@ -16,6 +16,7 @@ import api from '../services/api';
 import {useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
+import Modal from 'react-native-modal';
 
 export default function EditarEndereco({navigation}) {
   const [idCliente, setIdCliente] = useState('');
@@ -29,6 +30,8 @@ export default function EditarEndereco({navigation}) {
   const [ufLogCliente, setUfLogCliente] = useState('');
   const [tipoEndereco, setTipoEndereco] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [modalTwo, setModalTwo] = useState(false);
   var id;
 
   React.useEffect(() => {
@@ -86,20 +89,16 @@ export default function EditarEndereco({navigation}) {
         params: {idEnderecoCliente: idEnderecoCliente},
       });
       setShowLoader(false);
-      Alert.alert(
-        'Easycare',
-        'Endereço atualizado com sucesso!',
-        [{text: 'OK', onPress: () => voltar()}],
-        {cancelable: false},
-      );
+      setModalTwo(true);
     } catch (error) {
       setShowLoader(false);
-      alert(error);
+      setModal(true);
     }
   }
 
   function voltar() {
-    navigation.goBack();
+    setModalTwo(false);
+    setTimeout(() => navigation.navigate('Home'), 200);
   }
 
   return (
@@ -209,6 +208,48 @@ export default function EditarEndereco({navigation}) {
           </View>
         </View>
       </ScrollView>
+
+      <View>
+        <Modal
+          isVisible={modal}
+          style={styles.ModalView}
+          onSwipeComplete={() => setModal(false)}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={600}
+          setTimeOut={3000}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Ops...</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                Não foi possivel editar, verifique os campos e tente novamente
+                :(
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
+
+      <View>
+        <Modal
+          isVisible={modalTwo}
+          style={styles.ModalView}
+          onSwipeComplete={() => voltar()}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={300}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Hey!</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                Endereço editado com sucesso ;)
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </>
   );
 }
@@ -242,5 +283,51 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
     color: 'white',
+  },
+
+  ModalView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  Modal: {
+    backgroundColor: 'white',
+    width: 300,
+    paddingHorizontal: 5,
+    minHeight: 80,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  OpsTxt: {
+    marginTop: 20,
+    fontSize: 20,
+    color: 'rgba(0,0,0,0.8)',
+    fontWeight: 'bold',
+  },
+
+  AvisoModal: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'rgba(0,0,0,0.8)',
+    paddingBottom: 35,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  AvisoTxt: {
+    fontSize: 15,
+    color: 'rgba(0,0,0,0.6)',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  AvisoTxt2: {
+    fontSize: 15,
+    color: 'rgba(0,0,0,0.6)',
+    marginTop: 5,
+    fontWeight: 'bold',
   },
 });

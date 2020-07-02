@@ -6,12 +6,14 @@ import {
   StatusBar,
   TouchableOpacity,
   FlatList,
+  Image,
 } from 'react-native';
 import Header from '../componentes/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import {useEffect, useState} from 'react';
+import gifTriste from '../../assets/imgs/gifTriste2.gif';
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
@@ -49,12 +51,12 @@ export default function Cupom({navigation}) {
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <Header text="Cupons" />
-      <View style={styles.fundo}>
-        <View style={styles.mcView}>
-          <Text style={styles.txt}>Cupons já utilizados</Text>
-        </View>
-        <View style={styles.opcoes}>
-          {cupom != 'Erro de parametros: BAD REQUEST' && (
+      {cupom != 'Erro de parametros: BAD REQUEST' && (
+        <View style={styles.fundo}>
+          <View style={styles.mcView}>
+            <Text style={styles.txt}>Cupons já utilizados</Text>
+          </View>
+          <View style={styles.opcoes}>
             <FlatList
               data={cupom}
               showsVerticalScrollIndicator={false}
@@ -78,9 +80,16 @@ export default function Cupom({navigation}) {
                 </View>
               )}
             />
-          )}
+          </View>
         </View>
-      </View>
+      )}
+
+      {cupom == 'Erro de parametros: BAD REQUEST' && (
+        <View style={styles.container2}>
+          <Text style={styles.txt2}>Você ainda não utilizou cupons...</Text>
+          <Image source={gifTriste} style={styles.gif} />
+        </View>
+      )}
     </>
   );
 }
@@ -161,5 +170,27 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
     color: 'white',
+  },
+
+  container2: {
+    backgroundColor: 'white',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  txt2: {
+    fontSize: 20,
+    color: '#666',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    width: 280,
+  },
+
+  gif: {
+    width: 130,
+    height: 130,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });

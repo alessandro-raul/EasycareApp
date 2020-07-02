@@ -16,6 +16,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useRoute} from '@react-navigation/native';
+import Modal from 'react-native-modal';
 
 export default function AdicionarEndereco({navigation}) {
   const [idCliente, setIdCliente] = useState('');
@@ -28,6 +29,8 @@ export default function AdicionarEndereco({navigation}) {
   const [ufLogCliente, setUfLogCliente] = useState('');
   const [idLocal, setidLocal] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [modalTwo, setModalTwo] = useState(false);
   const route = useRoute();
   var id;
   var idEnd;
@@ -99,18 +102,13 @@ export default function AdicionarEndereco({navigation}) {
         setShowLoader(true);
         await api.post('/UserAdress/', data);
         setShowLoader(false);
-        Alert.alert(
-          'Easycare',
-          'Endereço adicionado com sucesso!',
-          [{text: 'OK', onPress: () => voltar()}],
-          {cancelable: false},
-        );
+        setModalTwo(true);
       } catch (error) {
         setShowLoader(false);
         alert(error);
       }
     } else {
-      alert('Não foi possivel cadastrar, verifique os campos');
+      setModal(true);
       //alert(`Dados invalidos, verifique os campos, Cep deve ser preenchido com a pontuação Ex: 00000-000.`);
       setShowLoader(false);
     }
@@ -147,7 +145,8 @@ export default function AdicionarEndereco({navigation}) {
   }
 
   function voltar() {
-    navigation.navigate('Home');
+    setModalTwo(false);
+    setTimeout(() => navigation.navigate('Home'), 200);
   }
 
   return (
@@ -352,6 +351,48 @@ export default function AdicionarEndereco({navigation}) {
           </View>
         </View>
       </ScrollView>
+
+      <View>
+        <Modal
+          isVisible={modal}
+          style={styles.ModalView}
+          onSwipeComplete={() => setModal(false)}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={600}
+          setTimeOut={3000}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Ops...</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                Não foi possivel cadastrar, verifique os campos e tente
+                novamente :(
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
+
+      <View>
+        <Modal
+          isVisible={modalTwo}
+          style={styles.ModalView}
+          onSwipeComplete={() => voltar()}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={300}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Hey!</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                Endereço cadastrado com sucesso ;)
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </>
   );
 }
@@ -400,5 +441,50 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
     flex: 1,
+  },
+
+  ModalView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  Modal: {
+    backgroundColor: 'white',
+    width: 300,
+    minHeight: 80,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  OpsTxt: {
+    marginTop: 20,
+    fontSize: 20,
+    color: 'rgba(0,0,0,0.8)',
+    fontWeight: 'bold',
+  },
+
+  AvisoModal: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'rgba(0,0,0,0.8)',
+    paddingBottom: 35,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  AvisoTxt: {
+    fontSize: 15,
+    color: 'rgba(0,0,0,0.6)',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  AvisoTxt2: {
+    fontSize: 15,
+    color: 'rgba(0,0,0,0.6)',
+    marginTop: 5,
+    fontWeight: 'bold',
   },
 });

@@ -175,40 +175,87 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
-  container2:{
-    height: '100%', 
+  container2: {
+    height: '100%',
     width: '100%',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
-},
+    backgroundColor: 'white',
+  },
 
-nlTxt:{
-    fontSize: 20, color: '#666', 
-    textAlign: 'center', 
+  nlTxt: {
+    fontSize: 20,
+    color: '#666',
+    textAlign: 'center',
     fontWeight: 'bold',
-    width: 280
-},
+    width: 280,
+  },
 
-btLogar:{
-    backgroundColor: '#23AFDB', 
-    width: 155, 
-    height: 40, 
-    borderRadius: 10, 
-    justifyContent: 'center', 
-    alignItems: 'center'
-},
+  btLogar: {
+    backgroundColor: '#23AFDB',
+    width: 155,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
-txtLogar:{
-    color: '#fff', 
-    fontSize: 17, 
-    fontWeight: 'bold'
-},
+  txtLogar: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
 
-gif:{
+  gif: {
     width: 130,
     height: 130,
     marginTop: 10,
-    marginBottom: 10
-}
+    marginBottom: 10,
+  },
+
+  ModalView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  Modal: {
+    backgroundColor: 'white',
+    width: 300,
+    minHeight: 80,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  OpsTxt: {
+    marginTop: 20,
+    fontSize: 20,
+    color: 'rgba(0,0,0,0.8)',
+    fontWeight: 'bold',
+  },
+
+  AvisoModal: {
+    marginTop: 20,
+    fontSize: 16,
+    color: 'rgba(0,0,0,0.8)',
+    paddingBottom: 35,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  AvisoTxt: {
+    fontSize: 15,
+    color: 'rgba(0,0,0,0.6)',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  AvisoTxt2: {
+    fontSize: 15,
+    color: 'rgba(0,0,0,0.6)',
+    marginTop: 5,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });

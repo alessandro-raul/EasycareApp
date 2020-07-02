@@ -15,9 +15,9 @@ import api from '../../services/api';
 import styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../../componentes/Header';
+import Modal from 'react-native-modal';
 
 export default function Pedido() {
-  
   const navigation = useNavigation();
   const [quant, setQuant] = useState(1);
   const [idCliente, setIdCliente] = useState();
@@ -38,17 +38,21 @@ export default function Pedido() {
   const [tipoProduto, setTipoProduto] = useState();
   const [formaDePagamento, setFormaDePagamento] = useState('');
   const [formaDePagamentoTxt, setFormaDePagamentoTxt] = useState(' ');
-  const [cupom, setCupom] = useState();
-  const [idCupom, setIdCupom] = useState("null");
+  const [cupom, setCupom] = useState('');
+  const [idCupom, setIdCupom] = useState('null');
   const [valorCupom, setValorCupom] = useState(null);
   const [valorDesconto, setValorDesconto] = useState(0);
   const [statusVenda, setStatusVenda] = useState(1);
+  const [modal, setModal] = useState(false);
+  const [modalTwo, setModalTwo] = useState(false);
   const route = useRoute();
 
   var data = new Date();
-  var dataVenda = data.getFullYear()+'/'+data.getMonth()+'/'+data.getDay();
-  var horaVenda = data.getHours()+':'+data.getMinutes()+':'+data.getSeconds();
-  
+  var dataVenda =
+    data.getFullYear() + '/' + data.getMonth() + '/' + data.getDay();
+  var horaVenda =
+    data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds();
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       pegarIdEndereco();
@@ -66,13 +70,15 @@ export default function Pedido() {
     setTotal(parseFloat(subTotal) + parseFloat(taxaEntrega));
   }, [quant]);
 
-  function pegaProd(){
+  function pegaProd() {
     try {
       setIdProduto(route.params.idProduto);
       setTipoProduto(route.params.tipoProduto);
       setPrecoProduto(route.params.precoProduto);
       setNomeEstabeleciemnto(route.params.nomeEstabelecimento);
-      setTaxaDeEntregaEstabelecimento(route.params.taxaDeEntregaEstabelecimento);
+      setTaxaDeEntregaEstabelecimento(
+        route.params.taxaDeEntregaEstabelecimento,
+      );
       setDescProduct(route.params.nomeProduto);
       setDescDosagem(route.params.descDosagem);
       setTipoDosagem(route.params.tipoDose);
@@ -82,9 +88,9 @@ export default function Pedido() {
       setCupom(route.params.cupom);
       setValorCupom(route.params.valorCupom);
       setStatus(true);
-      if(formaDePagamento == 1){
+      if (formaDePagamento == 1) {
         setFormaDePagamentoTxt('Dinheiro');
-      }else if (formaDePagamento == 2){
+      } else if (formaDePagamento == 2) {
         setFormaDePagamentoTxt('Cartão');
       }
     } catch (error) {
@@ -101,13 +107,16 @@ export default function Pedido() {
       setStatus(false);
     }
   }*/
-  
+
   function attQuant() {
     setSubtotal(quant * parseFloat(precoProd));
-    if(valorCupom != null){
-      setValorDesconto((parseFloat(subTotal) + parseFloat(taxaEntrega)) * parseFloat(valorCupom/100));
+    if (valorCupom != null) {
+      setValorDesconto(
+        (parseFloat(subTotal) + parseFloat(taxaEntrega)) *
+          parseFloat(valorCupom / 100),
+      );
       setTotal(parseFloat(subTotal) + parseFloat(taxaEntrega) - valorDesconto);
-    }else{
+    } else {
       setTotal(parseFloat(subTotal) + parseFloat(taxaEntrega));
     }
   }
@@ -178,17 +187,16 @@ export default function Pedido() {
     setIdCliente(idCliente);
   }
 
-  async function verificaCupom(){
-    
-    if(idCupom > 0){
-        const data = {
-          idcliente: idCliente,
-          idcupom: idCupom
-        }
-        console.log(data);
-        await api.post('/CuponsCliente/', data);
-        realizarPedido();
-    }else{
+  async function verificaCupom() {
+    if (idCupom > 0) {
+      const data = {
+        idcliente: idCliente,
+        idcupom: idCupom,
+      };
+      console.log(data);
+      await api.post('/CuponsCliente/', data);
+      realizarPedido();
+    } else {
       realizarPedido();
     }
   }
@@ -209,7 +217,7 @@ export default function Pedido() {
         precoFrete: taxaEntrega,
         idProduto: idProduto,
         idMedicamento: 'null',
-        idFormaPagamento : formaDePagamento,
+        idFormaPagamento: formaDePagamento,
         idStatusVenda: statusVenda,
         qtdProduto: quant,
       };
@@ -226,29 +234,25 @@ export default function Pedido() {
         idCupom: idCupom,
         precoFrete: taxaEntrega,
         idMedicamento: idProduto,
-        idFormaPagamento : formaDePagamento,
+        idFormaPagamento: formaDePagamento,
         idProduto: 'null',
         idStatusVenda: statusVenda,
         qtdProduto: quant,
       };
     }
-    
+
     try {
       await api.post('/Venda/', dataPedido);
       setIdProduto(null);
-      Alert.alert(
-        'Easycare',
-        'Compra realizada com sucesso!',
-        [{text: 'OK', onPress: () => navigateToHome()}],
-        {cancelable: false},
-      );
+      setModalTwo(true);
     } catch (error) {
-      alert(error);
+      setModal(true);
     }
   }
 
   function navigateToHome() {
-    navigation.navigate('Home', {screen: 'Home'});
+    setModalTwo(false);
+    setTimeout(() => navigation.navigate('Home', {screen: 'Home'}), 200);
   }
 
   return (
@@ -321,22 +325,38 @@ export default function Pedido() {
             <Text style={styles.subTitle}>Cupom de desconto:</Text>
             <Text style={styles.subTitleMaiorBold}>Total:</Text>
             <Text style={styles.cont}>R${subTotal},00</Text>
-            <Text style={styles.cont}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(taxaEntrega)}</Text>
-            {valorCupom != null &&
-              <Text style={styles.cont}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(valorDesconto)}</Text>
-            }
-            {valorCupom == null &&
-              <Text style={styles.cont}>R$0,00</Text>
-            }
-            <Text style={styles.cont}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(total)}</Text>
+            <Text style={styles.cont}>
+              {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(taxaEntrega)}
+            </Text>
+            {valorCupom != null && (
+              <Text style={styles.cont}>
+                {Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(valorDesconto)}
+              </Text>
+            )}
+            {valorCupom == null && <Text style={styles.cont}>R$0,00</Text>}
+            <Text style={styles.cont}>
+              {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(total)}
+            </Text>
           </View>
 
           <TouchableNativeFeedback
-            onPress={()=>navigateToCupom(idCliente)}
+            onPress={() => navigateToCupom(idCliente)}
             style={styles.contCupom}>
             <IconComunity name="cards-outline" size={28} color="#23AFDB" />
             <View style={styles.dadosCupom}>
-              <Text><Text style={styles.subTitleBold}>Cupom: </Text><Text style={styles.subTitlePgto}>{cupom}</Text></Text>
+              <Text>
+                <Text style={styles.subTitleBold}>Cupom: </Text>
+                <Text style={styles.subTitlePgto}>{cupom}</Text>
+              </Text>
               <Text style={styles.cont}>Inserir cupom</Text>
             </View>
             <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
@@ -347,19 +367,62 @@ export default function Pedido() {
             style={styles.contPagto}>
             <IconFeather name="credit-card" size={26} color="#23AFDB" />
             <View style={styles.dadosPagto}>
-              <Text><Text style={styles.subTitleBold}>Pagamento:</Text> <Text style={styles.subTitlePgto}>{formaDePagamentoTxt}</Text></Text>
+              <Text>
+                <Text style={styles.subTitleBold}>Pagamento:</Text>{' '}
+                <Text style={styles.subTitlePgto}>{formaDePagamentoTxt}</Text>
+              </Text>
               <Text style={styles.cont}>Formas de pagamento</Text>
             </View>
             <Icon name="keyboard-arrow-right" size={32} color="#23AFDB" />
           </TouchableNativeFeedback>
 
-          <TouchableOpacity
-            style={styles.btPedir}
-            onPress={verificaCupom}>
+          <TouchableOpacity style={styles.btPedir} onPress={verificaCupom}>
             <Text style={styles.btText}>Pedir</Text>
           </TouchableOpacity>
         </View>
       )}
+
+      <View>
+        <Modal
+          isVisible={modal}
+          style={styles.ModalView}
+          onSwipeComplete={() => setModal(false)}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={600}
+          setTimeOut={3000}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Ops...</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                Não foi realizar o pedido, verifique os dados e tente novamente
+                :(
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
+
+      <View>
+        <Modal
+          isVisible={modalTwo}
+          style={styles.ModalView}
+          onSwipeComplete={() => navigateToHome()}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={300}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Hey!</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                Compra realizada com sucesso ;)
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </>
   );
 }
