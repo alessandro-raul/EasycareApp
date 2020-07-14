@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import DashboardRoutes from '../../routes/dashboard.routes';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Feather';
+import { TextInputMask } from 'react-native-masked-text';
 
 export default function Cadastro({navigation}) {
   const [emailCliente, setEmailCliente] = useState('');
@@ -113,7 +114,7 @@ export default function Cadastro({navigation}) {
     if (
       validaEmail(data.emailCliente) &&
       validaSenha(data.senhaCliente) &&
-      String(telefoneCliente).length === 11
+      String(telefoneCliente).length === 15
     ) {
       try {
         await api.post('/UserLogin/', data);
@@ -221,7 +222,7 @@ export default function Cadastro({navigation}) {
                 ref={input => {
                   this.input2 = input;
                 }}
-                onSubmitEditing={() => this.input3.focus()}
+                //onSubmitEditing={() => this.input3.focus()}
               />
             </View>
 
@@ -234,10 +235,16 @@ export default function Cadastro({navigation}) {
                   color="#666"
                 />
               </TouchableWithoutFeedback>
-              <TextInput
+              <TextInputMask
                 style={styles.input}
                 placeholder="Telefone"
-                keyboardType="numeric"
+                type={'cel-phone'}
+                options={{
+                  maskType: 'BRL',
+                  withDDD: true,
+                  dddMask: '(99) '
+                }}
+                value={telefoneCliente}
                 returnKeyType="go"
                 blurOnSubmit={true}
                 onChangeText={telefoneCliente =>
@@ -286,7 +293,7 @@ export default function Cadastro({navigation}) {
                   : ' - Senha inválida, utilize uma senha com no minímo 8 digitos, sem espaços em branco.'
               }`}</Text>
               <Text style={styles.AvisoTxt2}>{`${
-                String(telefoneCliente).length === 11
+                String(telefoneCliente).length === 15
                   ? ';)'
                   : ' - Telefone inválido.'
               }`}</Text>

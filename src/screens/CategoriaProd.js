@@ -75,7 +75,7 @@ export default function Categoria({navigation}) {
                     <Text style={styles.nameLab}>
                       {products.nomeFabricante}
                     </Text>
-                    <Text style={styles.dosagemMedic}>{products.qtdMl}</Text>
+              <Text style={styles.dosagemMedic}>{products.qtdMl} {products.tipoDosagem}</Text>
                   </View>
                   <View style={styles.dadosCompra}>
                     <Text style={styles.precoMedic}>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
 
   medicContainer: {
     width: 130,
-    height: 330,
+    height: 305,
     marginLeft: 23,
     marginTop: 22,
     padding: 7,

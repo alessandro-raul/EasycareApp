@@ -53,8 +53,12 @@ export default function DetailProd() {
           <Image source={Remedio} style={styles.imgMed} />
         </View>
         <View style={styles.descMed}>
+
           <View>
-  <Text style={styles.title}>{product.nomeProduto}, {product.qtdMl} {product.tipoDosagem}</Text>
+              <Text style={styles.title}>{product.nomeProduto}, {product.qtdMl} {product.tipoDosagem}</Text>
+              <Text style={styles.precoMed}>{product.descProduto}</Text>
+          </View>
+          <View>
             <TouchableOpacity
               onPress={() =>
                 navigateToEstabelecimento(product.idEstabelecimento)
@@ -64,9 +68,6 @@ export default function DetailProd() {
                 <Text style={styles.nameFarm}> {nomeEstabelecimento}</Text>
               </Text>
             </TouchableOpacity>
-          </View>
-          <View>
-            <Text style={styles.precoMed}>R$ 20,00</Text>
             <Text style={styles.precoPromo}>
               {Intl.NumberFormat('pt-BR', {
             style: 'currency', currency: 'BRL'
@@ -80,9 +81,9 @@ export default function DetailProd() {
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btAdd}>
+        {/*<TouchableOpacity style={styles.btAdd}>
           <Text style={styles.textBtAdd}>Adicionar ao pedido</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>*/}
       </View>
     </>
   );

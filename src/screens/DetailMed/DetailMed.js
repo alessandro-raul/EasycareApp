@@ -87,18 +87,24 @@ export default function DetailMed() {
               {medicament.descMed}, {medicament.descDosagem}{' '}
               {medicament.tipoDosagem}
             </Text>
-            <TouchableOpacity
+           
+           
+            <Text style={styles.descTxt}>{medicament.composicaoMed}</Text>
+            <Text>
+              <Text style={styles.tarjaTxt}>Tarja </Text> 
+              <Text style={styles.descTxt}>{medicament.descTarja}</Text>
+            </Text> 
+          </View>
+          <View style={{marginTop: '5%'}}>
+          <TouchableOpacity
               onPress={() =>
                 navigateToEstabelecimento(medicament.idEstabelecimento)
               }>
-              <Text style={styles.descFarma}>
+            <Text style={styles.descFarma}>
                 Vendido por
                 <Text style={styles.nameFarm}> {nomeEstabelecimento}</Text>
               </Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <Text style={styles.precoMed}>R$ 20,00</Text>
+              </TouchableOpacity>
             <Text style={styles.precoPromo}>
               {Intl.NumberFormat('pt-BR', {
                 style: 'currency',
@@ -125,9 +131,9 @@ export default function DetailMed() {
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btAdd}>
+        {/*<TouchableOpacity style={styles.btAdd}>
           <Text style={styles.textBtAdd}>Adicionar ao pedido</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
     </>
   );

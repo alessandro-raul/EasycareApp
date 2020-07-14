@@ -17,6 +17,8 @@ import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useRoute} from '@react-navigation/native';
 import Modal from 'react-native-modal';
+import { TextInputMask } from 'react-native-masked-text';
+
 
 export default function AdicionarEndereco({navigation}) {
   const [idCliente, setIdCliente] = useState('');
@@ -195,32 +197,33 @@ export default function AdicionarEndereco({navigation}) {
                   onChangeText={numLogCliente =>
                     setNumLogCliente(numLogCliente)
                   }
-                  ref={input => {
+                  ref={(input) => {
                     this.input2 = input;
                   }}
-                  onSubmitEditing={() => this.input3.focus()}
+                  //onSubmitEditing={() => this.input3.focus()}
                   blurOnSubmit={false}
                 />
               </View>
             </View>
             <View style={{width: '40%'}}>
               <View style={styles.inputContainer}>
-                <TextInput
+                <TextInputMask
+                  type={'zip-code'}
                   style={styles.input}
                   returnKeyType="next"
                   autoCapitalize="none"
                   autoCompleteType="off"
                   keyboardType="numeric"
                   autoCorrect={false}
-                  placeholder="CEP Ex:12345-67"
+                  placeholder="CEP"
                   placeholderTextColor="#666"
                   value={cepLogCliente}
                   onChangeText={cepLogCliente =>
                     setCepLogCliente(cepLogCliente)
                   }
-                  ref={input => {
+                  /*ref={(input) => {
                     this.input3 = input;
-                  }}
+                  }}*/
                   onSubmitEditing={() => this.input4.focus()}
                   blurOnSubmit={false}
                 />
@@ -242,10 +245,10 @@ export default function AdicionarEndereco({navigation}) {
                 ref={input => {
                   this.input4 = input;
                 }}
-                /*
-                            onSubmitEditing={() => this.input5.focus()}
-                            blurOnSubmit={false}
-                            */
+                
+                 onSubmitEditing={() => this.input5.focus()}
+                  blurOnSubmit={false}
+                            
               />
             </View>
           </View>

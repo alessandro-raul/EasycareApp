@@ -262,7 +262,7 @@ export default (styles = StyleSheet.create({
 
   shimmerCategorias: {
     width: '85%',
-    height: 35,
+    height: 34,
     paddingHorizontal: 16,
     borderRadius: 45,
   },

@@ -21,6 +21,7 @@ import Input from '../componentes/InputComIconQuad';
 import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
+import {TextInputMask} from 'react-native-masked-text';
 
 export default function EditarPerfil({navigation}) {
   useEffect(() => {
@@ -64,8 +65,11 @@ export default function EditarPerfil({navigation}) {
   }
 
   function validaCPF(strCPF) {
-    if (strCPF.length != 0 && strCPF.length === 11) {
-      let cpf = strCPF;
+    if (strCPF.length != 0 && strCPF.length === 14) {
+      var cpf = strCPF;
+      var cpf2 = cpf.replace('.','');
+      var cpf3 = cpf2.replace('.','');
+      cpf = cpf3.replace('-','');
       let digitoA = 0;
       let digitoB = 0;
 
@@ -134,7 +138,7 @@ export default function EditarPerfil({navigation}) {
       nomeCliente.length >= 8 &&
       nomeCliente.search(' ') != -1 &&
       validaCPF(cpfCliente) &&
-      telefoneCliente.length === 11 &&
+      telefoneCliente.length === 15 &&
       validaEmail(emailCliente) &&
       validaSenha(senhaCliente)
     ) {
@@ -310,7 +314,7 @@ ${validaSenha(senhaCliente) ? '' : 'Senha inválida, utilize uma senha com no mi
               //keyboardType="default"
               blurOnSubmit={false}
               onChangeText={nomeCliente => setNomeCliente(nomeCliente)}
-              onSubmitEditing={() => this.input2.focus()}
+              //onSubmitEditing={() => this.input2.focus()}
               value={nomeCliente}
             />
           </View>
@@ -324,7 +328,8 @@ ${validaSenha(senhaCliente) ? '' : 'Senha inválida, utilize uma senha com no mi
                 color="#333"
               />
             </TouchableWithoutFeedback>
-            <TextInput
+            <TextInputMask
+              type={'cpf'}
               style={styles.input}
               placeholderTextColor="#666"
               placeholder="CPF"
@@ -335,7 +340,7 @@ ${validaSenha(senhaCliente) ? '' : 'Senha inválida, utilize uma senha com no mi
               ref={input => {
                 this.input2 = input;
               }}
-              onSubmitEditing={() => this.input3.focus()}
+              //onSubmitEditing={() => this.input3.focus()}
               value={cpfCliente}
             />
           </View>
@@ -349,8 +354,14 @@ ${validaSenha(senhaCliente) ? '' : 'Senha inválida, utilize uma senha com no mi
                 color="#333"
               />
             </TouchableWithoutFeedback>
-            <TextInput
+            <TextInputMask
               style={styles.input}
+              type={'cel-phone'}
+              options={{
+                maskType: 'BRL',
+                withDDD: true,
+                dddMask: '(99) ',
+              }}
               placeholderTextColor="#666"
               placeholder="Telefone"
               returnKeyType="next"
@@ -450,14 +461,14 @@ ${validaSenha(senhaCliente) ? '' : 'Senha inválida, utilize uma senha com no mi
                 {`${
                   validaCPF(cpfCliente)
                     ? ':)'
-                    : ' - CPF inválido, insira um CPF sem pontuções, Ex: 12345678912.'
+                    : ' - CPF inválido, insira um CPF válido'
                 }`}
               </Text>
               <Text style={styles.AvisoTxt2}>
                 {`${
-                  telefoneCliente.length === 11
+                  telefoneCliente.length === 15
                     ? ';)'
-                    : ' - Telefone inválido, insira o numero com o DDD sem pontuação, Ex: 1112345678.'
+                    : ' - Telefone inválido, verifique-o.'
                 }`}
               </Text>
               <Text style={styles.AvisoTxt2}>
@@ -601,7 +612,8 @@ const styles = StyleSheet.create({
 
   Modal: {
     backgroundColor: 'white',
-    width: 300,
+    width: 320,
+    paddingHorizontal: 5,
     minHeight: 80,
     borderRadius: 5,
     alignItems: 'center',

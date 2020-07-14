@@ -84,7 +84,6 @@ export default function Categoria({navigation}) {
                   </View>
 
                   <View style={styles.dadosCompra}>
-                    <Image source={Drogaria} style={styles.imgFarma} />
                     <Text style={styles.precoMedic}>
                       R$ {medicament.precoMed},00
                     </Text>
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
 
   medicContainer: {
     width: 130,
-    height: 330,
+    height: 305,
     marginLeft: 11.5,
     marginRight: 11.5,
     marginTop: 22,

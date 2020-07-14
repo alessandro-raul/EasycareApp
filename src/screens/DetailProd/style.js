@@ -53,7 +53,6 @@ export default (styles = StyleSheet.create({
   precoMed: {
     color: '#666',
     fontSize: 16,
-    textDecorationLine: 'line-through',
   },
 
   precoPromo: {

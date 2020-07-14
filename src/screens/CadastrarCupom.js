@@ -47,7 +47,6 @@ export default function CadatrarCupom({navigation}) {
       params: {idCupom: idCupom, idCliente: idCliente},
     });
     const data2 = response.data.response;
-    console.log(data2);
 
     if (data2 == 'Erro de parametros: BAD REQUEST' || data2 == '') {
       aplicaCupom(data);

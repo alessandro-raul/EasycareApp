@@ -20,9 +20,9 @@ import Moment from 'moment';
 export default function Pedidos({navigation}) {
   const [idCliente, setIdCliente] = useState('');
   const [pedido, setPedido] = useState([]);
-  //const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   Moment.locale('pt-BR');
-
+  
   useEffect(() => {
     pegarIdCliente();
   });
@@ -250,5 +250,5 @@ const styles = StyleSheet.create({
     height: 130,
     marginTop: 10,
     marginBottom: 10,
-  },
+  }
 });

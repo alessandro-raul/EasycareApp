@@ -50,11 +50,19 @@ export default (styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  precoMed: {
+  descTxt: {
     color: '#666',
     fontSize: 16,
-    textDecorationLine: 'line-through',
   },
+
+  tarjaTxt: {
+    fontWeight: 'bold',
+    color: '#222',
+    fontSize: 16,
+  },
+
+
+  
 
   precoPromo: {
     color: '#1F9433',

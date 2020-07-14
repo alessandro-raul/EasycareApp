@@ -129,7 +129,6 @@ export default function PerfilEstabelecimento({navigation}) {
     try {
       const response = await api.get('/MedsMaisVendidos/', {params:{idEstabelecimento: idEstabelecimento}});
       const data = response.data.response;
-      console.log(data);
       if(data != ''){
         setStatusMaisVendido(true)
       }
@@ -146,7 +145,6 @@ export default function PerfilEstabelecimento({navigation}) {
     });
     const data = response.data.response;
     setMedicamentsOffers(data);
-    console.log(data)
   }
 
   async function loadCategories(idEstabelecimento) {

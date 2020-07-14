@@ -37,21 +37,19 @@ export default function Pedido() {
   const [nomeEstabelecimento, setNomeEstabeleciemnto] = useState();
   const [tipoProduto, setTipoProduto] = useState();
   const [formaDePagamento, setFormaDePagamento] = useState('');
-  const [formaDePagamentoTxt, setFormaDePagamentoTxt] = useState(' ');
+  const [formaDePagamentoTxt, setFormaDePagamentoTxt] = useState('');
   const [cupom, setCupom] = useState('');
   const [idCupom, setIdCupom] = useState('null');
   const [valorCupom, setValorCupom] = useState(null);
   const [valorDesconto, setValorDesconto] = useState(0);
-  const [statusVenda, setStatusVenda] = useState(1);
+  const [statusVenda, setStatusVenda] = useState(2);
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
   const route = useRoute();
 
   var data = new Date();
-  var dataVenda =
-    data.getFullYear() + '/' + data.getMonth() + '/' + data.getDay();
-  var horaVenda =
-    data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds();
+  var dataVenda = data.getFullYear() + '-' + data.getMonth() + '-' + data.getDay();
+  var horaVenda = data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds();
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -76,37 +74,22 @@ export default function Pedido() {
       setTipoProduto(route.params.tipoProduto);
       setPrecoProduto(route.params.precoProduto);
       setNomeEstabeleciemnto(route.params.nomeEstabelecimento);
-      setTaxaDeEntregaEstabelecimento(
-        route.params.taxaDeEntregaEstabelecimento,
-      );
+      setTaxaDeEntregaEstabelecimento(route.params.taxaDeEntregaEstabelecimento);
       setDescProduct(route.params.nomeProduto);
       setDescDosagem(route.params.descDosagem);
       setTipoDosagem(route.params.tipoDose);
-      setFormaDePagamento(route.params.formaDePagamento);
       setIdEstabelecimento(route.params.idEstabelecimento);
       setIdCupom(route.params.idCupom);
       setCupom(route.params.cupom);
       setValorCupom(route.params.valorCupom);
+      setFormaDePagamento(route.params.idFormaPagamento);
+      setFormaDePagamentoTxt(route.params.formaPagamento);
       setStatus(true);
-      if (formaDePagamento == 1) {
-        setFormaDePagamentoTxt('Dinheiro');
-      } else if (formaDePagamento == 2) {
-        setFormaDePagamentoTxt('Cartão');
-      }
     } catch (error) {
       setStatus(false);
       console.log(error);
     }
   }
-
-  /*function validaProd(){
-    console.log(idProduto);
-    if(idProduto != null){
-      setStatus(true);
-    }else{
-      setStatus(false);
-    }
-  }*/
 
   function attQuant() {
     setSubtotal(quant * parseFloat(precoProd));
@@ -193,7 +176,6 @@ export default function Pedido() {
         idcliente: idCliente,
         idcupom: idCupom,
       };
-      console.log(data);
       await api.post('/CuponsCliente/', data);
       realizarPedido();
     } else {
@@ -214,7 +196,7 @@ export default function Pedido() {
         idEnderecoCliente: idd,
         idEstabelecimento: idEstabelecimento,
         idCupom: idCupom,
-        precoFrete: taxaEntrega,
+        taxaEntrega: taxaEntrega,
         idProduto: idProduto,
         idMedicamento: 'null',
         idFormaPagamento: formaDePagamento,
@@ -232,7 +214,7 @@ export default function Pedido() {
         idEnderecoCliente: idd,
         idEstabelecimento: idEstabelecimento,
         idCupom: idCupom,
-        precoFrete: taxaEntrega,
+        taxaEntrega: taxaEntrega,
         idMedicamento: idProduto,
         idFormaPagamento: formaDePagamento,
         idProduto: 'null',
@@ -247,6 +229,7 @@ export default function Pedido() {
       setModalTwo(true);
     } catch (error) {
       setModal(true);
+      console.log(error);
     }
   }
 
@@ -257,7 +240,7 @@ export default function Pedido() {
 
   return (
     <>
-      <Header text="Pedido" />
+      <Header text="Pedido"/>
       {!status && (
         <View style={styles.container2}>
           <Text style={styles.nlTxt}>
@@ -269,7 +252,7 @@ export default function Pedido() {
           </TouchableOpacity>
         </View>
       )}
-
+      
       {status && (
         <View style={styles.container}>
           <TouchableNativeFeedback

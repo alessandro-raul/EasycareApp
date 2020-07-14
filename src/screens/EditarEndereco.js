@@ -17,6 +17,7 @@ import {useRoute} from '@react-navigation/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
+import { TextInputMask } from 'react-native-masked-text';
 
 export default function EditarEndereco({navigation}) {
   const [idCliente, setIdCliente] = useState('');
@@ -132,7 +133,8 @@ export default function EditarEndereco({navigation}) {
               />
             </View>
             <View style={{width: '40%'}}>
-              <Input
+              <TextInputMask
+                type={'zip-code'}
                 placeholder="CEP"
                 value={cepLogCliente}
                 onChangeText={cepLogCliente => setCepLogCliente(cepLogCliente)}

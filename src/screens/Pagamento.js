@@ -1,22 +1,33 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, FlatList} from 'react-native';
 import Header from '../componentes/Header';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
+import api from '../services/api';
+
 
 
 export default function Pagamento({navigation}){
-    const cartaoTxt = 2;
-    const dinheiroTxt = 1;
+    const [formaPagamento, setFormaPagamento] = useState();
 
+    useEffect(() => {
+        pegarFormaPagamento();
+      }, []);
 
-    function navigateToPedido(formaDePagamento){
-        navigation.navigate('Pedido', {formaDePagamento});
+    function navigateToPedido(idFormaPagamento, formaPagamento){
+        navigation.navigate('Pedido', {idFormaPagamento, formaPagamento});
     }
 
-   
-
+    async function pegarFormaPagamento(){
+        try {
+            const response = await api.get('/FormaPagamento/');
+            const data = response.data.response;
+            setFormaPagamento(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return(
         <>
@@ -24,22 +35,20 @@ export default function Pagamento({navigation}){
         <View style={{backgroundColor: "white", height: "100%"}}>
             <View style={styles.opcoes}>
                     <Text style={styles.txt}>Escolha uma das formas de pagamento abaixo:</Text>
-                    <TouchableOpacity onPress={()=>navigateToPedido(cartaoTxt)} style={styles.touch}>
-                        <IconFeather name='credit-card' color='rgba(0,0,0,0.7)' size={24}/>
+                    <FlatList
+                    data={formaPagamento}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal={false}
+                    style={styles.flatlist}
+                    keyExtractor={pagamentos => String(pagamentos.idFormaPagamento)}
+                    renderItem={({ item:pagamentos }) => (
+                    <TouchableOpacity onPress={()=>navigateToPedido(pagamentos.idFormaPagamento, pagamentos.tipoPagamento)} style={styles.touch}>
+                        <IconFeather name='dollar-sign' color='rgba(0,0,0,0.7)' size={24}/>
                         <View style={styles.btView}>
-                            <Text style={styles.btTxt}>Cartão</Text>
+                            <Text style={styles.btTxt}>{pagamentos.tipoPagamento}</Text>
                         </View>
                     </TouchableOpacity>
-                   
-               
-                    <TouchableOpacity onPress={()=>navigateToPedido(dinheiroTxt)} style={styles.touch}>
-                        <IconComunity name='cash-usd' color='rgba(0,0,0,0.7)' size={27}/>
-                        <View style={styles.btView}>
-                            <Text style={styles.btTxt}>Dinheiro</Text>
-                        </View>
-                      
-                    </TouchableOpacity>
-                
+                    )}/>
             </View>
         </View>
         </>
@@ -47,9 +56,14 @@ export default function Pagamento({navigation}){
 }
 
 const styles = StyleSheet.create({
+    flatlist:{
+        height: '100%'
+    },
+
     opcoes:{
         marginTop: '7%',
         width: '100%',
+        paddingHorizontal: 32,
         alignItems: 'center',
         justifyContent: 'center'
     }, 
@@ -78,8 +92,9 @@ const styles = StyleSheet.create({
     },
 
     touch:{
-        width: '90%', 
+        width: '100%', 
         marginTop: 15,
+        marginBottom: 2,
         flexDirection: 'row', 
         alignItems: 'center', 
         borderWidth: 1, 

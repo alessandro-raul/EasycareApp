@@ -27,6 +27,7 @@ import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
+import { TextInputMask } from 'react-native-masked-text';
 
 export default function TelaLogin({navigation}) {
   const [stageNew, setStageNew] = useState([false]);
@@ -37,12 +38,13 @@ export default function TelaLogin({navigation}) {
   const [cpfCliente, setCpfCliente] = useState();
   const [idCliente, setIdCliente] = useState();
   const [modal, setModal] = useState(false);
+  const [modalThree, setModalThree] = useState(false);
+  const [modalFour, setModalFour] = useState(false);
   var valida = 0;
   var idClientee;
   var cpfClientee;
   var foneClientee;
   var nomeClientee;
-
   var resposta = '';
 
   const data = {
@@ -63,8 +65,11 @@ export default function TelaLogin({navigation}) {
   }
 
   function validaCPF(strCPF) {
-    if (String(strCPF).length != 0 && String(strCPF).length === 11) {
+    if (String(strCPF).length != 0 && String(strCPF).length === 14) {
       var cpf = strCPF;
+      var cpf2 = cpf.replace('.','');
+      var cpf3 = cpf2.replace('.','');
+      cpf = cpf3.replace('-','');
       digitoA = 0;
       digitoB = 0;
 
@@ -193,15 +198,13 @@ export default function TelaLogin({navigation}) {
         if (valida != 0) {
           pegarDadosCliente();
         } else {
-          Alert.alert('Easycare', 'Email ou senha inválidos!', [{text: 'OK'}], {
-            cancelable: false,
-          });
+          setModalThree(true);
         }
       } catch (error) {
         console.log(error);
       }
     } else {
-      alert('Não foi possivel logar, verifique se os dados estão corretos');
+        setModalFour(true);
     }
 
     /*
@@ -370,9 +373,12 @@ export default function TelaLogin({navigation}) {
                     color="#666"
                   />
                 </TouchableWithoutFeedback>
-                <TextInput
+
+                <TextInputMask
                   style={styles.input}
+                  type={'cpf'}
                   placeholder="CPF"
+                  value={cpfCliente}
                   keyboardType="numeric"
                   returnKeyType="go"
                   icon="clipboard"
@@ -427,10 +433,51 @@ export default function TelaLogin({navigation}) {
               }`}</Text>
               <Text style={styles.AvisoTxt2}>
                 {`${
-                  validaCPF(cpfCliente).valueOf()
+                  validaCPF(cpfCliente)
                     ? ';)'
-                    : ' - CPF inválido, insira um CPF sem pontuções, Ex: 12345678912'
+                    : ' - CPF inválido, insira um CPF válido e tente novamente'
                 }`}
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
+
+      <View>
+        <Modal
+          isVisible={modalThree}
+          style={styles.ModalView}
+          onSwipeComplete={() => setModalThree(false)}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={600}
+          setTimeOut={3000}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Ops...</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                  Email ou senha incorretos, verifique-os e tente novamente ;)
+              </Text>
+            </View>
+          </View>
+        </Modal>
+      </View>
+      <View>
+        <Modal
+          isVisible={modalFour}
+          style={styles.ModalView}
+          onSwipeComplete={() => setModalFour(false)}
+          swipeDirection={['down']}
+          animationIn="zoomIn"
+          animationInTiming={300}
+          animationOutTiming={600}
+          setTimeOut={3000}>
+          <View style={styles.Modal}>
+            <Text style={styles.OpsTxt}>Ops...</Text>
+            <View style={styles.AvisoModal}>
+              <Text style={styles.AvisoTxt}>
+                Campos inválidos, preencha-os corretamente e tente novamente ;)
               </Text>
             </View>
           </View>
