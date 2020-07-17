@@ -14,6 +14,7 @@ import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import MeuHeader from '../../componentes/Header';
 import logo from '../../../assets/imgs/drogariasp.png';
 import Remedio from '../../../assets/imgs/remedio.png';
+import Produto from '../../../assets/imgs/cosmeticos.png';
 import SearchBarHome from '../../componentes/SearchBarHome';
 import api from '../../services/api';
 import styles from './style';
@@ -166,6 +167,7 @@ export default function PerfilEstabelecimento({navigation}) {
     try {
       const response = await api.get('/ProdsMaisVendidos/', {params:{idEstabelecimento: idEstabelecimento}});
       const data = response.data.response;
+      console.log(data);
       if(data != ''){
         setStatusMaisVendidoProd(true)
       }
@@ -210,7 +212,7 @@ export default function PerfilEstabelecimento({navigation}) {
   return (
     <>
       <MeuHeader text={nomeEstabelecimento} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View style={styles.viewLogoFarma}>
             <ShimmerPlaceHolder
@@ -611,12 +613,12 @@ export default function PerfilEstabelecimento({navigation}) {
                           navigateToDetailProd(products, nomeEstabelecimento)
                         }>
                         <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
+                          <Image source={Produto} style={styles.imgMedic} />
                         </View>
                         <View style={styles.contDesc}>
                           <View style={styles.descMedic}>
                             <Text style={styles.nameMedic}>
-                              {products.nomeProduto}
+                              {products.descProduto}
                             </Text>
                             <Text style={styles.nameLab}>
                               {products.nomeFabricante}
@@ -651,12 +653,12 @@ export default function PerfilEstabelecimento({navigation}) {
                           navigateToDetailProd(products, nomeEstabelecimento)
                         }>
                         <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
+                          <Image source={Produto} style={styles.imgMedic} />
                         </View>
                         <View style={styles.contDesc}>
                           <View style={styles.descMedic}>
                             <Text style={styles.nameMedic}>
-                              {products.nomeProduto}
+                              {products.descProduto}
                             </Text>
                             <Text style={styles.nameLab}>
                               {products.nomeFabricante}
@@ -691,12 +693,12 @@ export default function PerfilEstabelecimento({navigation}) {
                           navigateToDetailProd(products, nomeEstabelecimento)
                         }>
                         <View style={styles.contImg}>
-                          <Image source={Remedio} style={styles.imgMedic} />
+                          <Image source={Produto} style={styles.imgMedic} />
                         </View>
                         <View style={styles.contDesc}>
                           <View style={styles.descMedic}>
                             <Text style={styles.nameMedic}>
-                              {products.nomeProduto}
+                              {products.descProduto}
                             </Text>
                             <Text style={styles.nameLab}>
                               {products.nomeFabricante}

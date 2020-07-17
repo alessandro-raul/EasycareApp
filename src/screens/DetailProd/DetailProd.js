@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Header from '../../componentes/HeaderBack';
-import Remedio from '../../../assets/imgs/remedio.png';
+import Remedio from '../../../assets/imgs/cosmeticos.png';
 import api from '../../services/api';
 import styles from './style';
 
@@ -41,8 +41,8 @@ export default function DetailProd() {
     });
   }
 
-  async function navigateToPedido(idProduto, nomeProduto, descDosagem, idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom) {
-    navigation.navigate('Pedido', {idProduto,nomeProduto, descDosagem, idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom});
+  async function navigateToPedido(idProduto, descProduto, descDosagem, idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom) {
+    navigation.navigate('Pedido', {idProduto, descProduto, descDosagem, idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, precoProduto, tipoDose, tipoProduto, idCupom, valorCupom, cupom});
   }
 
   return (
@@ -55,7 +55,7 @@ export default function DetailProd() {
         <View style={styles.descMed}>
 
           <View>
-              <Text style={styles.title}>{product.nomeProduto}, {product.qtdMl} {product.tipoDosagem}</Text>
+              <Text style={styles.title}>{product.descProduto}, {product.qtdMl} {product.tipoDosagem}</Text>
               <Text style={styles.precoMed}>{product.descProduto}</Text>
           </View>
           <View>
@@ -77,7 +77,7 @@ export default function DetailProd() {
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => navigateToPedido(product.idProduto, product.nomeProduto, product.qtdMl, product.idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, product.precoProduto, product.tipoDosagem, tipoProduto, idCupom, valorCupom, cupom)}
+          onPress={() => navigateToPedido(product.idProduto, product.descProduto, product.qtdMl, product.idEstabelecimento, nomeEstabelecimento, taxaDeEntregaEstabelecimento, product.precoProduto, product.tipoDosagem, tipoProduto, idCupom, valorCupom, cupom)}
           style={styles.btComprar}>
           <Text style={styles.textBtComprar}>Comprar</Text>
         </TouchableOpacity>

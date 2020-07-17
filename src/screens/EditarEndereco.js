@@ -132,13 +132,27 @@ export default function EditarEndereco({navigation}) {
                 onChangeText={numLogCliente => setNumLogCliente(numLogCliente)}
               />
             </View>
-            <View style={{width: '40%'}}>
-              <TextInputMask
-                type={'zip-code'}
-                placeholder="CEP"
-                value={cepLogCliente}
-                onChangeText={cepLogCliente => setCepLogCliente(cepLogCliente)}
-              />
+            <View style={{width: '40%', height: 30, marginTop: '5%'}}>
+            <TextInputMask
+                  type={'zip-code'}
+                  style={styles.input}
+                  returnKeyType="next"
+                  autoCapitalize="none"
+                  autoCompleteType="off"
+                  keyboardType="numeric"
+                  autoCorrect={false}
+                  placeholder="CEP"
+                  placeholderTextColor="#666"
+                  value={cepLogCliente}
+                  onChangeText={cepLogCliente =>
+                    setCepLogCliente(cepLogCliente)
+                  }
+                  /*ref={(input) => {
+                    this.input3 = input;
+                  }}*/
+                  //onSubmitEditing={() => this.input4.focus()}
+                  blurOnSubmit={false}
+                />
             </View>
           </View>
           <View style={{width: '80%'}}>
@@ -332,4 +346,14 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontWeight: 'bold',
   },
+
+  input: {
+    fontSize: 16,
+    color: '#707070',
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'rgba(70,70,70,0.4)',
+    borderRadius: 10
+    
+  }
 });

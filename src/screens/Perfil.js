@@ -127,7 +127,7 @@ export default function TelaPerfil({navigation}) {
       {statusLogin == 0 && <View style={styles.container2} />}
 
       {statusLogin == 1 && (
-        <ScrollView style={styles.fundo}>
+        <ScrollView style={styles.fundo} showsVerticalScrollIndicator={false}>
           <View style={styles.banner}>
             <View
               style={{

@@ -7,10 +7,10 @@ import {
 } from 'react-native-gesture-handler';
 import gifTriste from '../../../assets/imgs/gifTriste2.gif';
 import Remedio from '../../../assets/imgs/remedio.png';
+import Produto from '../../../assets/imgs/cosmeticos.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconComunity from 'react-native-vector-icons/MaterialCommunityIcons';
-//import Cupom from 'react-native-vector-icons/FontAwesome5';
 import api from '../../services/api';
 import styles from './style';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -45,11 +45,15 @@ export default function Pedido() {
   const [statusVenda, setStatusVenda] = useState(2);
   const [modal, setModal] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
+  const [img, setImg] = useState();
   const route = useRoute();
 
   var data = new Date();
-  var dataVenda = data.getFullYear() + '-' + data.getMonth() + '-' + data.getDay();
-  var horaVenda = data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds();
+  var ano = data.getFullYear();
+  var mes = data.getMonth()+1;
+  var dia = data.getDay()+12;
+  var dataVenda = ano+'-'+mes+'-'+dia;
+  var horaVenda = data.getHours()-3 + ':' + data.getMinutes() + ':' + data.getSeconds();
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -75,7 +79,7 @@ export default function Pedido() {
       setPrecoProduto(route.params.precoProduto);
       setNomeEstabeleciemnto(route.params.nomeEstabelecimento);
       setTaxaDeEntregaEstabelecimento(route.params.taxaDeEntregaEstabelecimento);
-      setDescProduct(route.params.nomeProduto);
+      setDescProduct(route.params.descProduto);
       setDescDosagem(route.params.descDosagem);
       setTipoDosagem(route.params.tipoDose);
       setIdEstabelecimento(route.params.idEstabelecimento);
@@ -85,6 +89,11 @@ export default function Pedido() {
       setFormaDePagamento(route.params.idFormaPagamento);
       setFormaDePagamentoTxt(route.params.formaPagamento);
       setStatus(true);
+      if(tipoProduto == 'Produto'){
+        setImg(Produto);
+      }else if(tipoProduto == 'Medicamento'){
+        setImg(Remedio);
+      }
     } catch (error) {
       setStatus(false);
       console.log(error);
@@ -277,7 +286,7 @@ export default function Pedido() {
 
           <View style={styles.contProd}>
             <View>
-              <Image source={Remedio} style={styles.imgProd} />
+              <Image source={img} style={styles.imgProd} />
             </View>
             <View style={styles.dadosProd}>
               <Text style={styles.subTitle}>

@@ -6,7 +6,6 @@ import TelaLogin from '../src/screens/TelaLogin';
 import Perfil from '../src/screens/Perfil';
 import Pedido from '../src/screens/Pedido/Pedido';
 import Pesquisa from '../src/screens/Pesquisa/Pesquisa';
-
 import Icon from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();

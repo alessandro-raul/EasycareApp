@@ -11,7 +11,7 @@ import {
 import {useNavigation, useRoute} from '@react-navigation/native';
 import MeuHeader from '../componentes/Header';
 import api from '../services/api';
-import Remedio from '../../assets/imgs/remedio.png';
+import Remedio from '../../assets/imgs/cosmeticos.png';
 import Drogaria from '../../assets/imgs/drogariasp.png';
 
 export default function Categoria({navigation}) {
@@ -71,7 +71,7 @@ export default function Categoria({navigation}) {
                 </View>
                 <View style={styles.contDesc}>
                   <View style={styles.descMedic}>
-                    <Text style={styles.nameMedic}>{products.nomeProduto}</Text>
+                    <Text style={styles.nameMedic}>{products.descProduto}</Text>
                     <Text style={styles.nameLab}>
                       {products.nomeFabricante}
                     </Text>

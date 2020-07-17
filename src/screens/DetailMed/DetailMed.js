@@ -46,7 +46,7 @@ export default function DetailMed() {
 
   async function navigateToPedido(
     idProduto,
-    nomeProduto,
+    descProduto,
     descDosagem,
     idEstabelecimento,
     nomeEstabelecimento,
@@ -60,7 +60,7 @@ export default function DetailMed() {
   ) {
     navigation.navigate('Pedido', {
       idProduto,
-      nomeProduto,
+      descProduto,
       descDosagem,
       idEstabelecimento,
       nomeEstabelecimento,
